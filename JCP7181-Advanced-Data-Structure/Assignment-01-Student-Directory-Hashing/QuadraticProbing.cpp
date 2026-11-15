@@ -10,16 +10,28 @@ class QuadraticProbingHashTable {
   StudentRecord table[HASH_TABLE_CAPACITY] ;
                        
     // Hash function computing sum of ASCII character codes in the student email.
-    int converter(const string& studentEmail) {                        
-                    
-        int total = 0 ;
-                    
-        for (char c : studentEmail)                 
-		{    
-			total += static_cast<int>(c) ;               
-		}     
-                            
-        return total ;                 
+        int converter(const string& studentEmail) {
+        long long h = 0;
+        const long long MOD = 1000000007LL;
+        for (unsigned char c : studentEmail) h = (h * 131 + c) % MOD;
+        return static_cast<int>(h);
+    }
+
+    /*
+      Alternating-sign quadratic probing: step 0 -> base, step 1 -> base+1^2,
+      step 2 -> base-1^2, step 3 -> base+2^2, step 4 -> base-2^2, ...
+      For a prime table size p with p % 4 == 3 (199 % 4 == 3 here), this
+      sequence is known to visit every one of the p slots exactly once as
+      step ranges 0..p-1, unlike plain "+i*i" quadratic probing which only
+      reaches about half the table.
+    */
+    int probeIndex(int base, int step) {
+        int k = (step + 1) / 2;
+        int sign = (step % 2 == 1) ? 1 : -1;
+        long long off = (long long)k * k * sign;
+        long long idx = ((long long)base + off) % HASH_TABLE_CAPACITY;
+        if (idx < 0) idx += HASH_TABLE_CAPACITY;
+        return static_cast<int>(idx);
     }
         
 public:                  
@@ -39,7 +51,7 @@ public:
                                      
         for (int i = 0 ; i < HASH_TABLE_CAPACITY ; ++i) {
 			               
-            int idx = (baseIndex + i * i) % HASH_TABLE_CAPACITY ;                                          
+            int idx = probeIndex(baseIndex, i) ;                                          
  
             if (table[idx].studentEmail.empty() || table[idx].isDeleted)                
 			{   
@@ -111,7 +123,7 @@ public:
     StudentRecord* find(const string& studentEmail) {
         int baseIndex = converter(studentEmail) % HASH_TABLE_CAPACITY ;
         for (int i = 0 ; i < HASH_TABLE_CAPACITY ; ++i) {  
-            int idx = (baseIndex + i * i) % HASH_TABLE_CAPACITY ;   
+            int idx = probeIndex(baseIndex, i) ;   
 			
             if (table[idx].studentEmail.empty()) break ;  
             
@@ -128,7 +140,7 @@ public:
           
 		for (int i = 0 ; i < HASH_TABLE_CAPACITY ; ++i) {  
           
-			int idx = (baseIndex + i * i) % HASH_TABLE_CAPACITY ;
+			int idx = probeIndex(baseIndex, i) ;
             
 			if (table[idx].studentEmail.empty()) break ;  
                
@@ -148,7 +160,7 @@ public:
         int baseIndex = converter(studentEmail) % HASH_TABLE_CAPACITY ;  
 		
         for (int i = 0 ; i < HASH_TABLE_CAPACITY ; ++i) {  
-            int idx = (baseIndex + i * i) % HASH_TABLE_CAPACITY ;
+            int idx = probeIndex(baseIndex, i) ;
 			  
             if (table[idx].studentEmail.empty()) break ;
 			

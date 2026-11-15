@@ -8,13 +8,11 @@ class LinearProbingHashTable {
     StudentRecord table[HASH_TABLE_CAPACITY] ;  // Fixed size array to hold records             
 
     // Hash function: sums ASCII values of email characters to generate initial index.             
-    int converter(const string& studentEmail) {
-
-
-        int totalAscii = 0 ;             
-        for (char c : studentEmail) totalAscii += static_cast<int>(c) ;
-
-        return totalAscii ;                
+        int converter(const string& studentEmail) {
+        long long h = 0;
+        const long long MOD = 1000000007LL;
+        for (unsigned char c : studentEmail) h = (h * 131 + c) % MOD;
+        return static_cast<int>(h);
     }
              
 public:

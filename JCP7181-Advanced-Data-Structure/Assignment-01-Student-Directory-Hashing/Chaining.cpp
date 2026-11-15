@@ -11,14 +11,11 @@ class SeparateChainingHashTable {
     
 	list<StudentRecord> buckets[HASH_TABLE_CAPACITY] ; 
  
-    int converter(const string& studentEmail) {
-        int total = 0 ;
-		
-        for (char c : studentEmail) 
-		{
-			total += c ;
-		}     
-        return total ;       
+        int converter(const string& studentEmail) {
+        long long h = 0;
+        const long long MOD = 1000000007LL;
+        for (unsigned char c : studentEmail) h = (h * 131 + c) % MOD;
+        return static_cast<int>(h);
     }
 
 public: 
