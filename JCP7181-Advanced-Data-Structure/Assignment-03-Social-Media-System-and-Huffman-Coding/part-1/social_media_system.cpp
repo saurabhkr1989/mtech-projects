@@ -187,8 +187,12 @@ public:
         }
 
         // Sort posts in descending order of their count.
+        // Sort posts in descending order of their count. The problem statement doesn't
+        // specify a tie-break, so ties are broken by postId ascending for a deterministic,
+        // reproducible result (std::sort alone is not guaranteed stable across runs/compilers).
         std::sort(allPosts.begin(), allPosts.end(), [](const Post& a, const Post& b) {
-            return a.count > b.count;
+            if (a.count != b.count) return a.count > b.count;
+            return a.postId < b.postId;
         });
 
         std::string result = "";
