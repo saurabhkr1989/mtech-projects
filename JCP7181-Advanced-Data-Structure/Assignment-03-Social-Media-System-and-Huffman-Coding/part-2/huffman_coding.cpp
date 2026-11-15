@@ -1,5 +1,5 @@
 /**
- * @file 2023CS10000_2.cpp
+ * @file 2025JCS3011_2.cpp
  * @brief Huffman Coding Compression and Decompression System
  *
  * This program implements a complete text compression and decompression utility
