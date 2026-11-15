@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<FlowMonitor>
+  <FlowStats>
+    <Flow flowId="1" timeFirstTxPacket="+2e+09ns" timeFirstRxPacket="+2.01169e+09ns" timeLastTxPacket="+6e+09ns" timeLastRxPacket="+6.01169e+09ns" delaySum="+5.8432e+07ns" jitterSum="+0ns" lastDelay="+1.16864e+07ns" maxDelay="+1.16864e+07ns" minDelay="+1.16864e+07ns" txBytes="5260" rxBytes="5260" txPackets="5" rxPackets="5" lostPackets="0" timesForwarded="5">
+      <delayHistogram nBins="12" >
+        <bin index="11" start="0.011" width="0.001" count="5" />
+      </delayHistogram>
+      <jitterHistogram nBins="1" >
+        <bin index="0" start="0" width="0.001" count="4" />
+      </jitterHistogram>
+      <packetSizeHistogram nBins="53" >
+        <bin index="52" start="1040" width="20" count="5" />
+      </packetSizeHistogram>
+      <flowInterruptionsHistogram nBins="5" >
+        <bin index="4" start="1" width="0.25" count="4" />
+      </flowInterruptionsHistogram>
+    </Flow>
+    <Flow flowId="2" timeFirstTxPacket="+2.01169e+09ns" timeFirstRxPacket="+2.02337e+09ns" timeLastTxPacket="+6.01169e+09ns" timeLastRxPacket="+6.02337e+09ns" delaySum="+5.8432e+07ns" jitterSum="+0ns" lastDelay="+1.16864e+07ns" maxDelay="+1.16864e+07ns" minDelay="+1.16864e+07ns" txBytes="5260" rxBytes="5260" txPackets="5" rxPackets="5" lostPackets="0" timesForwarded="5">
+      <delayHistogram nBins="12" >
+        <bin index="11" start="0.011" width="0.001" count="5" />
+      </delayHistogram>
+      <jitterHistogram nBins="1" >
+        <bin index="0" start="0" width="0.001" count="4" />
+      </jitterHistogram>
+      <packetSizeHistogram nBins="53" >
+        <bin index="52" start="1040" width="20" count="5" />
+      </packetSizeHistogram>
+      <flowInterruptionsHistogram nBins="5" >
+        <bin index="4" start="1" width="0.25" count="4" />
+      </flowInterruptionsHistogram>
+    </Flow>
+  </FlowStats>
+  <Ipv4FlowClassifier>
+    <Flow flowId="1" sourceAddress="10.0.1.1" destinationAddress="10.0.2.2" protocol="17" sourcePort="49153" destinationPort="9">
+      <Dscp value="0x0" packets="5" />
+    </Flow>
+    <Flow flowId="2" sourceAddress="10.0.2.2" destinationAddress="10.0.1.1" protocol="17" sourcePort="9" destinationPort="49153">
+      <Dscp value="0x0" packets="5" />
+    </Flow>
+  </Ipv4FlowClassifier>
+  <Ipv6FlowClassifier>
+  </Ipv6FlowClassifier>
+  <FlowProbes>
+    <FlowProbe index="0">
+      <FlowStats  flowId="1" packets="5" bytes="5260" delayFromFirstProbeSum="+0ns" >
+      </FlowStats>
+      <FlowStats  flowId="2" packets="5" bytes="5260" delayFromFirstProbeSum="+5.8432e+07ns" >
+      </FlowStats>
+    </FlowProbe>
+    <FlowProbe index="1">
+    </FlowProbe>
+    <FlowProbe index="2">
+      <FlowStats  flowId="1" packets="5" bytes="5260" delayFromFirstProbeSum="+2.9216e+07ns" >
+      </FlowStats>
+      <FlowStats  flowId="2" packets="5" bytes="5260" delayFromFirstProbeSum="+2.9216e+07ns" >
+      </FlowStats>
+    </FlowProbe>
+    <FlowProbe index="3">
+    </FlowProbe>
+    <FlowProbe index="4">
+      <FlowStats  flowId="1" packets="5" bytes="5260" delayFromFirstProbeSum="+5.8432e+07ns" >
+      </FlowStats>
+      <FlowStats  flowId="2" packets="5" bytes="5260" delayFromFirstProbeSum="+0ns" >
+      </FlowStats>
+    </FlowProbe>
+    <FlowProbe index="5">
+    </FlowProbe>
+  </FlowProbes>
+</FlowMonitor>

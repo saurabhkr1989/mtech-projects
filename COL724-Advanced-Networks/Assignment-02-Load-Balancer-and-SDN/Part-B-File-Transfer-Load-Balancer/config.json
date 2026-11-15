@@ -1,0 +1,19 @@
+{
+    "lb_ip": "127.0.0.1",
+    "lb_port": 8000,
+
+    "server1_ip": "127.0.0.1",
+    "server1_port": 9001,
+
+    "server2_ip": "127.0.0.1",
+    "server2_port": 9002,
+
+    "server3_ip": "127.0.0.1",
+    "server3_port": 9003,
+    
+    "server4_ip": "127.0.0.1",
+    "server4_port": 9004,
+
+    "client_threads": 4,
+    "data_dir": "./client_data"
+}
