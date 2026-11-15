@@ -1,0 +1,97 @@
+20 24
+
+---
+
+--- Test Group 1: PDF Examples (N=3) ---
+
+Check baseline reconstruction.
+
+25525511135
+192168011
+101023
+
+---
+
+--- Test Group 2: /24 Cluster Test (N=3) ---
+
+These 3 entries should form a cluster of 3 if S=24.
+
+(They will also cluster for S=16 and S=8).
+
+IPs: 192.168.1.1, 192.168.1.2, 192.168.1.3 (plus others)
+
+19216811
+19216812
+19216813
+
+---
+
+--- Test Group 3: /16 Cluster Test (N=3) ---
+
+These 3 entries should form a cluster of 3 if S=16.
+
+(They will be in different subnets for S=24).
+
+IPs: 172.16.0.100, 172.16.1.2, 172.16.255.255
+
+172160100
+1721612
+17216255255
+
+---
+
+--- Test Group 4: /8 Cluster Test (N=3) ---
+
+These 3 entries should form a cluster of 3 if S=8.
+
+(They will be in different subnets for S=16 and S=24).
+
+IPs: 10.1.23.4, 10.255.0.0, 10.0.1.1
+
+101234
+1025500
+10011
+
+---
+
+--- Test Group 5: Ambiguity & Mixed Prefixes (N=3) ---
+
+These test reconstruction ambiguity.
+
+1001001 -> 10.0.10.1, 100.10.0.1 (in different /8, /16, /24)
+
+1001001
+
+111111 -> 1.1.11.1, 1.11.1.1, 11.1.1.1 (all unique)
+
+111111
+
+8888 -> 8.8.8.8 (simple, 1 IP)
+
+8888
+
+---
+
+--- Test Group 6: Invalid & Edge Cases (N=5) ---
+
+These should all produce 0 valid IPs, except the last one.
+
+Too short
+
+123
+
+Too long
+
+2552552552551
+
+Contains invalid octet '256'
+
+1921681256
+
+Contains invalid leading zero octet '010'
+
+192168010
+
+Valid, but an edge case.
+
+0000

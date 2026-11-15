@@ -1,0 +1,321 @@
+Test Case 1
+
+# User creation and edge cases
+create_user 101 UserA user_a@test.com true
+create_user 102 UserB user_b@test.com false
+create_user 101 UserA_Dupe duplicate@test.com false
+get_user_details 101
+get_user_details 999
+
+# Connections and edge cases
+follow 101 102
+follow 101 101
+follow 101 102
+follow 101 999
+
+# Post creation and reactions
+create_post 201 101
+create_post 202 101
+create_post 203 102
+create_post 204 999
+like 201
+like 201
+like 202
+dislike 203
+dislike 203
+dislike 203
+
+# Queries
+top_posts 3
+follow_path 101 102
+
+# Unfollow and re-check path
+unfollow 101 102
+unfollow 101 103
+follow_path 101 102
+
+
+true
+true
+false
+101 UserA user_a@test.com true
+false
+true
+false
+false
+false
+true
+true
+true
+false
+true
+true
+true
+true
+true
+true
+101-201 101-202 102-203
+101 102
+true
+false
+-
+
+
+Test Case 2
+
+# Create two separate groups of users
+create_user 10 Don don@test.com true
+create_user 11 Ed ed@test.com true
+create_user 12 Frank frank@test.com true
+create_user 20 George george@test.com false
+create_user 21 Hank hank@test.com false
+create_user 22 Ian ian@test.com true
+
+# Connect users within Group 1
+follow 10 11
+follow 11 12
+
+# Connect users within Group 2
+follow 20 21
+follow 21 22
+
+# Pathfinding within groups (should succeed)
+follow_path 10 12
+
+# Pathfinding between groups (should fail)
+follow_path 10 22
+
+# Bridge the two groups
+follow 12 21
+
+# Pathfinding between groups (should now succeed)
+follow_path 10 22
+
+# Remove the bridge
+unfollow 12 21
+
+# Pathfinding between groups (should fail again)
+follow_path 10 22
+
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+10 11 12
+-
+true
+10 11 12 21 22
+true
+-
+
+
+
+
+
+Test Case 3
+
+# Create users
+create_user 301 Pam pam@test.com true
+create_user 302 Quentin quentin@test.com false
+
+# Create posts
+create_post 401 301
+create_post 402 301
+create_post 403 302
+create_post 404 302
+
+# Manipulate counts to be positive, zero, and negative
+like 401
+like 401
+like 401
+like 402
+dislike 403
+dislike 404
+dislike 404
+dislike 404
+
+# Post counts: 401 -> 3, 402 -> 1, 403 -> -1, 404 -> -2
+
+# Get top 3 posts
+top_posts 3
+
+# Get top 10 (more than available posts)
+top_posts 10
+
+# Change the ranking
+dislike 401
+dislike 401
+dislike 401
+dislike 401
+# Post counts: 401 -> -1, 402 -> 1, 403 -> -1, 404 -> -2
+
+# Get top 3 posts again
+top_posts 3
+
+
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+301-401 301-402 302-403
+301-401 301-402 302-403 302-404
+true
+true
+true
+true
+301-402 301-401 302-403
+
+
+
+
+Test Case 4
+
+create_user 1 Alice alice@iitd.ac.in true
+create_user 2 Bob bob@iitd.ac.in false
+create_user 3 Charlie charlie@iitd.ac.in false
+create_user 3 Tod tod@iitd.ac.in true
+follow 1 2
+follow 2 3
+follow 2 5
+follow_path 1 3
+follow_path 4 3
+create_post 101 2
+create_post 101 2
+create_post 102 2
+create_post 333 3
+like 101
+like 101
+like 333
+like 102
+dislike 102
+top_posts 2
+get_user_details 1
+
+
+true
+true
+true
+false
+1 2 3
+-
+true
+false
+true
+true
+true
+true
+true
+true
+true
+2-101 3-333
+1 Alice alice@iitd.ac.in true
+
+
+
+Test Cases 5
+
+# Query an empty system
+top_posts 5
+follow_path 1 2
+
+# Attempt to create a user with invalid boolean values
+create_user 501 UserX user_x@test.com TRUE
+create_user 502 UserY user_y@test.com Yes
+create_user 503 UserZ user_z@test.com 1
+
+# Create a valid user
+create_user 504 UserW user_w@test.com true
+
+# Try to follow/unfollow non-existent users
+follow 504 999
+unfollow 504 999
+
+# Check user details
+get_user_details 504
+get_user_details 501
+
+
+-
+false
+false
+false
+true
+false
+false
+504 UserW user_w@test.com true
+false
+
+
+
+Test Case 6
+
+# Create users
+create_user 601 Rick rick@test.com true
+create_user 602 Morty morty@test.com false
+create_user 603 Summer summer@test.com true
+create_user 604 Beth beth@test.com true
+
+# Create a circular connection
+follow 601 602
+follow 602 603
+follow 603 604
+follow 604 601
+
+# Find shortest path in the circle
+follow_path 601 603
+
+# Create posts and give them tied scores
+create_post 701 601
+create_post 702 602
+create_post 703 603
+create_post 704 604
+like 701
+like 702
+like 703
+like 704
+like 701
+like 702
+
+# Post counts: 701 -> 2, 702 -> 2, 703 -> 1, 704 -> 1
+
+# Get top posts with ties. The order of 701/702 and 703/704 might vary,
+# but they should appear after the higher-scored posts.
+top_posts 4
+
+
+true
+true
+true
+true
+true
+true
+true
+true
+601 604 603
+true
+true
+true
+true
+true
+true
+true
+true
+true
+true
+601-701 602-702 603-703 604-704

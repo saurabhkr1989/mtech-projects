@@ -1,0 +1,17 @@
+create_user 1 Alice alice@iitd.ac.in true
+create_user 2 Bob bob@iitd.ac.in false
+create_user 3 Charlie charlie@iitd.ac.in false
+create_user 4 Aaditya aaditya@iitd.ac.in false
+create_post 101 2
+create_post 102 2
+create_post 333 3
+like 101
+like 101
+like 333
+like 102
+like 102
+top_posts 2
+get_user_details 1
+dislike 101
+dislike 333
+top_posts 2

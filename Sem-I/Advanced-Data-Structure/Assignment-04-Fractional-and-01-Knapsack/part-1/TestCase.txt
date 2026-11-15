@@ -1,0 +1,192 @@
+Base and Small Test Cases
+
+Test Case 1: PDF Example
+
+3 50
+60 10
+100 20
+120 30
+
+MaxValue: 240.00
+Fractions: 1.00000000 1.00000000 0.66666667
+
+
+
+Test Case 2: Base Case (N=0)
+
+0 50
+
+MaxValue: 0.00
+Fractions: 
+
+
+Test Case 3: Base Case (C=0)
+
+3 0
+60 10
+100 20
+120 30
+
+MaxValue: 0.00
+Fractions: 0.00000000 0.00000000 0.00000000
+
+
+Test Case 4: Base Case (N=0, C=0)
+
+0 0
+
+MaxValue: 0.00
+Fractions: 
+
+
+Test Case 5: All Items Fit
+
+3 60
+60 10
+100 20
+120 30
+
+MaxValue: 280.00
+Fractions: 1.00000000 1.00000000 1.00000000
+
+
+Test Case 6: Simple Fractional Case
+
+3 20
+60 10
+100 20
+120 30
+
+
+MaxValue: 110.00
+Fractions: 1.00000000 0.50000000 0.00000000
+
+
+Test Case 7: Simple Tie-Breaking
+
+3 30
+100 10
+50 5
+60 20
+
+MaxValue: 195.00
+Fractions: 1.00000000 1.00000000 0.75000000
+
+
+3 10
+100 20
+200 30
+50 15
+
+MaxValue: 66.67
+Fractions: 0.00000000 0.33333333 0.00000000
+
+
+Test Case 9: Real Number (double) Inputs
+
+3 10
+70.5 7.2
+50.2 5.1
+100.1 10.3
+
+MaxValue: 98.17
+Fractions: 0.68055556 1.00000000 0.00000000
+
+
+Test Case 10: Input Order vs. Value Order
+
+4 25
+10 10
+100 10
+5 10
+50 10
+
+MaxValue: 155.00
+Fractions: 0.50000000 1.00000000 0.00000000 1.00000000
+
+
+
+
+Test Case 11: Mixed Density Profile
+
+10 100
+50 10
+20 5
+10 50
+90 30
+150 50
+120 60
+5 1
+40 40
+80 20
+22 11
+
+MaxValue: 347.00
+Fractions: 1.00000000 1.00000000 0.00000000 0.46666667 1.00000000 0.00000000 1.00000000 0.00000000 1.00000000 0.00000000
+
+
+
+Test Case 12: Tie-Breaking Showcase
+
+8 85
+100 20
+40 10
+30 10
+150 30
+50 10
+60 20
+90 30
+10 1
+
+MaxValue: 392.00
+Fractions: 1.00000000 1.00000000 0.00000000 1.00000000 1.00000000 0.00000000 0.46666667 1.00000000
+
+
+Test Case 13: Large Numbers (Values/Weights)
+
+5 50000
+100000 10000
+500000 20000
+90000 10000
+200000 10000
+160000 8000
+
+MaxValue: 978000.00
+Fractions: 1.00000000 1.00000000 0.20000000 1.00000000 1.00000000
+
+
+
+Test Case 14: Complex Fractional Result
+
+10 38
+100 10
+50 5
+10 2
+20 8
+8 1
+40 10
+90 30
+1 1
+18 6
+70 20
+
+MaxValue: 236.00
+Fractions: 1.00000000 1.00000000 1.00000000 0.50000000 1.00000000 1.00000000 0.00000000 0.00000000 1.00000000 0.00000000
+
+
+Test Case 15: Fractional Item is First
+
+10 50
+1000 100
+10 2
+20 5
+30 10
+40 20
+50 30
+60 40
+70 50
+80 60
+90 70
+
+MaxValue: 500.00
+Fractions: 0.50000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000 0.00000000

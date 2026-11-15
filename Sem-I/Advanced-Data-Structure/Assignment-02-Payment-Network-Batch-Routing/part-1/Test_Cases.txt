@@ -1,0 +1,376 @@
+Case 1: Direct path without checkpoints
+2 1
+0 1 5
+0
+0 1
+
+
+Output: 5
+
+Case 2: No path available
+2 1
+0 1 5
+0
+1 0
+
+
+(start=1, target=0, only edge 0→1 exists)
+Output: -1
+
+Case 3: Simple checkpoint
+3 2
+0 1 2
+1 2 3
+1
+1
+0 2
+
+
+Path: 0→1→2 = 5
+Output: 5
+
+Case 4: Unreachable checkpoint
+3 2
+0 2 5
+1 2 1
+1
+1
+0 2
+
+
+Checkpoint=1 not reachable from 0
+Output: -1
+
+Case 5: Multiple paths, choose min
+3 3
+0 1 5
+0 2 2
+2 1 1
+1
+1
+0 1
+
+
+0→2→1 = 3 (better than 0→1=5)
+Output: 3
+
+Case 6: No checkpoints
+3 3
+0 1 1
+1 2 1
+0 2 5
+0
+0 2
+
+
+Shortest: 0→1→2 = 2
+Output: 2
+
+Case 7: Self-loop ignored
+3 3
+0 0 1
+0 1 5
+1 2 2
+0
+0 2
+
+
+Path: 0→1→2 = 7 (self-loop doesn’t help)
+Output: 7
+
+Case 8: Start = checkpoint
+3 2
+0 1 4
+1 2 6
+1
+0
+0 2
+
+
+Checkpoint is start itself (cost=0 segment). Path: 0→1→2=10
+Output: 10
+
+Case 9: Target = checkpoint
+3 2
+0 1 4
+1 2 6
+1
+2
+0 2
+
+
+Itinerary: [0,2,2] → path 0→2 = 10
+Output: 10
+
+Case 10: Multiple checkpoints
+4 3
+0 1 1
+1 2 2
+2 3 3
+2
+1 2
+0 3
+
+
+0→1 (1), 1→2 (2), 2→3 (3) = 6
+Output: 6
+
+Case 11: Shortcut but checkpoints force detour
+4 4
+0 1 1
+1 2 1
+2 3 1
+0 3 1
+1
+2
+0 3
+
+
+Direct 0→3=1 exists but must pass checkpoint 2.
+Path: 0→1→2→3 = 3
+Output: 3
+
+Case 12: Multiple edges between same nodes
+3 3
+0 1 10
+0 1 2
+1 2 1
+0
+0 2
+
+
+Choose cheaper 0→1 edge (2). Path=3
+Output: 3
+
+Case 13: Reverse edges trap
+3 2
+0 1 1
+2 1 1
+0
+0 2
+
+
+No path 0→2 exists
+Output: -1
+
+Case 14: Two checkpoints
+5 5
+0 1 1
+1 2 1
+2 3 1
+3 4 1
+0 4 10
+2
+1 3
+0 4
+
+
+Path: 0→1 (1), 1→2→3 (2), 3→4 (1) = 4
+Output: 4
+
+Case 15: Disconnected graph
+4 2
+0 1 1
+2 3 1
+0
+0 3
+
+
+No connection between 0 and 3
+Output: -1
+
+Case 16: Checkpoint unreachable from start
+4 3
+0 1 5
+1 2 5
+2 3 5
+1
+3
+0 2
+
+
+Itinerary = [0,3,2], must go 0→3 first but no path
+Output: -1
+
+Case 17: Redundant checkpoints (revisit node)
+3 3
+0 1 1
+1 2 1
+2 1 1
+2
+1 1
+0 2
+
+
+Itinerary [0,1,1,2] → segments:
+0→1=1, 1→1=0, 1→2=1 → total=2
+Output: 2
+
+Case 18: Big weight edge misleading
+3 3
+0 1 1000
+0 2 2
+2 1 2
+1
+1
+0 1
+
+
+0→1 direct=1000, 0→2→1=4 → choose 4
+Output: 4
+
+Case 19: Cycle but still shortest
+3 3
+0 1 1
+1 2 1
+2 0 1
+0
+0 2
+
+
+Shortest 0→1→2=2
+Output: 2
+
+Case 20: Multiple checkpoints enforce path
+5 4
+0 1 1
+1 2 1
+2 3 1
+3 4 1
+3
+1 2 3
+0 4
+
+
+Path forced: cost=4
+Output: 4
+
+Case 21: Extra edge not helpful
+4 4
+0 1 1
+1 2 1
+2 3 1
+0 3 10
+1
+2
+0 3
+
+
+0→1 (1), 1→2 (1), 2→3 (1) = 3
+Output: 3
+
+Case 22: Forced wrong direction
+3 1
+1 0 5
+0
+0 1
+
+
+Only edge is 1→0, but need 0→1.
+Output: -1
+
+Case 23: Multiple checkpoints same node
+3 2
+0 1 5
+1 2 5
+2
+1 1
+0 2
+
+
+Itinerary [0,1,1,2]. Costs: 0→1=5, 1→1=0, 1→2=5. Total=10
+Output: 10
+
+Case 24: Self-loop checkpoint
+2 2
+0 0 5
+0 1 1
+1
+0
+0 1
+
+
+Itinerary [0,0,1]. 0→0=0, 0→1=1 → total=1
+Output: 1
+
+Case 25: Chain graph
+6 5
+0 1 1
+1 2 1
+2 3 1
+3 4 1
+4 5 1
+2
+2 4
+0 5
+
+
+0→1→2=2, 2→3→4=2, 4→5=1 → total=5
+Output: 5
+
+Case 26: Parallel path vs checkpoints
+4 4
+0 1 1
+1 3 1
+0 2 1
+2 3 1
+1
+1
+0 3
+
+
+Itinerary [0,1,3]. Must go via node 1: 0→1=1, 1→3=1. Total=2
+Output: 2
+
+Case 27: Start=Target with no checkpoints
+2 1
+0 1 5
+0
+0 0
+
+
+Itinerary [0,0]. Path=0
+Output: 0
+
+Case 28: Start=Target but checkpoints enforce travel
+3 2
+0 1 5
+1 0 1
+1
+1
+0 0
+
+
+Itinerary [0,1,0]. Cost: 0→1=5, 1→0=1 → total=6
+Output: 6
+
+Case 29: Two ways, but checkpoints block shortcut
+4 4
+0 1 1
+1 3 1
+0 2 1
+2 3 1
+1
+2
+0 3
+
+
+Must go through checkpoint=2. Path: 0→2=1, 2→3=1 → total=2
+Output: 2
+
+Case 30: Large weights edge vs small detour
+4 3
+0 1 1000
+0 2 5
+2 1 5
+1 3 1
+1
+1
+0 3
+
+
+Itinerary [0,1,3].
+Segment 0→1: either direct=1000 or 0→2→1=10 → choose 10
+Segment 1→3=1
+Total=11
+Output: 11

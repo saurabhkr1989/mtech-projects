@@ -1,0 +1,10 @@
+create_user 1 Alice alice@iitd.ac.in true
+create_user 2 Bob bob@iitd.ac.in false
+create_user 3 Charlie charlie@iitd.ac.in false
+create_user 4 Charlie charlie@iitd.ac.in false
+follow 1 2
+follow 2 3
+follow 3 4
+follow_path 1 4
+unfollow 2 3
+follow_path 1 4

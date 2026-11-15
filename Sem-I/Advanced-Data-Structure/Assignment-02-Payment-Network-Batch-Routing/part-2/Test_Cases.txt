@@ -1,0 +1,246 @@
+--- Test Case #1: Minimum N, M, and k ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #2: Basic Direct Access ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #3: Missing User ---
+addGroup g1
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #4: Missing Permission (Core Query Specific) ---
+addUser u1
+addGroup g1
+addResource r1
+addPermission pA
+addUserToGroup u1 g1
+grantPermissionToGroup pA g1
+applyPermissionToResource pA r1
+hasAccess u1 pB r1
+Expected Output: false
+
+--- Test Case #5: Missing `addUserToGroup` Link ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #6: Missing `grantPermissionToGroup` Link ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #7: Missing `applyPermissionToResource` Link ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #8: Nested Groups (Two Levels Deep) ---
+addUser u1
+addGroup g_sub
+addGroup g_main
+addPermission p1
+addResource r1
+addUserToGroup u1 g_sub
+addUserToGroup g_sub g_main
+grantPermissionToGroup p1 g_main
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #9: Nested Groups (Three Levels Deep) ---
+addUser u1
+addGroup g_sub_sub
+addGroup g_sub
+addGroup g_main
+addPermission p1
+addResource r1
+addUserToGroup u1 g_sub_sub
+addUserToGroup g_sub_sub g_sub
+addUserToGroup g_sub g_main
+grantPermissionToGroup p1 g_main
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #10: User in Multiple Groups, One Grants Access ---
+addUser u1
+addGroup g_admin
+addGroup g_dev
+addPermission p1
+addResource r1
+addUserToGroup u1 g_admin
+addUserToGroup u1 g_dev
+grantPermissionToGroup p1 g_admin
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #11: User in Multiple Groups, None Grant Access ---
+addUser u1
+addGroup g_admin
+addGroup g_dev
+addPermission p1
+addPermission p_other
+addResource r1
+addUserToGroup u1 g_admin
+addUserToGroup u1 g_dev
+grantPermissionToGroup p_other g_admin
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #12: Multiple Permissions Apply to Resource ---
+addUser u1
+addGroup g1
+addPermission p1
+addPermission p2
+addResource r1
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r1
+applyPermissionToResource p2 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #13: Cycle in Group Membership (BFS Prevention of Infinite Loop) ---
+addUser u1
+addGroup g1
+addGroup g2
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+addUserToGroup g1 g2
+addUserToGroup g2 g1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #14: Cycle in Group Membership, Access through the Cycle ---
+addUser u1
+addGroup g1
+addGroup g2
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+addUserToGroup g1 g2
+addUserToGroup g2 g1
+grantPermissionToGroup p1 g2
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: true
+
+--- Test Case #15: Large Number of Entities (Implicit scaling/efficiency test) ---
+addUser u1
+addGroup g_test
+addPermission p_test
+addResource r_test
+addUser dummy_user_1
+addUser dummy_user_2
+addGroup dummy_group_1
+addGroup dummy_group_2
+addPermission dummy_perm_1
+addResource dummy_res_1
+addUserToGroup u1 g_test
+grantPermissionToGroup p_test g_test
+applyPermissionToResource p_test r_test
+hasAccess u1 p_test r_test
+Expected Output: true
+
+--- Test Case #16: Long Identifier Strings ---
+addUser long_user_name_with_many_characters_and_numbers_123
+addGroup long_group_name_with_many_characters_and_numbers_456
+addPermission long_permission_id_with_many_characters_and_numbers_789
+addResource long_resource_path_with_many_characters_and_numbers_abc
+addUserToGroup long_user_name_with_many_characters_and_numbers_123 long_group_name_with_many_characters_and_numbers_456
+grantPermissionToGroup long_permission_id_with_many_characters_and_numbers_789 long_group_name_with_many_characters_and_numbers_456
+applyPermissionToResource long_permission_id_with_many_characters_and_numbers_789 long_resource_path_with_many_characters_and_numbers_abc
+hasAccess long_user_name_with_many_characters_and_numbers_123 long_permission_id_with_many_characters_and_numbers_789 long_resource_path_with_many_characters_and_numbers_abc
+Expected Output: true
+
+--- Test Case #17: User in Group, But Permission Granted to Different Group ---
+addUser u1
+addGroup g1
+addGroup g2
+addPermission p1
+addResource r1
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g2
+applyPermissionToResource p1 r1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #18: Permission Applies to Wrong Resource ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+addResource r_other
+addUserToGroup u1 g1
+grantPermissionToGroup p1 g1
+applyPermissionToResource p1 r_other
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #19: All Entities Exist, But No Relationships ---
+addUser u1
+addGroup g1
+addPermission p1
+addResource r1
+hasAccess u1 p1 r1
+Expected Output: false
+
+--- Test Case #20: Complex Disconnected Scenario ---
+addUser u_active
+addUser u_inactive
+addGroup g_dev
+addGroup g_prod
+addPermission p_read
+addPermission p_write
+addResource res_dev_data
+addResource res_prod_db
+addUserToGroup u_active g_dev
+grantPermissionToGroup p_read g_dev
+applyPermissionToResource p_read res_dev_data
+addUserToGroup u_inactive g_prod
+grantPermissionToGroup p_write g_prod
+applyPermissionToResource p_write res_prod_db
+hasAccess u_active p_write res_dev_data
+Expected Output: false
