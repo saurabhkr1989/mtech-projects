@@ -58,6 +58,12 @@ public:
         }
     }
 
+    // Owns raw pointers (parent/setSize); copying would double-free on destruction.
+    // No copy is ever made in this program, but disabling it explicitly is safer
+    // than relying on that staying true if this class is reused elsewhere.
+    ClusterUnion(const ClusterUnion&) = delete;
+    ClusterUnion& operator=(const ClusterUnion&) = delete;
+
     // Destructor - cleanup
     ~ClusterUnion() {
         if (this->parent != nullptr) {
@@ -146,6 +152,12 @@ struct TrieNode {
             children[i] = nullptr;
         }
     }
+
+    // Owns its children via raw pointers; copying would double-free on destruction.
+    // Never copied in this program, but disabled explicitly for the same reason as
+    // ClusterUnion above.
+    TrieNode(const TrieNode&) = delete;
+    TrieNode& operator=(const TrieNode&) = delete;
 
     /*
      Destructor
