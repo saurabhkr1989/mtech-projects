@@ -1,0 +1,14 @@
+numpy>=1.24
+opencv-python>=4.8
+scikit-image>=0.21
+scipy>=1.11
+matplotlib>=3.7
+rich>=13.0
+Pillow>=10.0
+fingerprint-enhancer>=0.0.14
+
+# Optional GPU acceleration (not required, gracefully falls back to CPU)
+# Uncomment the lines below to enable GPU support:
+# cupy-cuda11x>=11.0  (for CUDA 11.x)
+# cupy-cuda12x>=12.0  (for CUDA 12.x)
+# numba>=0.56.0

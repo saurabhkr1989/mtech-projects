@@ -1,0 +1,2414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multimodal Biometric System - Complete Interactive Presentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --light: #ecf0f1;
+            --dark: #34495e;
+            --border: #bdc3c7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            color: var(--secondary);
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 0;
+        }
+
+        .nav-tabs button {
+            background: var(--light);
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 5px 5px 0 0;
+            font-size: 1em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            color: var(--dark);
+        }
+
+        .nav-tabs button.active {
+            background: var(--secondary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-tabs button:hover {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h2 {
+            color: var(--primary);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: var(--secondary);
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        .pipeline {
+            background: var(--light);
+            padding: 20px;
+            border-left: 5px solid var(--secondary);
+            border-radius: 5px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            gap: 15px;
+        }
+
+        .step-number {
+            background: var(--secondary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .arrow {
+            color: var(--secondary);
+            font-weight: bold;
+            margin: 0 10px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: var(--secondary);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--light);
+        }
+
+        .comparison-table tr:hover {
+            background: #e3f2fd;
+            transition: background 0.3s ease;
+        }
+
+        .formula {
+            background: #f5f5f5;
+            padding: 15px;
+            border-left: 4px solid var(--warning);
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+
+        .key-point {
+            background: #fffacd;
+            border-left: 4px solid var(--warning);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 4px solid var(--success);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #155724;
+        }
+
+        .error-box {
+            background: #f8d7da;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #721c24;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            color: #0c5460;
+        }
+
+        .image-trace {
+            background: #f9f9f9;
+            padding: 20px;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        .code-block {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .inline-code {
+            background: #f5f5f5;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+        }
+
+        .diagram {
+            background: var(--light);
+            padding: 20px;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.2;
+        }
+
+        .metric-card {
+            display: inline-block;
+            background: white;
+            border: 2px solid var(--secondary);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 10px;
+            text-align: center;
+            min-width: 200px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .metric-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--secondary);
+            margin: 10px 0;
+        }
+
+        .metric-label {
+            color: var(--dark);
+            font-weight: 500;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .column {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .highlight {
+            background: yellow;
+            font-weight: bold;
+            padding: 2px 4px;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: white;
+            border: 2px solid var(--border);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-item h4 {
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        .comparison-item ul {
+            list-style-position: inside;
+            color: var(--dark);
+        }
+
+        .comparison-item li {
+            margin: 8px 0;
+        }
+
+        footer {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .toggle-section {
+            background: var(--light);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 2px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .toggle-section:hover {
+            background: #d5d8dc;
+            border-color: var(--secondary);
+        }
+
+        .toggle-content {
+            display: none;
+            background: white;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+
+        .toggle-content.active {
+            display: block;
+        }
+
+        .toggle-icon {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        .ranking {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 5px solid var(--secondary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .ranking-position {
+            background: var(--secondary);
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .ranking-content {
+            flex: 1;
+        }
+
+        .ranking-metric {
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tabs button {
+                border-radius: 5px;
+            }
+        }
+
+        .expand-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .expand-btn:hover {
+            background: var(--primary);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Multimodal Biometric System</h1>
+            <p class="subtitle">Complete Interactive Implementation Guide</p>
+            <p><strong>Face, Iris & Offline Signature Verification</strong></p>
+            <p style="margin-top: 15px; color: #7f8c8d;">
+                Student: Lt Col Saurabh Kumar Singh | Entry: 2025JCS3011<br>
+                Course: SIL7175 - Biometric Security (Assignment 2)
+            </p>
+            
+            <div class="nav-tabs">
+                <button onclick="switchTab(event, 'overview')" class="active">Overview</button>
+                <button onclick="switchTab(event, 'architecture')">System Architecture</button>
+                <button onclick="switchTab(event, 'face')">Face Modality</button>
+                <button onclick="switchTab(event, 'iris')">Iris Modality</button>
+                <button onclick="switchTab(event, 'signature')">Signature Modality</button>
+                <button onclick="switchTab(event, 'fusion')">Fusion Strategies</button>
+                <button onclick="switchTab(event, 'traces')">Mathematical Traces</button>
+                <button onclick="switchTab(event, 'performance')">Performance Analysis</button>
+                <button onclick="switchTab(event, 'findings')">Key Findings</button>
+            </div>
+        </header>
+
+        <!-- OVERVIEW TAB -->
+        <div id="overview" class="tab-content active">
+            <h2>🎯 System Overview</h2>
+            
+            <h3>Why Multimodal Biometric Systems?</h3>
+            <p>Unimodal biometric systems that rely on a single trait suffer from critical limitations:</p>
+            
+            <div class="two-column">
+                <div class="column">
+                    <h4>❌ Problems with Single Modality:</h4>
+                    <ul>
+                        <li><strong>Non-Universality</strong>: Not all users can provide all modalities reliably</li>
+                        <li><strong>Noise Susceptibility</strong>: Single trait vulnerable to sensor errors</li>
+                        <li><strong>Spoofing Vulnerability</strong>: Face spoofed by photos, iris by contacts</li>
+                        <li><strong>Single Point of Failure</strong>: System completely fails if one modality fails</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h4>✅ Solution: Multimodal Fusion</h4>
+                    <ul>
+                        <li><strong>Physiological Traits</strong>: Face & Iris (structure-based)</li>
+                        <li><strong>Behavioral Traits</strong>: Signature (action-based)</li>
+                        <li><strong>Complementary Information</strong>: Different vulnerability vectors</li>
+                        <li><strong>Redundancy</strong>: System robust if one modality fails</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>System Architecture (5 Layers)</h3>
+            <div class="diagram">
+INPUT LAYER
+┌────────────────────────────────────────────┐
+│ Face Image (RGB) | Iris Image | Signature │
+└────────────┬────────────────────────────────┘
+             │
+             ▼
+PREPROCESSING LAYER
+┌─────────────────────────────────────────────┐
+│ Face: Landmarks → ROI → Enhancement        │
+│ Iris: Segment → Normalize → Strips         │
+│ Signature: Binarize → Center → Resize      │
+└────────────┬────────────────────────────────┘
+             │
+             ▼
+FEATURE EXTRACTION LAYER
+┌──────────────────────────────────────────────┐
+│ Face: ULBP (885-dim) + SE-AlexNet (4096-dim)│
+│ Iris: ULBP (37760-dim) + SE-AlexNet (4096)  │
+│ Signature: AlexNet_N (1024-dim)              │
+└────────────┬────────────────────────────────┘
+             │
+             ▼
+FUSION LAYER
+┌──────────────────────────────────────────────┐
+│ Feature-Level: Concatenate (47,861-dim)     │
+│ Decision-Level: Majority Voting (3/5)       │
+└────────────┬────────────────────────────────┘
+             │
+             ▼
+VERIFICATION LAYER
+┌──────────────────────────────────────────────┐
+│ Binary SVM Classifier per User              │
+│ Output: Match/No-Match + Confidence         │
+└──────────────────────────────────────────────┘
+            </div>
+
+            <h3>Expected Performance</h3>
+            <div style="text-align: center;">
+                <div class="metric-card">
+                    <div class="metric-label">Signature (Best)</div>
+                    <div class="metric-value">98.83%</div>
+                    <div class="metric-label">EER: 0.012</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Decision Fusion</div>
+                    <div class="metric-value">91.00%</div>
+                    <div class="metric-label">EER: 0.124</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Feature Fusion</div>
+                    <div class="metric-value">86.80%</div>
+                    <div class="metric-label">EER: 0.113</div>
+                </div>
+            </div>
+
+            <div class="error-box">
+                <strong>⚠️ FUSION PARADOX:</strong> Naive fusion (86-91%) underperforms signature alone (98.83%) due to modality quality imbalance. Weak modalities contaminate/suppress the excellent signature signal.
+            </div>
+        </div>
+
+        <!-- ARCHITECTURE TAB -->
+        <div id="architecture" class="tab-content">
+            <h2>🏗️ System Architecture Details</h2>
+
+            <h3>Dataset Preparation: Chimeric Mapping</h3>
+            <p>Create virtual users by pairing independent subjects across different databases:</p>
+
+            <div class="two-column">
+                <div class="column">
+                    <h4>Dataset 1 (Constrained)</h4>
+                    <div class="formula">
+Virtual User_i = {
+  Face: CASIA-Iris-Distance Subject_i (NIR)
+  Iris: CASIA-Iris-Distance Subject_i (NIR)
+  Signature: BHSig260 Bengali Subject_i
+}
+100 virtual users
+Controlled lighting (Near-Infrared)
+                    </div>
+                </div>
+                <div class="column">
+                    <h4>Dataset 2 (Unconstrained)</h4>
+                    <div class="formula">
+Virtual User_j = {
+  Face: LFW Subject_j (RGB, wild)
+  Iris: IITD Iris Subject_j (natural)
+  Signature: BHSig260 Hindi Subject_j
+}
+100 virtual users
+Visible light (RGB)
+Varying conditions (pose, lighting)
+                    </div>
+                </div>
+            </div>
+
+            <h3>Cross-Validation Strategy</h3>
+            <div class="info-box">
+                <strong>Challenge:</strong> Different modalities have different sample counts
+                <div style="margin-top: 10px;">
+                    <div>Face: 5-20 images per user</div>
+                    <div>Iris: 4-10 samples per user</div>
+                    <div>Signature: 15-30 samples per user</div>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>Solution: 5-Fold Cross-Validation with Minimum Samples</strong>
+                <div style="margin-top: 10px;">
+                    1. For each user, find N = min(n_face, n_iris, n_signature)<br>
+                    2. Create N distinct Chimeric Tuples pairing N samples from each modality<br>
+                    3. Stratified 5-fold split on these N tuples<br>
+                    4. Average metrics across 5 folds
+                </div>
+            </div>
+
+            <h3>Example: User_42</h3>
+            <div class="image-trace">
+Available Samples:
+├─ Face images: 8
+├─ Iris samples: 6
+└─ Signatures: 25
+
+Minimum N = 6
+
+Create 6 Chimeric Tuples:
+├─ Tuple_1: (Face_1, Iris_1, Sig_1)
+├─ Tuple_2: (Face_2, Iris_2, Sig_2)
+├─ Tuple_3: (Face_3, Iris_3, Sig_3)
+├─ Tuple_4: (Face_4, Iris_4, Sig_4)
+├─ Tuple_5: (Face_5, Iris_5, Sig_5)
+└─ Tuple_6: (Face_6, Iris_6, Sig_6)
+
+5-Fold Split:
+├─ Fold_1: Test={Tuple_1}, Train={2,3,4,5,6}
+├─ Fold_2: Test={Tuple_2}, Train={1,3,4,5,6}
+├─ Fold_3: Test={Tuple_3}, Train={1,2,4,5,6}
+├─ Fold_4: Test={Tuple_4}, Train={1,2,3,5,6}
+└─ Fold_5: Test={Tuples_5,6}, Train={1,2,3,4}
+            </div>
+        </div>
+
+        <!-- FACE TAB -->
+        <div id="face" class="tab-content">
+            <h2>👤 Face Modality - Complete Pipeline</h2>
+
+            <h3>Step 1: Preprocessing</h3>
+            <div class="pipeline">
+Raw Face Image
+    ↓ [Landmark Detection - Dlib 68 points]
+68 Facial Landmarks (eyes, nose, mouth, jawline)
+    ↓ [ROI Extraction - 15 overlapping 30×30 patches]
+15 Enhanced Patches
+    ↓ [Histogram Equalization]
+Contrast Enhanced Patches
+    ↓ [Mean-Variance Normalization]
+Standardized Patches (μ=0, σ=1)
+            </div>
+
+            <h3>Why Preprocessing Matters?</h3>
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Histogram Equalization</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+PROBLEM:
+Input histogram concentrated in narrow range [100-150]
+Not utilizing full [0-255] intensity range
+Hard to extract consistent features
+
+SOLUTION - Histogram Equalization:
+Map pixels through CDF (Cumulative Distribution Function)
+I_new = round(CDF[I_old] × 255)
+
+EFFECT:
+✓ Full dynamic range utilized
+✓ Contrast enhanced
+✓ Illumination invariant features enabled
+                </div>
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Mean-Variance Normalization</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+FORMULA:
+I_normalized = (I - μ) / σ
+
+WHERE:
+μ = mean of patch intensities
+σ = standard deviation
+
+EFFECT:
+✓ Zero mean: Center data at 0
+✓ Unit variance: Scale to consistent range
+✓ Standardization: Same distribution across patches
+→ Result: Intensity scale invariant
+                </div>
+            </div>
+
+            <h3>Step 2: Feature Extraction - Pipeline A (ULBP)</h3>
+            <div class="pipeline">
+15 Preprocessed 30×30 Patches
+    ↓ [Divide into 10×10 blocks]
+9 blocks per patch
+    ↓ [ULBP Computation: P=8, R=1]
+Compare 8 neighbors to center pixel
+    ↓ [Create histogram]
+59-bin histogram per block
+    ↓ [Concatenation]
+15 patches × 59 bins = 885-dimensional vector
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: ULBP (Uniform Local Binary Patterns)</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+ALGORITHM:
+For each center pixel (excluding borders):
+  1. Get center value: c = I[i,j]
+  2. Compare 8 neighbors (P=8, radius R=1):
+     neighbors = [I[i-1,j-1], I[i-1,j], I[i-1,j+1],
+                  I[i,j-1],           I[i,j+1],
+                  I[i+1,j-1], I[i+1,j], I[i+1,j+1]]
+  3. Threshold: b_k = (neighbor_k >= c) ? 1 : 0
+  4. Binary pattern: b = [b0, b1, ..., b7]
+  5. Rotation-invariant mapping: Find minimum rotation
+  6. Uniformity constraint: Only 59 uniform patterns
+  7. Histogram: Count occurrences
+
+PROPERTIES:
+✓ Rotation invariant: Same texture at different angles
+✓ Illumination robust: Uses comparison, not absolute values
+✓ Low-dimensional: 59 bins vs thousands of pixels
+✓ No learning: Deterministic, fast computation
+                </div>
+            </div>
+
+            <h3>Step 3: Feature Extraction - Pipeline B (SE-AlexNet)</h3>
+            <div class="pipeline">
+Raw Face Image (224×224×3)
+    ↓ [Conv Layer 1-5]
+Hierarchical feature extraction
+    ↓ [Squeeze-Excitation Block] ← ATTENTION MECHANISM
+Learn which channels are important
+    ↓ [Fully Connected Layers]
+FC1: Feature extraction layer
+    ↓ [FC2 Layer Output]
+4,096-dimensional feature vector
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Squeeze-Excitation (SE) Attention Mechanism</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+SE BLOCK OPERATIONS:
+
+1. SQUEEZE (Global Average Pooling):
+   Goal: Compress spatial dims (H×W) to channel descriptor
+   
+   zc = (1/(H×W)) × Σ Σ Fc(i,j)
+   
+   WHERE:
+   - Fc(i,j): Intensity at position (i,j) of channel c
+   - zc: Single value per channel
+   
+   INPUT: 256 × 7×7 feature map
+   OUTPUT: 256-dimensional channel descriptor
+
+2. EXCITATION (Adaptive Re-weighting):
+   Goal: Learn which channels are identity-relevant
+   
+   h = ReLU(W1 · z)           [reduction: 256→16]
+   s = σ(W2 · h)              [expansion: 16→256 + sigmoid]
+   
+   WHERE:
+   - σ = sigmoid (outputs [0,1])
+   - s = attention weights for each channel
+   
+   OUTPUT: 256 attention weights ∈ [0,1]
+
+3. SCALE (Re-weight):
+   F'c = sc ⊙ Fc              [element-wise multiplication]
+   
+   High-importance channels: Amplified (s_c close to 1.0)
+   Low-importance channels: Suppressed (s_c close to 0.0)
+   
+   OUTPUT: Re-weighted feature map
+
+WHY THIS WORKS:
+If eye texture is identity-relevant:
+  → SE learns high s_c for eye channels
+  → Those channels get amplified
+  → Identity signal strengthened
+  → Background/noise suppressed
+                </div>
+            </div>
+
+            <h3>Step 4: Verification - Binary SVM</h3>
+            <div class="formula">
+For each of 100 enrolled users:
+
+Training:
+├─ Positive class: Target user's face features
+├─ Negative class: Random impostor faces (1:3 ratio)
+├─ Kernel: RBF (non-linear boundaries)
+├─ Class weight: 'balanced' (handles imbalance)
+└─ Output: Trained SVM model per user
+
+Verification:
+├─ Extract test features (ULBP + Deep)
+├─ Query user's SVM classifier
+├─ Get score: f(x) = Σ αi·yi·K(xi,x) + b
+├─ Apply threshold (usually 0)
+└─ Decision: Match (1) or No-Match (0)
+            </div>
+
+            <h3>Face Performance Comparison</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Method</th>
+                    <th>Dataset 1 (NIR)</th>
+                    <th>Dataset 2 (RGB)</th>
+                    <th>Degradation</th>
+                    <th>Robustness</th>
+                </tr>
+                <tr>
+                    <td><strong>ULBP (Texture)</strong></td>
+                    <td>77.83%, EER 0.082</td>
+                    <td>75.13%, EER 0.173</td>
+                    <td>-2.70%</td>
+                    <td><span style="color:green">✓ Good</span></td>
+                </tr>
+                <tr>
+                    <td><strong>SE-AlexNet (Deep)</strong></td>
+                    <td>96.04%, EER 0.079</td>
+                    <td>77.40%, EER 0.351</td>
+                    <td>-18.64%</td>
+                    <td><span style="color:red">✗ Poor</span></td>
+                </tr>
+            </table>
+
+            <div class="key-point">
+                <strong>🔍 Why the Paradox?</strong><br>
+                NIR (Dataset 1): Structural reflectance, clean signal → SE-AlexNet learns pure facial geometry → 96.04% accuracy<br><br>
+                RGB (Dataset 2): Surface reflectance, high noise → SE blocks learn shadows as identity features → Performance drops to 77.40%<br><br>
+                ULBP remains robust because it uses <strong>comparison-based features</strong> (illumination invariant), not absolute values.
+            </div>
+        </div>
+
+        <!-- IRIS TAB -->
+        <div id="iris" class="tab-content">
+            <h2>👁️ Iris Modality - Complete Pipeline</h2>
+
+            <h3>Step 1: Iris Segmentation</h3>
+            <div class="pipeline">
+Raw Eye Image (640×480)
+    ↓ [Hough Circle Transform]
+Detect pupil (dark circle at center)
+Detect iris boundary (brighter circle)
+    ↓ [Output]
+Segmented iris region (~120-150 pixel radius)
+            </div>
+
+            <h3>Step 2: Daugman Rubber Sheet Normalization</h3>
+            <div class="pipeline">
+Circular Iris Image
+    ↓ [Polar to Rectangular Transformation]
+Map (r,θ) in polar → (row,col) in rectangular
+    ↓ [Output]
+512×64 Normalized Iris Matrix
+(Columns: Angular direction | Rows: Radial direction)
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Daugman Mathematical Mapping</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+PROBLEM SOLVED:
+- Different iris sizes: Pupil dilation varies
+- Iris rotation: Head tilt at different angles
+- Need standardized representation for comparison
+
+DAUGMAN SOLUTION:
+
+For each point (row, col) in normalized 512×64 space:
+
+1. Radial mapping (rows → pupil to boundary):
+   r_normalized = row / 64           [0 to 1]
+   r_pixels = r_p + r_norm × (r_i - r_p)
+   
+   WHERE:
+   - r_p = pupil radius (e.g., 50 pixels)
+   - r_i = iris boundary radius (e.g., 120 pixels)
+   - Result: [50, 120] pixels mapped to 64 rows
+
+2. Angular mapping (cols → full circle):
+   θ_normalized = col / 512          [0 to 512]
+   θ = θ_norm × 2π                   [0 to 2π radians]
+   
+   Result: Full 360° mapped to 512 columns
+
+3. Cartesian conversion:
+   x = center_x + r_pixels × cos(θ)
+   y = center_y + r_pixels × sin(θ)
+   
+   I_normalized[row, col] = I_original[y, x]
+
+EXAMPLE MAPPINGS:
+
+(row=0, col=0):
+  r=50px (pupil edge), θ=0° (right)
+  → Original: (370, 240)
+
+(row=32, col=256):
+  r=85px (mid-iris), θ=180° (left)
+  → Original: (235, 240)
+
+(row=64, col=512):
+  r=120px (iris boundary), θ=360° (full rotation)
+  → Original: (440, 240)
+
+BENEFITS:
+✓ Invariant to iris size (handles pupil dilation)
+✓ Handles rotation (circular mapping)
+✓ Standardized 512×64 for all irises
+                </div>
+            </div>
+
+            <h3>Step 3: Strip Generation</h3>
+            <div class="pipeline">
+512×64 Normalized Iris Matrix
+    ↓ [Divide into overlapping strips]
+10 horizontal strips (32×512 pixels each)
+4-pixel overlap between consecutive strips
+    ↓ [Enhancement per strip]
+Histogram Equalization (localized)
+    ↓ [Output]
+10 Enhanced Iris Texture Strips
+            </div>
+
+            <h3>Step 4: Feature Extraction - ULBP on Iris</h3>
+            <div class="formula">
+For each of 10 iris strips:
+
+Block Division:
+├─ 32×512 strip → 16×16 blocks
+├─ Blocks: (512/16) × (32/16) = 32 × 2 = 64 blocks per strip
+└─ Total per iris: 10 strips × 64 blocks = 640 blocks
+
+ULBP Computation (P=8, R=1):
+├─ For each block: Create 59-bin histogram
+├─ Features per strip: 64 blocks × 59 bins = 3,776 dimensions
+└─ Total iris vector: 10 × 3,776 = 37,760 dimensions
+
+COMPARISON WITH FACE:
+Face ULBP:   15 patches × 59 = 885-dim (low noise)
+Iris ULBP:   10 strips × 64 blocks × 59 = 37,760-dim (detailed!)
+
+WHY IRIS FEATURES ARE MUCH HIGHER-DIM:
+Iris contains extremely fine texture details:
+├─ Radial furrows: Deep grooves
+├─ Crypts: Small pits
+├─ Stromal fibers: Detailed patterns
+├─ Capillaries: Fine blood vessels
+→ High-dimensional features capture these micro-details
+            </div>
+
+            <h3>Step 5: Feature Extraction - SE-AlexNet</h3>
+            <p>Same as face SE-AlexNet architecture → 4,096-dimensional feature vector</p>
+
+            <h3>Why Iris is Most Robust?</h3>
+            <div class="success-box">
+                <strong>Iris Performance (Dataset 1 vs Dataset 2):</strong><br>
+                <div style="margin-top: 10px;">
+                    Iris-Deep: 85.77% → 84.24% (only -1.53% degradation!)<br>
+                    Iris-ULBP: 86.10% → 78.86% (-7.24% degradation)<br><br>
+                    <strong>Why so robust?</strong><br>
+                    ✓ Circular geometry provides natural structural constraint<br>
+                    ✓ Iris patterns (furrows, crypts) highly consistent<br>
+                    ✓ Less affected by lighting changes than face<br>
+                    ✓ SE attention mechanism effective on structured geometry
+                </div>
+            </div>
+        </div>
+
+        <!-- SIGNATURE TAB -->
+        <div id="signature" class="tab-content">
+            <h2>✍️ Signature Modality - Complete Pipeline</h2>
+
+            <h3>Why Signature is Different?</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <h4>Physiological Traits (Face, Iris)</h4>
+                    <ul>
+                        <li>Affected by lighting conditions</li>
+                        <li>Sensitive to camera angle/distance</li>
+                        <li>Change with aging/expressions</li>
+                        <li>Vulnerable to environmental noise</li>
+                    </ul>
+                </div>
+                <div class="comparison-item">
+                    <h4>Behavioral Traits (Signature)</h4>
+                    <ul>
+                        <li>Invariant to capture conditions</li>
+                        <li>Independent of illumination/angle</li>
+                        <li>Consistent across lifetime (strokes stable)</li>
+                        <li>Robust to environmental variations</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Step 1: Preprocessing Pipeline</h3>
+            <div class="pipeline">
+Grayscale Scanned Signature
+    ↓ [Otsu's Binarization]
+Separate ink (foreground) from paper (background)
+    ↓ [Inversion Check]
+Ensure ink=1, paper=0
+    ↓ [Center-of-Mass Calculation]
+Calculate signature center coordinates
+    ↓ [Image Centering]
+Align to canvas center
+    ↓ [Resizing]
+Fixed 170×242 pixels (nearest-neighbor)
+    ↓ [Output]
+Binary signature with centered strokes
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Otsu's Binarization Algorithm</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+GOAL: Find threshold T that separates ink from paper
+
+ALGORITHM:
+Compute between-class variance for each threshold:
+σ²_B(T) = ω₀(T) × ω₁(T) × [μ₀(T) - μ₁(T)]²
+
+WHERE:
+- ω₀(T) = proportion of pixels < T (background)
+- ω₁(T) = proportion of pixels ≥ T (foreground)
+- μ₀(T) = mean intensity of pixels < T
+- μ₁(T) = mean intensity of pixels ≥ T
+
+PROCESS:
+1. Compute histogram of grayscale intensities
+2. Try each possible threshold T ∈ [0,255]
+3. Calculate σ²_B(T) for each
+4. Find T that maximizes σ²_B
+5. Result: Optimal threshold for binarization
+
+OUTPUT:
+Binary image where:
+├─ Pixels < T → 0 (paper/background)
+└─ Pixels ≥ T → 1 (ink/foreground)
+
+ADVANTAGE:
+✓ Automatic: No manual parameter tuning
+✓ Robust: Works across different lighting conditions
+✓ Optimal: Mathematically derived
+                </div>
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Center-of-Mass Calculation</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+GOAL: Find geometric center of signature strokes
+
+CALCULATION:
+
+Column average (weighted by ink):
+cx = Σ Σ (j × I[i,j]) / Σ Σ I[i,j]
+
+Row average (weighted by ink):
+cy = Σ Σ (i × I[i,j]) / Σ Σ I[i,j]
+
+WHERE:
+- I[i,j] ∈ {0, 1} (binary image)
+- Only ink pixels (I=1) contribute to sums
+- j: column index
+- i: row index
+
+EXAMPLE:
+If 54 ink pixels total:
+Column positions: 1,2,3,4,5,6 (repeated 9 times)
+  cx = Σ(1+2+3+4+5+6) × 9 / 54 = 21×9/54 = 3.5
+Row positions: 1,2,3,4,5,6,7,8,9 (repeated 6 times)
+  cy = Σ(1+2+3+4+5+6+7+8+9) × 6 / 54 = 45×6/54 = 5.0
+
+RESULT: Signature center at (3.5, 5.0)
+                </div>
+            </div>
+
+            <h3>Step 2: Writer-Independent Feature Learning</h3>
+            <div class="key-point">
+                <strong>Key Concept:</strong> Pre-train on DIFFERENT users to learn universal handwriting characteristics, then apply to target users.
+            </div>
+
+            <div class="two-column">
+                <div class="column">
+                    <h4>Development Set (D)</h4>
+                    <div class="formula">
+Purpose: Train CNN to recognize 
+general handwriting styles
+
+Users: 50-100 different users
+(NOT in target 100)
+
+Data: 10-20 signatures per user
+
+Task: Softmax classification
+(predict user identity)
+
+Output: Trained AlexNet_N with
+learned stroke topology filters
+                    </div>
+                </div>
+                <div class="column">
+                    <h4>Exploitation Set (E)</h4>
+                    <div class="formula">
+Purpose: Apply learned features
+to target users
+
+Users: Target 100 users
+(never seen during training)
+
+Data: 15-30 signatures per user
+
+Task: Feature extraction
+(CNN frozen, weights fixed)
+
+Processing: 
+1. Pass signatures through trained CNN
+2. Extract FC2 layer activations
+3. Get 1024-dim feature vectors
+4. Train SVM per user on these
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step 3: AlexNet_N Architecture</h3>
+            <div class="pipeline">
+Binary 170×242 Signature Image
+    ↓
+CONV1: 32 filters (5×5) → BatchNorm + ReLU + MaxPool → 32×85×121
+    ↓
+CONV2: 64 filters (5×5) → BatchNorm + ReLU + MaxPool → 64×42×60
+    ↓
+CONV3: 128 filters (3×3) → BatchNorm + ReLU → 128×42×60
+    ↓
+CONV4: 256 filters (3×3) → BatchNorm + ReLU → 256×42×60
+    ↓
+CONV5: 256 filters (3×3) → BatchNorm + ReLU → 256×42×60
+    ↓
+FLATTEN: 645,120 → 1D
+    ↓
+FC1: 645,120 → 1,024 → BatchNorm + ReLU
+    ↓
+FC2: 1,024 → 1,024 → BatchNorm + ReLU ← FEATURE EXTRACTION POINT
+    ↓
+FC3: 1,024 → |D| → Softmax (classification, only in development)
+            </div>
+
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Details: Why Batch Normalization is CRITICAL for Signatures</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="error-box">
+                    <strong>❌ Problem WITHOUT Batch Normalization:</strong><br>
+                    <div style="margin-top: 10px;">
+                        Signature images: Sparse binary (mostly 0=paper, few 1=ink)<br>
+                        Early layers see highly imbalanced distributions<br>
+                        Activations become saturated (all 0 or all 1)<br>
+                        Gradients vanish: dL/dw → 0 (no learning!)<br>
+                        <strong>Result: Training FAILS to converge</strong>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <strong>✅ Solution: Batch Normalization</strong><br>
+                    <div style="margin-top: 10px;">
+                        Applied after EVERY layer (conv and FC), BEFORE activation<br><br>
+                        For each mini-batch:<br>
+                        1. Compute batch mean: μ_B = (1/B) × Σ x_i<br>
+                        2. Compute batch variance: σ²_B = (1/B) × Σ (x_i - μ_B)²<br>
+                        3. Normalize: x̂_i = (x_i - μ_B) / √(σ²_B + ε)<br>
+                        4. Scale/shift: y_i = γ × x̂_i + β<br><br>
+                        <strong>Effects:</strong><br>
+                        ✓ Stabilizes internal covariate shift<br>
+                        ✓ Normalizes to Gaussian (zero mean, unit variance)<br>
+                        ✓ Allows higher learning rates<br>
+                        ✓ Acts as regularizer<br>
+                        <strong>Result: AlexNet_N converges, achieves EER 0.012!</strong>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Step 4: Feature Extraction & SVM Training</h3>
+            <div class="formula">
+Phase 1: Development Set Training
+├─ Train AlexNet_N on development users
+├─ Learn universal handwriting topology
+└─ Save trained model weights
+
+Phase 2: Exploitation Set Feature Extraction
+├─ Load trained model (weights FROZEN)
+├─ Pass each exploitation set signature through frozen network
+├─ Extract FC2 layer activations: 1,024-dimensional vector
+└─ Output: Feature vectors ready for SVM
+
+Phase 3: SVM Training Per User
+For each of 100 target users:
+├─ Positive class: Target user's FC2 features (genuine)
+├─ Negative class: Random impostor FC2 features
+├─ Ratio: 1:3 positive:negative
+├─ Kernel: RBF
+├─ Class weight: 'balanced'
+└─ Output: Binary SVM classifier
+            </div>
+
+            <h3>Signature Performance - Why Best?</h3>
+            <div class="success-box">
+                <strong>Signature Modality: The Winner!</strong><br>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Dataset 1</th>
+                        <th>Dataset 2</th>
+                        <th>Robustness</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Accuracy</strong></td>
+                        <td>98.83%</td>
+                        <td>96.81%</td>
+                        <td>Only -2.02% ✓</td>
+                    </tr>
+                    <tr>
+                        <td><strong>EER</strong></td>
+                        <td>0.012 (excellent!)</td>
+                        <td>0.048 (still great!)</td>
+                        <td>Most stable</td>
+                    </tr>
+                </table>
+                <br>
+                <strong>Why Superior Performance?</strong><br>
+                ✓ <strong>Behavioral trait:</strong> Stroke dynamics invariant to capture conditions<br>
+                ✓ <strong>No lighting effects:</strong> Binary signature unaffected by illumination<br>
+                ✓ <strong>No pose sensitivity:</strong> Offline signature invariant to camera angle<br>
+                ✓ <strong>Highly consistent:</strong> Handwriting physics stable across lifetime<br>
+                ✓ <strong>Writer-Independent learning:</strong> Separates universal from personal traits
+            </div>
+        </div>
+
+        <!-- FUSION TAB -->
+        <div id="fusion" class="tab-content">
+            <h2>🔀 Fusion Strategies & The Fusion Paradox</h2>
+
+            <h3>Approach 1: Feature-Level Fusion (Early Fusion)</h3>
+            <div class="pipeline">
+5 Feature Vectors
+├─ Face ULBP: 885-dim
+├─ Face SE-AlexNet: 4,096-dim
+├─ Iris ULBP: 37,760-dim (DOMINATES!)
+├─ Iris SE-AlexNet: 4,096-dim
+└─ Signature AlexNet_N: 1,024-dim
+    ↓
+CONCATENATION: Stack all into single vector
+    ↓
+Fused Vector: 47,861 dimensions
+    ↓
+MASTER SVM: Train one SVM per user on concatenated vectors
+    ↓
+VERIFICATION: Single decision per user
+            </div>
+
+            <h3>Approach 2: Decision-Level Fusion (Late Fusion)</h3>
+            <div class="pipeline">
+5 Binary Classifiers (Independent SVMs)
+├─ Face ULBP SVM → Decision ∈ {0,1}
+├─ Face SE-AlexNet SVM → Decision ∈ {0,1}
+├─ Iris ULBP SVM → Decision ∈ {0,1}
+├─ Iris SE-AlexNet SVM → Decision ∈ {0,1}
+└─ Signature AlexNet_N SVM → Decision ∈ {0,1}
+    ↓
+MAJORITY VOTING (3/5 required)
+    ↓
+D_final = 1 if Σ D_i ≥ 3, else 0
+    ↓
+FINAL DECISION: Match or No-Match
+            </div>
+
+            <h3>📊 Performance Comparison</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Configuration</th>
+                    <th>Dataset 1</th>
+                    <th>Dataset 2</th>
+                    <th>vs Signature Alone</th>
+                </tr>
+                <tr>
+                    <td><strong>Signature Alone</strong></td>
+                    <td>98.83%</td>
+                    <td>96.81%</td>
+                    <td>BASELINE</td>
+                </tr>
+                <tr style="background: #f8d7da;">
+                    <td><strong>Feature Fusion</strong></td>
+                    <td>86.80%</td>
+                    <td>77.27%</td>
+                    <td>-12.03% 😞</td>
+                </tr>
+                <tr style="background: #f8d7da;">
+                    <td><strong>Decision Fusion</strong></td>
+                    <td>91.00%</td>
+                    <td>79.48%</td>
+                    <td>-8.35% 😞</td>
+                </tr>
+            </table>
+
+            <h2>⚠️ THE FUSION PARADOX EXPLAINED</h2>
+            <div class="error-box">
+                <strong>Problem:</strong> Both fusion methods UNDERPERFORM signature alone!<br>
+                <br>
+                Signature alone: 98.83%<br>
+                Feature fusion: 86.80% ← 12% WORSE!<br>
+                Decision fusion: 91.00% ← 8% WORSE!
+            </div>
+
+            <h3>Root Cause 1: Feature Contamination (Feature-Level Fusion)</h3>
+            <div class="formula">
+PROBLEM:
+
+Dimensionality breakdown:
+├─ Iris ULBP: 37,760 dims (79.1% of total!) ◄─ DOMINATES
+├─ Face features: 4,981 dims (10.5%)
+└─ Signature: 1,024 dims (2.1%) ◄─ OVERWHELMED
+
+High-variance features dominate optimization:
+├─ Iris ULBP: Highly variable, noisy (79% weight)
+├─ Face features: High variance in RGB (10% weight)
+└─ Signature: Clean, precise signal (2% weight)
+
+SVM Optimization:
+Minimize: ||w||² + C × Σ ξ_i
+
+Gradient descent naturally flows toward:
+├─ High-variance dimensions (iris)
+├─ Noise-filled spaces
+└─ AWAY from signature signal
+
+RESULT:
+Signature's excellent discriminative power (EER 0.012)
+is DILUTED by iris noise (37,760 meaningless dimensions)
+
+Mathematical effect:
+- Signature contributes 2% to feature space
+- But needs 100% influence to maintain 98.83% accuracy
+- Instead: 79% iris noise suppresses signature
+
+ANALOGY:
+Mixing 1 cup of pure honey with 49 cups of bitter water
+= Diluted product (86.80%) worse than original honey (98.83%)
+            </div>
+
+            <h3>Root Cause 2: Decision Bottleneck (Decision-Level Fusion)</h3>
+            <div class="formula">
+PROBLEM:
+
+Voting Rule: 3 out of 5 must agree
+
+Modality Accuracies (Dataset 1):
+├─ Signature: 98.83% (best)
+├─ Face Deep: 96.04%
+├─ Iris Deep: 85.77%
+├─ Iris ULBP: 86.10%
+└─ Face ULBP: 77.83% (worst)
+
+Scenario: Genuine User Verification
+
+If signature is CORRECT but only 2 others agree:
+  Vote: [1, 0, 1, 1, 0] = 3 votes → PASS ✓
+  (Signature's YES + 2 others = consensus)
+
+But if signature is CORRECT but only 1 other agrees:
+  Vote: [1, 0, 0, 1, 0] = 2 votes → FAIL ✗
+  (Signature's YES + only 1 other ≠ majority!)
+
+WORST CASE:
+Signature: YES (correct)
+Other 4 modalities: NO (all wrong)
+Vote: [1, 0, 0, 0, 0] = 1 vote → FAIL ✗
+→ False rejection! (genuine user rejected)
+
+MATHEMATICAL PENALTY:
+
+Accuracy with majority voting:
+= P(at least 3/5 correct)
+= P(exactly 3) + P(exactly 4) + P(exactly 5)
+
+This is LESS than individual best performer
+because worst performers drag down the ensemble
+
+Example calculation (if independent):
+P(all 5 correct) ≈ 0.985 × 0.96 × 0.858 × 0.861 × 0.778 ≈ 0.55
+P(at least 3 correct) ≈ 0.75 (rough estimate)
+
+But signature alone = 98.83%!
+Majority voting loses signature's excellence
+            </div>
+
+            <h3>Why Naive Fusion Fails</h3>
+            <div class="diagram">
+            NAIVE FUSION ASSUMPTION:
+            "More modalities = More information = Better performance"
+            
+            REALITY:
+            "More weak modalities = Bottleneck on strong modality"
+            
+            ENSEMBLE LEARNING SUCCESS (normal case):
+            - Classifiers: 85%, 87%, 86% (all good quality)
+            - Ensemble: 90% (improvement!)
+            - Diverse AND accurate → Combined better
+            
+            THIS SYSTEM (failure case):
+            - Signature: 98.83% (excellent)
+            - Iris: 85.77% (good)
+            - Face: 77.40% (poor in RGB)
+            - Feature fusion: 86.80% (signature diluted)
+            - Decision fusion: 91.00% (signature suppressed)
+            
+            KEY DIFFERENCE:
+            Signature is TOO GOOD, others are TOO WEAK
+            → Naive fusion averaging hurts not helps
+            </div>
+
+            <h3>Solutions: Better Fusion Strategies</h3>
+            <div class="success-box">
+                <strong>Recommendation 1: Weighted Fusion</strong><br>
+                Instead of equal concatenation, use learned weights:<br>
+                V_weighted = [1.0×V_sig || 0.3×V_iris || 0.1×V_face]<br>
+                → Signature dominates, others contribute moderately<br>
+                → Expected: >95% accuracy
+            </div>
+
+            <div class="success-box">
+                <strong>Recommendation 2: Gated Fusion</strong><br>
+                Use signature decision, add others only when confident:<br>
+                If signature confident (score >2σ): Use signature alone<br>
+                Else: Use signature + iris confirmation<br>
+                Avoid face in RGB unconstrained environments<br>
+                → Expected: Signature excellence + robustness
+            </div>
+
+            <div class="success-box">
+                <strong>Recommendation 3: Hierarchical Fusion</strong><br>
+                Two-stage decision tree:<br>
+                Stage 1: Signature votes → Strong decision?<br>
+                Yes → Accept (98.83% confidence)<br>
+                No → Stage 2: Add iris for confirmation<br>
+                → Leverage signature excellence, avoid bottleneck
+            </div>
+        </div>
+
+        <!-- MATHEMATICAL TRACES TAB -->
+        <div id="traces" class="tab-content">
+            <h2>📐 Mathematical Traces & 10×10 Pixel Examples</h2>
+
+            <h3>Face ULBP: 10×10 Patch Processing</h3>
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Complete Step-by-Step Trace</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="image-trace">
+STEP 1: INPUT 10×10 PATCH (Grayscale Intensities)
+
+     0    1    2    3    4    5    6    7    8    9
+   +----+----+----+----+----+----+----+----+----+----+
+ 0 | 45 | 67 | 89 |112 |134 |156 |178 |195 |210 |220 |
+   +----+----+----+----+----+----+----+----+----+----+
+ 1 | 52 | 74 |102 |128 |149 |167 |185 |201 |215 |225 |
+   +----+----+----+----+----+----+----+----+----+----+
+ 2 | 58 | 81 |109 |135 |156 |175 |193 |208 |220 |230 |
+   +----+----+----+----+----+----+----+----+----+----+
+ ... (continue for rows 3-9)
+
+Histogram Analysis:
+- Range [0-50]:   2 pixels (underutilized)
+- Range [51-100]: 18 pixels
+- Range [101-150]: 18 pixels
+- Range [151-200]: 27 pixels
+- Range [201-255]: 35 pixels
+- PROBLEM: Not using full [0,255] dynamic range
+
+
+STEP 2: HISTOGRAM EQUALIZATION
+
+Goal: Stretch intensity distribution across full range
+
+Cumulative Distribution Function (CDF):
+├─ CDF[0-50] = 2/100 = 0.02
+├─ CDF[51-100] = 20/100 = 0.20
+├─ CDF[101-150] = 38/100 = 0.38
+├─ CDF[151-200] = 65/100 = 0.65
+└─ CDF[201-255] = 100/100 = 1.00
+
+Mapping Formula:
+I_eq[i,j] = round(CDF[I[i,j]] × 255)
+
+Examples:
+- I[0,0] = 45 → CDF ≈ 0.02 → I_eq = 5
+- I[0,9] = 220 → CDF ≈ 0.98 → I_eq = 250
+
+Result: New histogram uniformly distributed [0,255]
+
+
+STEP 3: MEAN-VARIANCE NORMALIZATION
+
+Calculate statistics:
+μ = (1/100) × Σ I_eq[i,j] ≈ 125.3
+σ = √variance ≈ 65.5
+
+Normalization Formula:
+I_norm[i,j] = (I_eq[i,j] - μ) / σ
+
+Examples:
+- I_eq[0,0] = 5 → I_norm = (5-125.3)/65.5 = -1.84
+- I_eq[0,9] = 250 → I_norm = (250-125.3)/65.5 = +1.91
+
+Result: All patches have μ=0, σ=1 (standardized)
+
+
+STEP 4: ULBP COMPUTATION
+
+Since 10×10 = single block
+
+Select center pixels (skip borders): 8×8 = 64 pixels
+
+For center pixel at (1,1):
+  Value: 120 (after normalization)
+  
+  8 Neighbors (P=8, R=1):
+  NW: -1.84  < -1.20? YES → b_0 = 1
+  N:  -1.33  < -1.20? NO  → b_1 = 0
+  NE: -0.93  < -1.20? NO  → b_2 = 0
+  W:  -1.70  < -1.20? YES → b_3 = 1
+  E:  -0.75  < -1.20? NO  → b_4 = 0
+  SW: -1.58  < -1.20? YES → b_5 = 1
+  S:  -1.09  < -1.20? NO  → b_6 = 0
+  SE: -0.63  < -1.20? NO  → b_7 = 0
+  
+  Binary Pattern: [1,0,0,1,0,1,0,0]
+  
+  Convert to rotation-invariant uniform pattern
+  Map to histogram bin
+
+STEP 5: HISTOGRAM CREATION
+
+Count LBP patterns for all 64 pixels:
+├─ Uniform patterns: 59 possible values
+├─ Count occurrences of each
+└─ Output: 59-bin histogram
+
+FINAL OUTPUT: 59-dimensional feature vector
+(repeated for all 15 patches → 885-dim total)
+                </div>
+            </div>
+
+            <h3>Iris Daugman Normalization: Mathematical Details</h3>
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Transformation Mathematics</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="image-trace">
+INPUT: Circular iris image
+├─ Center: (xc, yc) = (320, 240)
+├─ Pupil radius: r_p = 50 pixels
+├─ Iris boundary: r_i = 120 pixels
+└─ Size: 640×480
+
+DAUGMAN TRANSFORMATION:
+
+For each point (row, col) in normalized 512×64 space:
+
+1. RADIAL MAPPING (row → radius):
+   
+   row_normalized = row / 64           [0 to 1]
+   r_pixels = r_p + row_norm × (r_i - r_p)
+   
+   Examples:
+   row=0  → r_norm=0.0 → r=50 (pupil edge)
+   row=32 → r_norm=0.5 → r=85 (middle)
+   row=64 → r_norm=1.0 → r=120 (boundary)
+
+2. ANGULAR MAPPING (col → angle):
+   
+   col_normalized = col / 512          [0 to 512]
+   θ = col_norm × 2π                   [0 to 2π radians]
+   
+   Examples:
+   col=0   → θ=0°     (3 o'clock, right)
+   col=128 → θ=90°    (12 o'clock, top)
+   col=256 → θ=180°   (9 o'clock, left)
+   col=384 → θ=270°   (6 o'clock, bottom)
+   col=512 → θ=360°   (full rotation)
+
+3. CARTESIAN CONVERSION:
+   
+   x = xc + r_pixels × cos(θ)
+   y = yc + r_pixels × sin(θ)
+   
+   I_normalized[row, col] = I_original[y, x]
+
+4. EXAMPLE PIXEL MAPPINGS:
+   
+   Normalized (0, 0):
+   r=50, θ=0° → x=320+50=370, y=240
+   
+   Normalized (32, 256):
+   r=85, θ=180° → x=320-85=235, y=240
+   
+   Normalized (64, 512):
+   r=120, θ=360°=0° → x=320+120=440, y=240
+
+PROPERTIES:
+
+✓ Invariant to iris size:
+  Small iris: r_p=40, r_i=100 → Maps to same 512×64
+  Large iris: r_p=60, r_i=130 → Maps to same 512×64
+  
+✓ Handles rotation:
+  Iris rotated 90° → Shifted columns (can compensate)
+  
+✓ Standardized dimensions:
+  All irises → 512×64 regardless of input size
+
+OUTPUT: 512×64 normalized iris matrix
+(ready for feature extraction)
+                </div>
+            </div>
+
+            <h3>SE-Attention Block Computation</h3>
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Complete SE Block Computation</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="formula">
+INPUT: Feature Map F from Conv layer
+├─ Dimensions: C × H × W
+├─ Example: 256 × 7×7 (256 channels, 7×7 spatial)
+└─ Total values: 256 × 49 = 12,544
+
+STEP 1: SQUEEZE (Global Average Pooling)
+
+Goal: Compress spatial dimensions, keep channel info
+
+For each channel c:
+zc = (1/(H×W)) × Σ Σ Fc(i,j)
+
+where:
+├─ H=7, W=7 → 1/49
+├─ Σ: Sum over all spatial positions
+└─ Fc(i,j): Intensity at (i,j) in channel c
+
+Example (Channel 0):
+F_0 (7×7 feature map):
+  1.2, -0.3,  2.1,  0.5, -1.2,  0.9, 1.5
+  0.8,  1.5,  0.4,  1.8,  0.3, -0.1, 0.7
+  -0.5, 0.2, 1.3,  0.6,  1.1,  0.4,-0.2
+  0.9,  1.4, -0.7, 0.2,  0.5,  1.6, 0.8
+  1.2,  0.3, 0.9,  1.1,  0.7,  0.2, 1.4
+  0.6, -0.4, 1.5,  0.8,  0.9,  1.3, 0.5
+  1.1,  0.7, 0.3,  1.2,  0.4,  0.6, 1.0
+
+Sum = 32.5
+z_0 = 32.5 / 49 = 0.664
+
+Repeat for all 256 channels:
+z = [0.664, -0.123, 0.891, ..., 0.234]
+Output z ∈ R^256
+
+
+STEP 2: EXCITATION (Adaptive Re-weighting)
+
+Goal: Learn which channels matter for identity
+
+FC Layer 1 (Reduction):
+h = ReLU(W1 · z)
+
+Where:
+├─ W1 ∈ R^(16×256) [reduction: 256→16]
+├─ Matrix multiplication: W1·z
+├─ ReLU activation: max(0, x)
+└─ Output: h ∈ R^16
+
+Example:
+h[0] = ReLU(0.1×0.664 + 0.02×(-0.123) + ... + 0.08×0.234)
+     = ReLU(0.4521)
+     = 0.4521
+
+FC Layer 2 (Expansion + Sigmoid):
+s = σ(W2 · h)
+
+Where:
+├─ W2 ∈ R^(256×16) [expansion: 16→256]
+├─ σ(x) = 1/(1+exp(-x)) [sigmoid, outputs [0,1]]
+└─ Output: s ∈ [0,1]^256
+
+Example:
+s_pre[0] = W2[0,:] · h = 0.7451 (unbounded)
+s[0] = σ(0.7451) = 1/(1+exp(-0.7451)) = 0.678
+
+Result: s = [0.678, 0.442, 0.891, ..., 0.234]
+(Attention weights for 256 channels)
+
+Interpretation:
+├─ s[c] ≈ 1.0: Channel c is important for identity
+├─ s[c] ≈ 0.5: Channel c is neutral
+└─ s[c] ≈ 0.0: Channel c is not important (noise)
+
+
+STEP 3: SCALE (Re-weight Feature Map)
+
+Goal: Apply learned importance to features
+
+For each channel c:
+F'_c = s_c ⊙ F_c
+
+where ⊙ is element-wise multiplication
+
+Example (Channel 0, s_0 = 0.678):
+Original F_0[0,0] = 1.2
+Scaled F'_0[0,0] = 0.678 × 1.2 = 0.813
+
+All values in channel 0 multiplied by 0.678
+
+Example (Channel 100, s_100 = 0.123):
+All values in channel 100 multiplied by 0.123
+(This channel is suppressed!)
+
+OUTPUT: Re-weighted Feature Map F' ∈ R^(256×7×7)
+├─ Important channels: Amplified (×1.0 weights)
+├─ Unimportant channels: Suppressed (×0.0 weights)
+└─ Identity-relevant features enhanced
+
+MATHEMATICAL EFFECT:
+SE block learns identity-specific importance
+→ Downstream layers receive priority signal
+→ Network focuses on identity features
+→ Noise and artifacts suppressed
+                </div>
+            </div>
+
+            <h3>Signature Preprocessing: 10×10 Example</h3>
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>Complete Signature Processing Trace</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="image-trace">
+STEP 1: INPUT 10×10 PATCH (Grayscale)
+
+Grayscale intensities (0=white, 255=black):
+
+     0    1    2    3    4    5    6    7    8    9
+   +----+----+----+----+----+----+----+----+----+----+
+ 0 |230 |235 |240 |245 |250 |248 |242 |238 |235 |232 |
+   +----+----+----+----+----+----+----+----+----+----+
+ 1 |240 | 20 | 10 | 15 | 25 | 30 | 35 |245 |250 |255 |
+   +----+----+----+----+----+----+----+----+----+----+
+ 2 |250 | 15 |  5 |  8 | 12 | 20 | 25 |250 |255 |255 |
+   +----+----+----+----+----+----+----+----+----+----+
+ ... (continue)
+
+Observation: Columns 1-6 contain dark pixels (ink),
+             columns 0,7-9 contain light pixels (paper)
+
+
+STEP 2: OTSU'S BINARIZATION
+
+Find optimal threshold T:
+
+Histogram:
+├─ [0-50]:   18 pixels (dark, ink)
+├─ [51-100]: 12 pixels (mixed)
+├─ [101-150]: 8 pixels (mixed)
+└─ [201-255]: 62 pixels (light, paper)
+
+Try T=120:
+├─ ω_0(120) = 30/100 = 0.30 (pixels < 120)
+├─ ω_1(120) = 70/100 = 0.70 (pixels ≥ 120)
+├─ μ_0(120) = 35 (mean of dark pixels)
+├─ μ_1(120) = 230 (mean of light pixels)
+└─ σ²_B(120) = 0.30 × 0.70 × (35-230)² = 7,985
+
+[Otsu finds T ≈ 120 maximizes between-class variance]
+
+Binary Output:
+├─ Pixels < 120 → 0 (ink)
+└─ Pixels ≥ 120 → 1 (paper)
+
+Result:
+     0  1  2  3  4  5  6  7  8  9
+   +--+--+--+--+--+--+--+--+--+--+
+ 0 | 1| 1| 1| 1| 1| 1| 1| 1| 1| 1 |
+ 1 | 1| 0| 0| 0| 0| 0| 0| 1| 1| 1 |
+ 2 | 1| 0| 0| 0| 0| 0| 0| 1| 1| 1 |
+ ... (continue)
+
+Clear separation: Ink (0) from paper (1)
+
+
+STEP 3: INVERSION CHECK
+
+Convert: 0=paper, 1=ink (inverse convention)
+I_inv[i,j] = 1 - I_bin[i,j]
+
+Result:
+     0  1  2  3  4  5  6  7  8  9
+   +--+--+--+--+--+--+--+--+--+--+
+ 0 | 0| 0| 0| 0| 0| 0| 0| 0| 0| 0 |
+ 1 | 0| 1| 1| 1| 1| 1| 1| 0| 0| 0 |
+ 2 | 0| 1| 1| 1| 1| 1| 1| 0| 0| 0 |
+ ... (continue)
+
+Now: 1=ink (foreground), 0=paper (background)
+
+
+STEP 4: CENTER-OF-MASS CALCULATION
+
+Count ink pixels: 54 total (columns 1-6, rows 1-9)
+
+Column average:
+cx = Σ(j × I[i,j]) / Σ I[i,j]
+   = (1+2+3+4+5+6) × 9 / 54
+   = 21 × 9 / 54
+   = 3.5
+
+Row average:
+cy = Σ(i × I[i,j]) / Σ I[i,j]
+   = (1+2+3+4+5+6+7+8+9) × 6 / 54
+   = 45 × 6 / 54
+   = 5.0
+
+Signature center: (3.5, 5.0)
+
+
+STEP 5: CENTERING
+
+Target center: (4.5, 4.5) [center of 10×10 canvas]
+Current center: (3.5, 5.0)
+
+Shift amounts:
+├─ shift_x = 4.5 - 3.5 = 1.0 pixels right
+└─ shift_y = 4.5 - 5.0 = -0.5 pixels up
+
+Apply shift (nearest-neighbor):
+I_centered[i,j] = I_inv[i - shift_y, j - shift_x]
+                = I_inv[i + 0.5, j - 1.0]
+
+Result: Signature shifts right ~1, up ~0.5 pixels
+
+
+STEP 6: RESIZING
+
+Current: 10×10
+Target: 170×242
+
+Scale factors:
+├─ scale_x = 170 / 10 = 17.0
+└─ scale_y = 242 / 10 = 24.2
+
+Nearest-neighbor upsampling:
+For each (i_new, j_new) in 170×242:
+├─ Map back: i_orig = i_new / 24.2
+├─ Map back: j_orig = j_new / 17.0
+├─ Round: i_orig_round = round(i_orig)
+└─ Copy: I_resized[i_new, j_new] = I_centered[i_orig_round, j_orig_round]
+
+Effect: Each pixel becomes 17×24 block
+
+OUTPUT: Binary 170×242 image
+├─ Ink pixels: 1
+├─ Paper pixels: 0
+├─ Signature: Centered and scaled
+└─ Ready for AlexNet_N
+                </div>
+            </div>
+        </div>
+
+        <!-- PERFORMANCE TAB -->
+        <div id="performance" class="tab-content">
+            <h2>📊 Performance Analysis & Cross-Dataset Effects</h2>
+
+            <h3>Complete Performance Table</h3>
+            <table class="comparison-table">
+                <tr>
+                    <th>Modality/Method</th>
+                    <th>Dataset 1 (NIR)</th>
+                    <th>Dataset 2 (RGB)</th>
+                    <th>Degradation</th>
+                    <th>Robustness</th>
+                </tr>
+                <tr style="background: #d4edda;">
+                    <td><strong>Signature WI</strong></td>
+                    <td><strong>98.83%</strong>, EER 0.012</td>
+                    <td><strong>96.81%</strong>, EER 0.048</td>
+                    <td><strong>-2.02%</strong></td>
+                    <td><span style="color:green; font-weight:bold">EXCELLENT</span></td>
+                </tr>
+                <tr>
+                    <td>Iris Deep (SE)</td>
+                    <td>85.77%, EER 0.225</td>
+                    <td>84.24%, EER 0.264</td>
+                    <td>-1.53%</td>
+                    <td><span style="color:green">Very High</span></td>
+                </tr>
+                <tr>
+                    <td>Iris Texture (ULBP)</td>
+                    <td>86.10%, EER 0.187</td>
+                    <td>78.86%, EER 0.299</td>
+                    <td>-7.24%</td>
+                    <td><span style="color:orange">High</span></td>
+                </tr>
+                <tr>
+                    <td>Face Texture (ULBP)</td>
+                    <td>77.83%, EER 0.082</td>
+                    <td>75.13%, EER 0.173</td>
+                    <td>-2.70%</td>
+                    <td><span style="color:orange">High</span></td>
+                </tr>
+                <tr style="background: #f8d7da;">
+                    <td>Face Deep (SE)</td>
+                    <td><strong>96.04%</strong>, EER 0.079</td>
+                    <td><strong>77.40%</strong>, EER 0.351</td>
+                    <td><strong>-18.64%</strong></td>
+                    <td><span style="color:red">POOR</span></td>
+                </tr>
+                <tr style="background: #f8d7da;">
+                    <td>Feature Fusion</td>
+                    <td>86.80%, EER 0.113</td>
+                    <td>77.27%, EER 0.237</td>
+                    <td>-9.53%</td>
+                    <td><span style="color:orange">Medium</span></td>
+                </tr>
+                <tr style="background: #f8d7da;">
+                    <td>Decision Fusion</td>
+                    <td>91.00%, EER 0.124</td>
+                    <td>79.48%, EER 0.273</td>
+                    <td>-11.52%</td>
+                    <td><span style="color:orange">Medium</span></td>
+                </tr>
+            </table>
+
+            <h3>Robustness Ranking (Best to Worst)</h3>
+            <div class="ranking">
+                <div class="ranking-position">1</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Signature WI AlexNet_N</div>
+                    <div class="ranking-metric">-2.02% degradation | EER 0.012-0.048</div>
+                    <div>Behavioral trait, invariant to capture conditions</div>
+                </div>
+            </div>
+
+            <div class="ranking">
+                <div class="ranking-position">2</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Iris Deep (SE-AlexNet)</div>
+                    <div class="ranking-metric">-1.53% degradation | EER 0.225-0.264</div>
+                    <div>Structured circular geometry, very consistent</div>
+                </div>
+            </div>
+
+            <div class="ranking">
+                <div class="ranking-position">3</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Face Texture (ULBP)</div>
+                    <div class="ranking-metric">-2.70% degradation | EER 0.082-0.173</div>
+                    <div>Comparison-based, illumination invariant</div>
+                </div>
+            </div>
+
+            <div class="ranking">
+                <div class="ranking-position">4</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Iris Texture (ULBP)</div>
+                    <div class="ranking-metric">-7.24% degradation | EER 0.187-0.299</div>
+                    <div>Good structure, but high dimensionality (37K dims)</div>
+                </div>
+            </div>
+
+            <div class="ranking">
+                <div class="ranking-position">5</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Feature-Level Fusion</div>
+                    <div class="ranking-metric">-9.53% degradation | EER 0.113-0.237</div>
+                    <div>Feature contamination from weak modalities</div>
+                </div>
+            </div>
+
+            <div class="ranking">
+                <div class="ranking-position">6</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Decision-Level Fusion</div>
+                    <div class="ranking-metric">-11.52% degradation | EER 0.124-0.273</div>
+                    <div>Decision bottleneck, weak modalities suppress strong ones</div>
+                </div>
+            </div>
+
+            <div class="ranking" style="background: #f8d7da;">
+                <div class="ranking-position">7</div>
+                <div class="ranking-content">
+                    <div style="font-weight: bold; color: var(--secondary);">Face Deep (SE-AlexNet)</div>
+                    <div class="ranking-metric">-18.64% degradation | EER 0.079-0.351</div>
+                    <div>Deep learning learns shadows in RGB, complete failure</div>
+                </div>
+            </div>
+
+            <h3>NIR vs RGB Physics: Why the Gap?</h3>
+            <div class="two-column">
+                <div class="column">
+                    <h4>🔵 NIR (Near-Infrared) - Dataset 1</h4>
+                    <div class="formula">
+Light spectrum: 880-940 nm
+
+Properties:
+├─ Penetrates skin
+├─ Structural reflectance
+├─ Skin pigment independent
+├─ Shadow-free illumination
+└─ Uniform lighting
+
+Face Features Captured:
+├─ Bone structure geometry
+├─ Facial contours
+├─ Eye sockets
+└─ Minimal skin tone variation
+
+SE-AlexNet Performance:
+├─ Learns pure identity geometry
+├─ Attention blocks identify bones
+├─ Minimal noise
+└─ Result: 96.04% accuracy!
+
+Advantages:
+✓ Clean signal
+✓ High quality features
+✓ Deep learning excels
+                    </div>
+                </div>
+                <div class="column">
+                    <h4>🔴 RGB (Visible Light) - Dataset 2</h4>
+                    <div class="formula">
+Light spectrum: 400-700 nm
+
+Properties:
+├─ Surface reflectance
+├─ Skin tone dependent
+├─ Complex ambient shadows
+├─ Pose-dependent lighting
+└─ Background clutter
+
+Face Features Captured:
+├─ Shadows (→ fake identity)
+├─ Highlights (→ fake identity)
+├─ Skin color variation
+├─ Pose artifacts
+└─ High-frequency noise
+
+SE-AlexNet Problem:
+├─ Learns shadows as features!
+├─ Attention amplifies noise
+├─ Misidentifies artifacts
+├─ Result: 77.40% accuracy (collapse!)
+
+What Happened?
+SE blocks learned:
+├─ Dark shadow = identity marker
+├─ Bright highlight = face feature
+├─ Background = contextual clue
+→ Fooled by non-biometric signals!
+
+Mean FNR: 0.817 (very high!)
+(81.7% of genuine users rejected)
+                    </div>
+                </div>
+            </div>
+
+            <h3>Why ULBP Remains Stable</h3>
+            <div class="success-box">
+                <strong>Face ULBP: Only -2.7% Degradation</strong><br>
+                <div style="margin-top: 15px;">
+                    <strong>Key Property: Comparison-Based</strong><br>
+                    ULBP compares neighbors to center:
+                    b_k = (neighbor_k ≥ center) ? 1 : 0<br><br>
+                    
+                    <strong>Why This is Robust:</strong><br>
+                    ✓ Relative comparison: Independent of absolute intensity<br>
+                    ✓ Monotonic invariance: Stretching histogram doesn't change LBP<br>
+                    ✓ Local analysis: 3×3 neighborhood ignores global shadows<br>
+                    ✓ Unlabeled learning: No "learning" of shadows as features<br><br>
+                    
+                    <strong>Example:</strong><br>
+                    In NIR: Neighborhood [100, 105, 110, 120, ...] vs center 120<br>
+                    → Binary: [0,0,0,1,...] (same pattern)<br><br>
+                    In RGB with shadow: [100, 105, 80, 120, ...] vs center 120<br>
+                    → Binary: [0,0,1,1,...] (DIFFERENT pattern)<br><br>
+                    
+                    But ULBP captures local texture, not global artifacts
+                    → Only minor degradation (-2.7%)
+                </div>
+            </div>
+        </div>
+
+        <!-- FINDINGS TAB -->
+        <div id="findings" class="tab-content">
+            <h2>🔍 Key Findings & Recommendations</h2>
+
+            <h3>Finding 1: Behavioral > Physiological</h3>
+            <div class="success-box">
+                <strong>Signature Achieves EER 0.012 (Near-Perfect)</strong><br>
+                <ul style="margin-top: 15px;">
+                    <li>Dataset 1: 98.83% accuracy, EER 0.012</li>
+                    <li>Dataset 2: 96.81% accuracy, EER 0.048</li>
+                    <li>Cross-dataset degradation: Only 2% (best in system!)</li>
+                    <li><strong>Why?</strong> Behavioral traits (stroke dynamics) invariant to capture conditions</li>
+                </ul>
+            </div>
+
+            <h3>Finding 2: Deep Learning Environmental Sensitivity</h3>
+            <div class="error-box">
+                <strong>Face SE-AlexNet: 18.6% Catastrophic Drop</strong><br>
+                <ul style="margin-top: 15px;">
+                    <li>NIR (Dataset 1): 96.04% accuracy, EER 0.079 ✓</li>
+                    <li>RGB (Dataset 2): 77.40% accuracy, EER 0.351 ✗</li>
+                    <li>Degradation: -18.64% (WORST in system)</li>
+                    <li>Mean FNR: 0.817 (81.7% false rejection!)</li>
+                    <li><strong>Why?</strong> SE blocks learn shadows, highlights, and artifacts as identity features</li>
+                </ul>
+            </div>
+
+            <h3>Finding 3: Iris Robustness Through Structure</h3>
+            <div class="success-box">
+                <strong>Iris: Only -1.53% Degradation (SE-AlexNet)</strong><br>
+                <ul style="margin-top: 15px;">
+                    <li>Dataset 1: 85.77% accuracy, EER 0.225</li>
+                    <li>Dataset 2: 84.24% accuracy, EER 0.264</li>
+                    <li>Much more robust than face deep learning</li>
+                    <li><strong>Why?</strong> Circular geometry provides natural structural constraint</li>
+                    <li>SE attention blocks more effective on constrained iris patterns</li>
+                </ul>
+            </div>
+
+            <h3>Finding 4: The Fusion Paradox</h3>
+            <div class="error-box">
+                <strong>Naive Fusion Makes Performance Worse!</strong><br>
+                <table class="comparison-table" style="margin-top: 15px;">
+                    <tr>
+                        <th>Configuration</th>
+                        <th>Dataset 1</th>
+                        <th>vs Signature</th>
+                    </tr>
+                    <tr>
+                        <td>Signature Alone</td>
+                        <td><strong>98.83%</strong></td>
+                        <td>BASELINE</td>
+                    </tr>
+                    <tr style="background: #f8d7da;">
+                        <td>Feature Fusion</td>
+                        <td>86.80%</td>
+                        <td><strong>-12.03%</strong></td>
+                    </tr>
+                    <tr style="background: #f8d7da;">
+                        <td>Decision Fusion</td>
+                        <td>91.00%</td>
+                        <td><strong>-8.35%</strong></td>
+                    </tr>
+                </table>
+                <div style="margin-top: 15px;">
+                    <strong>Root Causes:</strong>
+                    <ul>
+                        <li>Feature-Level: Iris ULBP dominates (79% of dims), dilutes signature signal</li>
+                        <li>Decision-Level: 3/5 voting suppresses signature's 98.83% by weak modalities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Finding 5: Batch Normalization is Essential</h3>
+            <div class="success-box">
+                <strong>Batch Norm: The Signature's Secret Weapon</strong><br>
+                <ul style="margin-top: 15px;">
+                    <li>Without BN: Signature CNN training FAILS (gradient saturation)</li>
+                    <li>With BN: Convergence achieved, EER 0.012 unlocked</li>
+                    <li>Sparse binary nature of signatures requires normalization after every layer</li>
+                    <li>Placement: After each conv/FC layer, BEFORE activation</li>
+                    <li>Effect: Stabilizes gradient flow, prevents internal covariate shift</li>
+                </ul>
+            </div>
+
+            <h3>Finding 6: Texture More Robust Than Deep</h3>
+            <div class="success-box">
+                <strong>ULBP Outperforms Deep Learning in Unconstrained Env</strong><br>
+                <ul style="margin-top: 15px;">
+                    <li>ULBP degradation: -2.7% (face), -7.24% (iris)</li>
+                    <li>Deep learning degradation: -18.64% (face), -1.53% (iris)</li>
+                    <li><strong>Key Insight:</strong> Comparison-based features more stable than learned representations</li>
+                    <li>ULBP doesn't "learn" shadows as features (deterministic algorithm)</li>
+                    <li>Deep learning "learns" whatever maximizes classification (including artifacts)</li>
+                </ul>
+            </div>
+
+            <h3>Finding 7: Daugman & ROI Design</h3>
+            <div class="success-box">
+                <strong>Preprocessing Excellence Enables Features</strong><br>
+                <ul style="margin-top: 15px;">
+                    <li>Daugman normalization: Handles iris size/rotation variations</li>
+                    <li>Overlapping Face ROIs (15 patches): Redundancy against occlusions</li>
+                    <li>Iris strips (10 overlapping): Localized texture without global artifacts</li>
+                    <li>Signature resizing: Fixed 170×242 ensures consistency</li>
+                    <li>Result: Clean input to feature extractors</li>
+                </ul>
+            </div>
+
+            <h3>Recommendations for System Improvement</h3>
+            <div class="toggle-section" onclick="toggleContent(this)">
+                <span><strong>🔧 Better Fusion Strategies (Click to Expand)</strong></span>
+                <span class="toggle-icon">+</span>
+            </div>
+            <div class="toggle-content">
+                <div class="success-box">
+                    <strong>Recommendation 1: Weighted Fusion</strong><br>
+                    <div style="margin-top: 10px;">
+                        <strong>Strategy:</strong> Use learned weights instead of equal concatenation<br>
+                        V_weighted = [1.0×V_sig || 0.3×V_iris || 0.1×V_face]<br><br>
+                        <strong>Weights learned from validation data</strong><br>
+                        Signature dominates (1.0x)<br>
+                        Iris contributes moderately (0.3x)<br>
+                        Face minimal contribution (0.1x)<br><br>
+                        <strong>Expected improvement:</strong> >95% accuracy<br>
+                        <strong>Prevents:</strong> Feature contamination by weighting by quality
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <strong>Recommendation 2: Gated Fusion</strong><br>
+                    <div style="margin-top: 10px;">
+                        <strong>Strategy:</strong> Dynamically select modalities based on confidence<br>
+                        1. If signature confidence HIGH: Use signature alone<br>
+                        2. If signature confidence MEDIUM: Add iris confirmation<br>
+                        3. If signature confidence LOW: Use signature + iris + (skip face in RGB)<br><br>
+                        <strong>Logic:</strong> Signature alone already excellent at 98.83%<br>
+                        Only add others when signature uncertain<br><br>
+                        <strong>Expected improvement:</strong> Signature excellence + robustness<br>
+                        <strong>Prevents:</strong> Decision bottleneck by selective fusion
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <strong>Recommendation 3: Hierarchical Decision Tree</strong><br>
+                    <div style="margin-top: 10px;">
+                        <strong>Strategy:</strong> Two-stage verification<br>
+                        <br>
+                        Stage 1: Query signature SVM<br>
+                        ├─ High confidence match → ACCEPT (use signature's 98.83%)<br>
+                        ├─ High confidence mismatch → REJECT (trust signature)<br>
+                        └─ Low confidence → Proceed to Stage 2<br>
+                        <br>
+                        Stage 2: Query iris + face SVMs<br>
+                        ├─ Use as confirmation/clarification<br>
+                        └─ Only override signature if very confident<br><br>
+                        <strong>Expected improvement:</strong> Leverage signature excellence<br>
+                        <strong>Prevents:</strong> Weak modality suppression of strong ones
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <strong>Recommendation 4: Environment-Aware Fusion</strong><br>
+                    <div style="margin-top: 10px;">
+                        <strong>Strategy:</strong> Select modalities based on capture environment<br>
+                        <br>
+                        In Controlled NIR Environment:<br>
+                        ├─ Include face deep (96.04% excellent)<br>
+                        ├─ Include iris (robust)<br>
+                        └─ Signature as primary + confirmation<br>
+                        <br>
+                        In Unconstrained RGB Environment:<br>
+                        ├─ SKIP face deep (77.40% unreliable)<br>
+                        ├─ Use face texture instead (75.13% but stable)<br>
+                        ├─ Include iris deep (84.24% robust)<br>
+                        └─ Signature as primary verifier<br><br>
+                        <strong>Expected improvement:</strong> Avoid worst modality<br>
+                        <strong>Prevents:</strong> Using unreliable face in RGB
+                    </div>
+                </div>
+            </div>
+
+            <h3>System Deployment Recommendation</h3>
+            <div class="success-box" style="background: #d4edda;">
+                <strong>✅ RECOMMENDED CONFIGURATION</strong><br>
+                <div style="margin-top: 15px;">
+                    <strong>1. Primary Verifier: Signature (WI AlexNet_N)</strong><br>
+                    └─ Use as main decision maker (98.83% accuracy, EER 0.012)<br><br>
+                    
+                    <strong>2. Backup Confirmation: Iris (SE-AlexNet)</strong><br>
+                    └─ If signature confidence medium, use iris confirmation<br>
+                    └─ Iris robust (84.24%) across environments<br><br>
+                    
+                    <strong>3. Conditional: Face Modality</strong><br>
+                    └─ Use only in controlled NIR environments (96.04%)<br>
+                    └─ Skip in unconstrained RGB (77.40% unreliable)<br>
+                    └─ Or use ULBP instead of deep (75.13% stable)<br><br>
+                    
+                    <strong>4. Fusion Strategy: Weighted or Gated</strong><br>
+                    └─ NOT naive feature or decision fusion (both degrade performance)<br>
+                    └─ Signature weight ≥ 50% of total<br><br>
+                    
+                    <strong>Expected System Performance:</strong><br>
+                    ├─ Accuracy: >95% (all environments)<br>
+                    ├─ EER: <0.1 (excellent)<br>
+                    ├─ Robustness: Excellent cross-dataset<br>
+                    └─ Reliability: High (avoids weak modalities)
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p><strong>Multimodal Biometric System - Complete Interactive Presentation</strong></p>
+            <p>Student: Lt Col Saurabh Kumar Singh | Entry: 2025JCS3011</p>
+            <p>Course: SIL7175 - Biometric Security (Assignment 2)</p>
+            <p style="margin-top: 20px; color: #7f8c8d;">
+                All content explained without abstraction. All steps shown with concrete examples. 
+                All algorithms detailed with mathematical formulas. All functions described with inputs/outputs.
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function switchTab(evt, tabName) {
+            var i, tabcontent, tabbuttons;
+            
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            
+            tabbuttons = document.getElementsByClassName("nav-tabs")[0].getElementsByTagName("button");
+            for (i = 0; i < tabbuttons.length; i++) {
+                tabbuttons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function toggleContent(element) {
+            const content = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+            
+            if (content.classList.contains('active')) {
+                content.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                content.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>

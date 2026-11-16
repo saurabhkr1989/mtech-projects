@@ -1,0 +1,1273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contactless Fingerprint Recognition - Complete Pipeline</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: #e2e8f0;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 40px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 10px;
+            border-left: 5px solid #3b82f6;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #60a5fa;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #cbd5e1;
+            margin-bottom: 5px;
+        }
+
+        .course-info {
+            font-size: 0.95em;
+            color: #94a3b8;
+            margin-top: 10px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            background: rgba(30, 41, 59, 0.8);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            color: #60a5fa;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .tab-btn:hover,
+        .tab-btn.active {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(51, 65, 85, 0.6);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .card h2 {
+            color: #60a5fa;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h3 {
+            color: #93c5fd;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: #3b82f6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-arrow {
+            width: 30px;
+            height: 3px;
+            background: #3b82f6;
+            margin: 0 10px;
+        }
+
+        .workflow-box {
+            background: rgba(31, 41, 55, 0.8);
+            border-left: 4px solid #10b981;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+            overflow-x: auto;
+        }
+
+        .code-section {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 3px solid #f59e0b;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .parameter {
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(45, 55, 72, 0.7);
+            border-radius: 3px;
+        }
+
+        .parameter-name {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .parameter-type {
+            color: #60a5fa;
+            font-style: italic;
+        }
+
+        .parameter-desc {
+            color: #cbd5e1;
+            margin-left: 10px;
+        }
+
+        .matrix-viz {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        th {
+            background: rgba(59, 130, 246, 0.3);
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .example-item {
+            background: rgba(31, 41, 55, 0.8);
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+
+        .highlight {
+            background: rgba(34, 197, 94, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #86efac;
+            font-weight: 500;
+        }
+
+        .warning {
+            background: rgba(245, 158, 11, 0.2);
+            padding: 15px;
+            border-left: 3px solid #f59e0b;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .success {
+            background: rgba(34, 197, 94, 0.2);
+            padding: 15px;
+            border-left: 3px solid #10b981;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+
+        .metric-box {
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.2);
+            border: 1px solid #3b82f6;
+            padding: 15px 25px;
+            border-radius: 5px;
+            margin: 10px 10px 10px 0;
+            text-align: center;
+        }
+
+        .metric-label {
+            color: #94a3b8;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            color: #60a5fa;
+            font-size: 1.4em;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3b82f6, transparent);
+            margin: 30px 0;
+        }
+
+        .icon {
+            display: inline-block;
+            font-size: 1.3em;
+            margin-right: 8px;
+        }
+
+        footer {
+            margin-top: 50px;
+            padding: 20px;
+            text-align: center;
+            color: #64748b;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .transition-diagram {
+            background: rgba(31, 41, 55, 0.8);
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .grid-visual {
+            display: inline-block;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 20px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #3b82f6;
+        }
+
+        .grid-cell {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin: 2px;
+            border: 1px solid #475569;
+            vertical-align: middle;
+        }
+
+        .grid-cell.foreground {
+            background: #3b82f6;
+        }
+
+        .grid-cell.background {
+            background: #1e293b;
+        }
+
+        .grid-cell.minutiae {
+            background: #ef4444;
+            border: 1px solid #dc2626;
+        }
+
+        .grid-legend {
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+
+        .legend-item {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #475569;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🔐 Contactless Fingerprint Recognition System</h1>
+            <p class="subtitle">Global Minutia Topology with Loose Genetic Algorithm</p>
+            <p class="course-info">SIL775/7175 - Biometric Security | IIT Delhi</p>
+            <p class="course-info">Complete Pipeline Visualization with Detailed Workflows & 10×10 Example Traces</p>
+        </header>
+
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showTab('overview')">📋 Overview</button>
+            <button class="tab-btn" onclick="showTab('preprocessing')">🖼️ Preprocessing</button>
+            <button class="tab-btn" onclick="showTab('matching')">🔗 Matching</button>
+            <button class="tab-btn" onclick="showTab('optimization')">⚡ GA Optimization</button>
+            <button class="tab-btn" onclick="showTab('evaluation')">📊 Evaluation</button>
+            <button class="tab-btn" onclick="showTab('example10x10')">🎯 10×10 Example</button>
+            <button class="tab-btn" onclick="showTab('workflows')">⚙️ Workflows</button>
+            <button class="tab-btn" onclick="showTab('insights')">💡 Insights</button>
+        </div>
+
+        <!-- OVERVIEW SECTION -->
+        <div id="overview" class="content-section active">
+            <div class="card">
+                <h2><span class="icon">📋</span>System Overview</h2>
+                <p>This system implements contactless fingerprint recognition using Global Minutia Topology and Loose Genetic Algorithm to overcome perspective distortion challenges.</p>
+                
+                <h3>The Core Challenge</h3>
+                <div class="warning">
+                    <strong>Why Contactless is Hard:</strong> Unlike touch-based fingerprints, contactless images captured from 3D fingers suffer from:
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li><span class="highlight">Perspective Distortion</span> - Rotation (roll), pitch (tilt), and yaw angles</li>
+                        <li><span class="highlight">Resolution Issues</span> - 1000 PPI contactless vs 500 PPI traditional</li>
+                        <li><span class="highlight">Uneven Illumination</span> - Shadows and highlights from 3D surface</li>
+                        <li><span class="highlight">Ridge Clarity</span> - Lower contrast between ridges and valleys</li>
+                    </ul>
+                </div>
+
+                <h3>Complete Pipeline Flow</h3>
+                <div style="display: flex; align-items: center; margin: 30px 0; flex-wrap: wrap;">
+                    <div class="step-number">1</div>
+                    <div style="flex: 1; padding: 0 10px;">Standardization (1000 PPI → 500 PPI)</div>
+                    <div style="color: #60a5fa;">→</div>
+                    <div class="step-number" style="margin: 0 10px;">2</div>
+                    <div style="flex: 1; padding: 0 10px;">ROI Extraction (CNN)</div>
+                </div>
+
+                <div style="display: flex; align-items: center; margin: 30px 0; flex-wrap: wrap;">
+                    <div class="step-number">3</div>
+                    <div style="flex: 1; padding: 0 10px;">Enhancement (Intrinsic + Guided Filter)</div>
+                    <div style="color: #60a5fa;">→</div>
+                    <div class="step-number" style="margin: 0 10px;">4</div>
+                    <div style="flex: 1; padding: 0 10px;">Minutiae Extraction</div>
+                </div>
+
+                <div style="display: flex; align-items: center; margin: 30px 0; flex-wrap: wrap;">
+                    <div class="step-number">5</div>
+                    <div style="flex: 1; padding: 0 10px;">Similarity Matrix Construction</div>
+                    <div style="color: #60a5fa;">→</div>
+                    <div class="step-number" style="margin: 0 10px;">6</div>
+                    <div style="flex: 1; padding: 0 10px;">Loose GA Optimization</div>
+                </div>
+
+                <div style="display: flex; align-items: center; margin: 30px 0; flex-wrap: wrap;">
+                    <div class="step-number">7</div>
+                    <div style="flex: 1; padding: 0 10px;">Minutia-Pair Expansion</div>
+                    <div style="color: #60a5fa;">→</div>
+                    <div class="step-number" style="margin: 0 10px;">8</div>
+                    <div style="flex: 1; padding: 0 10px;">Final Scoring & Decision</div>
+                </div>
+
+                <h3>Key Innovation: Ridge Count as Distortion-Invariant Feature</h3>
+                <div class="success">
+                    <strong>Why This Works:</strong> The number of ridge lines between two minutiae remains constant under perspective distortion!
+                    <div style="margin-top: 10px; font-family: monospace; background: rgba(15, 23, 42, 0.8); padding: 10px; border-radius: 3px;">
+                        Original: 5 ridges between minutia A and B<br/>
+                        After 3D rotation: Still 5 ridges<br/>
+                        After perspective stretching: Still 5 ridges<br/>
+                        ✓ Topological invariant!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREPROCESSING SECTION -->
+        <div id="preprocessing" class="content-section">
+            <div class="card">
+                <h2><span class="icon">🖼️</span>Part 1: Preprocessing & Feature Extraction</h2>
+                
+                <h3>Step 1: Standardization (1000 PPI → 500 PPI)</h3>
+                <p><strong>What:</strong> Resample fingerprint image to standard resolution</p>
+                <p><strong>Why:</strong> Ensures consistency across different input devices</p>
+                <p><strong>Relation:</strong> First step in pipeline - prepares for all subsequent processing</p>
+                
+                <div class="code-section">
+                    <strong>Function Call:</strong><br/>
+                    <code>standardize(image, original_ppi=1000, target_ppi=500)</code><br/>
+                    <div style="margin-top: 10px; color: #93c5fd;">
+                        <div class="parameter">
+                            <span class="parameter-name">image:</span> 
+                            <span class="parameter-type">ndarray[H × W]</span>
+                            <span class="parameter-desc">Grayscale input image from contactless capture</span>
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">original_ppi:</span> 
+                            <span class="parameter-type">int</span>
+                            <span class="parameter-desc">Source resolution (default 1000)</span>
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">target_ppi:</span> 
+                            <span class="parameter-type">int</span>
+                            <span class="parameter-desc">Target resolution (default 500)</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; color: #10b981;">
+                        <strong>Processing:</strong><br/>
+                        1. Calculate scale factor: <code>scale = 1000 / 500 = 2.0</code><br/>
+                        2. New dimensions: <code>new_H = H / 2</code>, <code>new_W = W / 2</code><br/>
+                        3. Resample using bicubic interpolation (cv2.INTER_CUBIC)<br/>
+                        4. Apply minor CLAHE for local contrast
+                    </div>
+                    <div style="margin-top: 15px; color: #60a5fa;">
+                        <strong>Output:</strong><br/>
+                        <code>(image_standardized, scale_factor)</code>
+                    </div>
+                </div>
+
+                <h3>Step 2: ROI Extraction (Segmentation)</h3>
+                <p><strong>What:</strong> Extract fingertip foreground using CNN</p>
+                <p><strong>Why:</strong> Eliminates spurious minutiae in background noise</p>
+                
+                <div class="code-section">
+                    <strong>Function Call:</strong><br/>
+                    <code>segment_fingertip(image_standardized, use_neural_networks=True)</code><br/>
+                    <div style="margin-top: 10px; color: #93c5fd;">
+                        <div class="parameter">
+                            <span class="parameter-name">image:</span> 
+                            <span class="parameter-type">ndarray</span>
+                            <span class="parameter-desc">500 PPI standardized image</span>
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">patch_size:</span> 
+                            <span class="parameter-type">int</span>
+                            <span class="parameter-desc">Patch dimensions: 24×24, 32×32, or 48×48</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; color: #10b981;">
+                        <strong>CNN Segmentation Process:</strong><br/>
+                        1. Extract overlapping patches from image<br/>
+                        2. Load pre-trained NN1 model (32 filters, 3 conv layers)<br/>
+                        3. Classify each patch: P(foreground | patch) ∈ [0, 1]<br/>
+                        4. Create probability map by averaging overlapping predictions<br/>
+                        5. Apply threshold (τ = 0.5): <code>mask = prob_map > 0.5</code><br/>
+                        6. Morphological cleanup: dilate → erode (remove small holes)
+                    </div>
+                    <div style="margin-top: 15px; color: #60a5fa;">
+                        <strong>Output:</strong><br/>
+                        <code>Binary mask M ∈ {0,1}^(H×W)</code> (same size as input)
+                    </div>
+                </div>
+
+                <h3>Step 3: Image Enhancement</h3>
+                <p><strong>What:</strong> Decompose into reflectance + illumination, then apply guided filtering</p>
+                <p><strong>Why:</strong> Contactless images suffer from uneven lighting and shadows</p>
+                
+                <div class="code-section">
+                    <strong>Intrinsic Decomposition:</strong><br/>
+                    <code>decompose_intrinsic(image, mask, scales=[16, 32, 64])</code><br/>
+                    <div style="margin-top: 10px; color: #93c5fd;">
+                        <div class="parameter">
+                            Formula: <span class="parameter-type">I(x,y) = R(x,y) × L(x,y)</span>
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">I:</span> Observed intensity
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">R:</span> Reflectance (true ridge structure)
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">L:</span> Illumination (lighting variation)
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; color: #10b981;">
+                        <strong>Multi-scale Processing:</strong><br/>
+                        For each scale σ in [16, 32, 64]:<br/>
+                        1. Gaussian blur: <code>L = G(σ) * image</code><br/>
+                        2. Reflectance: <code>R = image / (L + ε)</code>, where ε = 0.001<br/>
+                        3. Iterate 3-5 times for refinement
+                    </div>
+                </div>
+
+                <div class="code-section" style="margin-top: 15px;">
+                    <strong>Guided Filtering:</strong><br/>
+                    <code>guided_filter(reflectance_image, guidance=reflectance, radius=8, eps=0.01)</code><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        <strong>Local Linear Model:</strong><br/>
+                        For each pixel (i,j) with window [i-r:i+r, j-r:j+r]:<br/>
+                        1. μ = mean(guidance[window])<br/>
+                        2. σ² = var(guidance[window])<br/>
+                        3. a = cov(image, guidance) / (σ² + eps)<br/>
+                        4. b = mean(image) - a×μ<br/>
+                        5. Output = a × guidance + b
+                    </div>
+                </div>
+
+                <h3>Step 4: Minutiae Extraction</h3>
+                <p><strong>What:</strong> Detect ridge endings and bifurcations</p>
+                <p><strong>Why:</strong> Minutiae are stable, repeatable features for matching</p>
+                
+                <div class="code-section">
+                    <strong>Function Call:</strong><br/>
+                    <code>extract_minutiae(enhanced_image, mask, threshold=100)</code><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        <strong>Detection Process:</strong><br/>
+                        1. Binarization: <code>binary = enhanced_image > 100</code><br/>
+                        2. Morphological thinning (Zhang-Suen algorithm)<br/>
+                        3. Analyze 3×3 neighborhoods:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;• Ridge Ending: 1 black neighbor (+ center)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;• Bifurcation: 3+ black neighbors<br/>
+                        4. Compute orientation from Gabor response<br/>
+                        5. Quality filtering: min distance 5 pixels
+                    </div>
+                    <div style="margin-top: 15px; color: #60a5fa;">
+                        <strong>Output:</strong><br/>
+                        <code>Minutiae M = {(x_i, y_i, θ_i) : i=1..n}</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MATCHING SECTION -->
+        <div id="matching" class="content-section">
+            <div class="card">
+                <h2><span class="icon">🔗</span>Part 2: Mathematical Modeling - Energy Function</h2>
+                
+                <h3>Correspondence Optimization Framework</h3>
+                <p><strong>Goal:</strong> Find the optimal matching between template and query minutiae</p>
+                
+                <div class="code-section">
+                    <strong>Mathematical Formulation:</strong><br/>
+                    <div style="margin-top: 15px; color: #93c5fd;">
+                        <div class="parameter">
+                            Maximize: <code>f(x) = x<sup>T</sup>Wx</code>
+                        </div>
+                        <div class="parameter">
+                            Subject to: One-to-one mapping constraints
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">X:</span> Correspondence matrix (what matches to what)
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">W:</span> Global Similarity Matrix (distortion-invariant features)
+                        </div>
+                        <div class="parameter">
+                            <span class="parameter-name">x:</span> Vectorized X (for quadratic form)
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Global Similarity Matrix Construction</h3>
+                <p>Matrix W encodes how compatible different minutiae pairs are with each other.</p>
+                
+                <h4>Step 1: Minutiae-Wise Similarity S(a,a)</h4>
+                <div class="code-section">
+                    <strong>For single pair a = (i, i'):</strong><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        1. Create local descriptor from concentric circles<br/>
+                        2. Compute raw similarity: γ(i,i') = (1/K) Σ exp(-2μ/π × δ(α, β))<br/>
+                        3. Normalize to [-1, 1]:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;γ'(i,i') = γ(i,i') - mean(γ)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;S(a,a) = ((γ'_max - γ'_min) × (γ' - γ_min) / (γ_max - γ_min)) + γ'_min
+                    </div>
+                    <div style="margin-top: 15px; color: #60a5fa;">
+                        <strong>Output:</strong> S(a,a) ∈ [-1, 1]
+                    </div>
+                </div>
+
+                <h4>Step 2: Minutiae-Pair Similarity S(a,b)</h4>
+                <p>For two pairs a=(i,i') and b=(j,j'), compute compatibility based on distortion-invariant features.</p>
+                <div class="code-section">
+                    <strong>Algorithm:</strong><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        1. Conflict check:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;If (i=j AND i'≠j') OR (i≠j AND i'=j') → S(a,b) = 0<br/>
+                        2. Compute feature differences:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Υ(a,b) = |rc_ij - rc_i'j'| (ridge count difference)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Θ(a,b) = |ψ_ij - ψ_i'j'| (orientation difference)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;D(a,b) = |d_ij - d_i'j'| (distance difference)<br/>
+                        3. Threshold-based scoring:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;S(a,b) = Ψ(Υ, δ_rc) × Ψ(Θ, δ_θ) × Ψ(D, δ_d)<br/>
+                        where Ψ(x, δ) = {1 if x < δ, -1 otherwise}
+                    </div>
+                    <div style="margin-top: 15px; color: #60a5fa;">
+                        <strong>Output:</strong> S(a,b) ∈ {-1, 0, 1}
+                    </div>
+                </div>
+
+                <h3>Ridge Count Feature: Distortion Invariant</h3>
+                <div class="success">
+                    <strong>Key Insight:</strong> Ridge count between two minutiae is preserved under perspective distortion!<br/>
+                    <div style="margin-top: 10px;">
+                        Example: 5 ridges between minutiae A and B<br/>
+                        → After rotation/scaling: Still 5 ridges<br/>
+                        → Under 3D projection: Still 5 ridges<br/>
+                        ✓ <span class="highlight">Topologically invariant!</span>
+                    </div>
+                </div>
+
+                <h4>How to Compute Ridge Count</h4>
+                <div class="code-section">
+                    <strong>Algorithm:</strong><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        1. Draw line from minutia i to minutia j<br/>
+                        2. Scan along line pixel by pixel<br/>
+                        3. Track transitions: ridge (dark, low value) ↔ valley (light, high value)<br/>
+                        4. Each transition = 1 ridge<br/>
+                        5. Final count = rc_ij
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <strong>Example:</strong> Line of 50 pixels shows pattern:<br/>
+                        ridge→valley (1), valley→ridge (2), ridge→valley (3)... = 8 ridges
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- OPTIMIZATION SECTION -->
+        <div id="optimization" class="content-section">
+            <div class="card">
+                <h2><span class="icon">⚡</span>Part 3: Loose Genetic Algorithm (LGA)</h2>
+                
+                <h3>Why Genetic Algorithm?</h3>
+                <div class="warning">
+                    <strong>Problem:</strong> Combinatorial explosion of possible correspondences<br/>
+                    • n_t! × n_q! possible solutions<br/>
+                    • Greedy methods get stuck in local optima<br/>
+                    <strong>Solution:</strong> GA explores solution space probabilistically
+                </div>
+
+                <h3>Solution Encoding</h3>
+                <div class="code-section">
+                    <strong>Vector representation:</strong><br/>
+                    <code>x = (p_1, p_2, ..., p_n_t)<sup>T</sup></code><br/>
+                    <div style="margin-top: 10px; color: #93c5fd;">
+                        <div class="parameter">
+                            <span class="parameter-name">p_i ∈ {0, 1, ..., n_q}:</span> 
+                            <span class="parameter-desc">p_i = 0 means minutia i is unmatched; p_i = j means minutia i matches query minutia j</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; color: #10b981;">
+                        <strong>One-to-One Constraint:</strong><br/>
+                        No two p_i can equal the same value j (except 0)
+                    </div>
+                </div>
+
+                <h3>Genetic Operators</h3>
+                
+                <h4>1. Initialization</h4>
+                <div class="code-section">
+                    <strong>Function:</strong> <code>initialize_population(n_t, n_q, n_pop, greedy_solution)</code><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        1. <strong>Seeding:</strong> Create p¹₁ from greedy solution<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;p¹₁ = argmax S(a,a) for each minutia i<br/>
+                        2. <strong>Random generation:</strong> For i=2..n_pop<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Select n₀ different values from {1..n_q} randomly<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Remaining positions = 0 (unmatched)<br/>
+                        3. Verify one-to-one constraints
+                    </div>
+                    <div style="margin-top: 15px; color: #60a5fa;">
+                        <strong>Output:</strong> P¹ = {p¹₁, p¹₂, ..., p¹_n} (first generation)
+                    </div>
+                </div>
+
+                <h4>2. Crossover (Set-Based)</h4>
+                <div class="code-section">
+                    <strong>Function:</strong> <code>crossover_operator(parent_1, parent_2)</code><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        1. Convert to sets (non-zero matches only):<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;A = {(j, p_j) : p_j ≠ 0}<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;B = {(j, p'_j) : p'_j ≠ 0}<br/>
+                        2. Compute:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;C = A ∩ B (common matches)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;D_A = A \ B (unique to A)<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;D_B = B \ A (unique to B)<br/>
+                        3. Random selection (~50% from each)<br/>
+                        4. Child construction:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Child1 = C_n1 ∪ D'_A<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;Child2 = C_n1 ∪ D'_B
+                    </div>
+                    <div style="margin-top: 15px; color: #10b981;">
+                        <strong>Property:</strong> One-to-one constraint always preserved!
+                    </div>
+                </div>
+
+                <h4>3. Mutation</h4>
+                <div class="code-section">
+                    <strong>Three operations (randomly chosen):</strong><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        <strong>REMOVE:</strong> Set p_j = 0 (unmatch a minutia)<br/>
+                        <strong>ADD:</strong> Assign unused query value to p_j (add new match)<br/>
+                        <strong>SWAP:</strong> Exchange values p_j1 ↔ p_j2
+                    </div>
+                </div>
+
+                <h4>4. Selection</h4>
+                <div class="code-section">
+                    <strong>For each generation g:</strong><br/>
+                    <div style="margin-top: 10px; color: #10b981;">
+                        1. Evaluate fitness: f(p_k) = p_k<sup>T</sup>Wp_k for all individuals<br/>
+                        2. Keep elite (best individual)<br/>
+                        3. Sort and select top 50% for breeding<br/>
+                        4. Create next generation from:<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;• Elite individual<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;• Crossover children<br/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;• Mutated individuals<br/>
+                        5. Stop if fitness plateaus for 20 generations
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EVALUATION SECTION -->
+        <div id="evaluation" class="content-section">
+            <div class="card">
+                <h2><span class="icon">📊</span>Part 5: Experimental Evaluation</h2>
+                
+                <h3>Evaluation Framework</h3>
+                <p>Assess system performance using genuine and impostor pairs.</p>
+
+                <h3>Performance Metrics</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0;">
+                    <div class="metric-box">
+                        <div class="metric-label">False Acceptance Rate</div>
+                        <div class="metric-value">FAR(τ)</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">False Rejection Rate</div>
+                        <div class="metric-value">FRR(τ)</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Equal Error Rate</div>
+                        <div class="metric-value">EER</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Area Under Curve</div>
+                        <div class="metric-value">AUC</div>
+                    </div>
+                </div>
+
+                <h4>FAR and FRR Computation</h4>
+                <div class="code-section">
+                    <strong>False Acceptance Rate (FAR):</strong><br/>
+                    <code>FAR(τ) = count(impostor_scores > τ) / total_impostor_pairs</code><br/>
+                    <div style="margin-top: 10px; color: #cbd5e1;">
+                        Error of accepting a fake fingerprint as genuine
+                    </div>
+                </div>
+
+                <div class="code-section" style="margin-top: 15px;">
+                    <strong>False Rejection Rate (FRR):</strong><br/>
+                    <code>FRR(τ) = count(genuine_scores < τ) / total_genuine_pairs</code><br/>
+                    <div style="margin-top: 10px; color: #cbd5e1;">
+                        Error of rejecting a legitimate user
+                    </div>
+                </div>
+
+                <h4>Equal Error Rate (EER)</h4>
+                <div class="code-section">
+                    <div style="color: #10b981;">
+                        Find threshold τ* where FAR(τ*) ≈ FRR(τ*)<br/>
+                        <strong>Lower EER = Better Performance</strong><br/>
+                        Represents optimal operating point balancing false positives and false negatives
+                    </div>
+                </div>
+
+                <h3>ROC Curve</h3>
+                <div class="code-section">
+                    Plot: <strong>False Acceptance Rate (X-axis) vs Genuine Acceptance Rate (Y-axis)</strong><br/>
+                    <div style="margin-top: 10px; color: #cbd5e1;">
+                        GAR(τ) = 1 - FRR(τ) = True Positive Rate<br/>
+                        AUC measures overall discrimination ability (closer to 1.0 = better)
+                    </div>
+                </div>
+
+                <h3>Score Interpretation</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Score Range</th>
+                        <th>Interpretation</th>
+                        <th>Typical Action</th>
+                    </tr>
+                    <tr>
+                        <td>0.0 - 0.3</td>
+                        <td>Low similarity</td>
+                        <td>Likely impostor → Reject</td>
+                    </tr>
+                    <tr>
+                        <td>0.3 - 0.5</td>
+                        <td>Moderate similarity</td>
+                        <td>Uncertain (threshold-dependent)</td>
+                    </tr>
+                    <tr>
+                        <td>0.5 - 1.0</td>
+                        <td>High similarity</td>
+                        <td>Likely genuine → Accept</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- 10x10 EXAMPLE SECTION -->
+        <div id="example10x10" class="content-section">
+            <div class="card">
+                <h2><span class="icon">🎯</span>Complete Pipeline Trace: 10×10 Example</h2>
+                
+                <h3>Initial Setup</h3>
+                <p>Raw 10×10 contactless fingerprint image with simulated values representing ridge and valley patterns.</p>
+
+                <div class="transition-diagram">
+                    <h4>Input Image (10×10)</h4>
+                    <p style="margin: 10px 0; color: #93c5fd;">Grayscale values 0-255</p>
+                    <div class="grid-visual">
+                        <div style="display: grid; grid-template-columns: repeat(10, 1fr); gap: 0;">
+                            <!-- Simulated fingerprint pattern -->
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell background"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell foreground"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell foreground"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell background"></div><div class="grid-cell foreground"></div>
+                            <div class="grid-cell foreground"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                            <div class="grid-cell background"></div><div class="grid-cell background"></div>
+                        </div>
+                    </div>
+                    <div class="grid-legend">
+                        <div class="legend-item">
+                            <div class="legend-color foreground"></div>
+                            <span>Foreground (Ridge)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color background"></div>
+                            <span>Background (Noise)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color minutiae"></div>
+                            <span>Minutiae</span>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Step-by-Step Transformation</h3>
+                <div class="workflow-box">
+                    <strong>Step 1: STANDARDIZATION (1000→500 PPI)</strong><br/>
+                    Input: 10×10 image<br/>
+                    Processing: Downsampled by factor of 2 (no change due to 10×10 size in this demo)<br/>
+                    Output: 10×10 image with smoothed values<br/>
+                </div>
+
+                <div class="workflow-box">
+                    <strong>Step 2: SEGMENTATION (CNN)</strong><br/>
+                    Input: 10×10 standardized<br/>
+                    Processing: CNN classifies center region as foreground<br/>
+                    Output: Binary mask - center 6×6 = 1, rest = 0<br/>
+                    Effect: Removes 36 background pixels
+                </div>
+
+                <div class="workflow-box">
+                    <strong>Step 3: INTRINSIC DECOMPOSITION</strong><br/>
+                    Input: Masked image<br/>
+                    Processing: Separate reflectance from illumination<br/>
+                    Output: Enhanced contrast, shadows removed<br/>
+                    Effect: Ridge-valley transitions sharper
+                </div>
+
+                <div class="workflow-box">
+                    <strong>Step 4: GUIDED FILTERING + GABOR</strong><br/>
+                    Input: Decomposed image<br/>
+                    Processing: Edge-preserving filtering + orientation analysis<br/>
+                    Output: Clean ridge pattern with orientation map<br/>
+                    Effect: Noise smoothed, ridge structure preserved
+                </div>
+
+                <div class="workflow-box">
+                    <strong>Step 5: MINUTIAE EXTRACTION</strong><br/>
+                    Input: Enhanced binarized image<br/>
+                    Processing: Thinning → neighborhood analysis<br/>
+                    Output: 3-5 minutiae detected<br/>
+                    Example: [(4,3,45°), (5,5,30°), (7,6,15°)]
+                </div>
+
+                <h3>Matching Phase (Template vs Query)</h3>
+                <p style="margin: 20px 0; background: rgba(31, 41, 55, 0.8); padding: 15px; border-radius: 5px; border-left: 3px solid #10b981;">
+                    <strong>Template T:</strong> {m₁(4,3,45°), m₂(5,5,30°), m₃(7,6,15°)} - n_t = 3<br/>
+                    <strong>Query Q:</strong> {m'₁(4,4,43°), m'₂(5,6,32°), m'₃(7,7,16°)} - n_q = 3 (slightly distorted)
+                </p>
+
+                <h4>Ridge Count Matrix</h4>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Pair</th>
+                        <th>Template RC</th>
+                        <th>Query RC</th>
+                        <th>Distortion Invariant?</th>
+                    </tr>
+                    <tr>
+                        <td>m₁-m₂ / m'₁-m'₂</td>
+                        <td>5</td>
+                        <td>5</td>
+                        <td><span class="highlight">✓ Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td>m₁-m₃ / m'₁-m'₃</td>
+                        <td>8</td>
+                        <td>8</td>
+                        <td><span class="highlight">✓ Yes</span></td>
+                    </tr>
+                    <tr>
+                        <td>m₂-m₃ / m'₂-m'₃</td>
+                        <td>3</td>
+                        <td>3</td>
+                        <td><span class="highlight">✓ Yes</span></td>
+                    </tr>
+                </table>
+
+                <h4>Similarity Matrix W (Simplified 9×9)</h4>
+                <p style="margin: 10px 0; color: #93c5fd;">Candidate pairs: (1,1'), (1,2'), (1,3'), (2,1'), (2,2'), (2,3'), (3,1'), (3,2'), (3,3')</p>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 15px; border-radius: 5px; overflow-x: auto; margin: 15px 0;">
+                    <strong>Diagonal Elements (minutiae-wise):</strong><br/>
+                    W₁,₁ = S(1,1') = 0.85 (high match, angle diff 2°)<br/>
+                    W₅,₅ = S(2,2') = 0.82<br/>
+                    W₉,₉ = S(3,3') = 0.80<br/>
+                    <strong>Off-diagonal (pair compatibility):</strong><br/>
+                    W₁,₅ = S((1,1'), (2,2')) = 1 (ridge counts match)<br/>
+                    W₁,₉ = S((1,1'), (3,3')) = 1<br/>
+                    W₅,₉ = S((2,2'), (3,3')) = 1
+                </div>
+
+                <h4>Loose GA Optimization</h4>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
+                    <strong>Population Initialization:</strong><br/>
+                    p¹₁ = [1, 2, 3]ᵀ (greedy: match all)<br/>
+                    p¹₂ = [2, 0, 1]ᵀ (random)<br/>
+                    p¹₃ = [3, 1, 2]ᵀ (random)<br/>
+                    <br/>
+                    <strong>Fitness Evaluation:</strong><br/>
+                    f(p¹₁) = [1,2,3]ᵀ·W·[1,2,3] = 2.47 <span class="highlight">(highest)</span><br/>
+                    <br/>
+                    <strong>After 50 Generations:</strong><br/>
+                    p_final = [1, 2, 3]ᵀ <span class="highlight">(converged to greedy solution)</span>
+                </div>
+
+                <h4>Minutia-Pair Expanding</h4>
+                <div style="background: rgba(15, 23, 42, 0.8); padding: 15px; border-radius: 5px; margin: 15px 0;">
+                    X_skeleton = p_final → T₁ = {1,2,3}, Q₁ = {1',2',3'}<br/>
+                    T₂ = {}, Q₂ = {} <span class="highlight">(all matched)</span><br/>
+                    → No expansion needed
+                </div>
+
+                <h4>Final Score Computation</h4>
+                <div style="background: rgba(34, 197, 94, 0.2); padding: 15px; border-radius: 5px; border-left: 3px solid #10b981; margin: 15px 0;">
+                    <strong>Energy Function:</strong> f(x_final) = 2.47<br/>
+                    <strong>Matched Pairs:</strong> N_match = 3 (all matched)<br/>
+                    <strong>Score:</strong> (2 × 2.47) / (3 × 6) = 4.94 / 18 = <span class="highlight">0.274</span><br/>
+                    <strong>Interpretation:</strong> Borderline (close to 0.3 threshold)
+                </div>
+            </div>
+        </div>
+
+        <!-- WORKFLOWS SECTION -->
+        <div id="workflows" class="content-section">
+            <div class="card">
+                <h2><span class="icon">⚙️</span>Execution Workflows & Function Calls</h2>
+                
+                <h3>Preprocessing Pipeline</h3>
+                <div class="workflow-box">
+                    <code>main.py preprocess --input raw/ --output processed/</code><br/><br/>
+                    For each image in raw/:<br/>
+                    ├─ load_image(path) → img<br/>
+                    ├─ standardize(img, 1000, 500) → (img_std, scale)<br/>
+                    ├─ segment_fingertip(img_std, use_cnn=True) → mask<br/>
+                    ├─ intrinsic_decomposition(img_std, mask) → reflectance<br/>
+                    ├─ guided_filter(reflectance) → enhanced<br/>
+                    ├─ gabor_enhance(enhanced) → enhanced_oriented<br/>
+                    ├─ extract_minutiae(enhanced_oriented, mask) → minutiae<br/>
+                    └─ save_results(enhanced, mask, minutiae)
+                </div>
+
+                <h3>Matching Workflow</h3>
+                <div class="workflow-box">
+                    <code>match_fingerprints(probe_img, gallery_img):</code><br/><br/>
+                    ├─ Preprocess both:<br/>
+                    │  ├─ preprocess_image(probe_img) → (M_p, minT_p)<br/>
+                    │  └─ preprocess_image(gallery_img) → (M_g, minT_g)<br/>
+                    ├─ Compute features:<br/>
+                    │  ├─ ridge_count_matrix(minT_p, minT_g) → RC<br/>
+                    │  └─ compute_minutiae_similarity(minT_p, minT_g) → S_aa<br/>
+                    ├─ Build W matrix:<br/>
+                    │  └─ assemble_similarity_matrix(minT_p, minT_g, RC) → W<br/>
+                    ├─ GA optimization:<br/>
+                    │  └─ run_loose_ga(W, n_t, n_q) → X_skeleton<br/>
+                    ├─ Expand matches:<br/>
+                    │  └─ expand_minutia_pairs(X_skeleton, minT_p, minT_g) → X_final<br/>
+                    ├─ Compute score:<br/>
+                    │  └─ compute_final_score(X_final, W) → score (0-1)<br/>
+                    └─ Return decision
+                </div>
+
+                <h3>Evaluation Workflow</h3>
+                <div class="workflow-box">
+                    <code>evaluate_system(database_path):</code><br/><br/>
+                    ├─ Phase 1: Preprocess all<br/>
+                    │  └─ For each subject folder → preprocess all images<br/>
+                    ├─ Phase 2: Generate pairs<br/>
+                    │  ├─ Genuine: All within-subject combinations<br/>
+                    │  └─ Impostor: Random cross-subject pairings<br/>
+                    ├─ Phase 3: Match all pairs<br/>
+                    │  └─ For each pair → match_fingerprints() → score<br/>
+                    ├─ Phase 4: Compute metrics<br/>
+                    │  ├─ Sort scores: S_genuine, S_impostor<br/>
+                    │  ├─ For each threshold τ:<br/>
+                    │  │  ├─ FAR(τ) = count(S_imp > τ) / len(S_imp)<br/>
+                    │  │  └─ FRR(τ) = count(S_gen < τ) / len(S_gen)<br/>
+                    │  ├─ Find EER: τ* = argmin |FAR(τ) - FRR(τ)|<br/>
+                    │  └─ Compute AUC from ROC<br/>
+                    └─ Phase 5: Visualization<br/>
+                       ├─ plot_roc_curve(FAR, GAR)<br/>
+                       ├─ plot_error_rates(FAR, FRR, τ)<br/>
+                       └─ plot_score_distribution(S_genuine, S_impostor)
+                </div>
+            </div>
+        </div>
+
+        <!-- INSIGHTS SECTION -->
+        <div id="insights" class="content-section">
+            <div class="card">
+                <h2><span class="icon">💡</span>Key Insights & Design Rationale</h2>
+                
+                <h3>Challenge 1: Perspective Distortion</h3>
+                <div class="example-item">
+                    <strong>Problem:</strong> Contactless images suffer from 3D projection effects<br/>
+                    <strong>Solution:</strong> Use distortion-invariant features (Ridge Count)<br/>
+                    <strong>Why:</strong> Topological properties preserved under rotation/scaling/projection
+                </div>
+
+                <h3>Challenge 2: Combinatorial Explosion</h3>
+                <div class="example-item">
+                    <strong>Problem:</strong> Naive search over n! correspondences is intractable<br/>
+                    <strong>Solution:</strong> Genetic Algorithm with set-based operators<br/>
+                    <strong>Why:</strong> Probabilistic exploration balances exploration/exploitation
+                </div>
+
+                <h3>Challenge 3: Image Quality Variations</h3>
+                <div class="example-item">
+                    <strong>Problem:</strong> Uneven illumination, noise, lower resolution<br/>
+                    <strong>Solution:</strong> Multi-stage enhancement (intrinsic + guided filter + Gabor)<br/>
+                    <strong>Why:</strong> Each stage removes different artifact class systematically
+                </div>
+
+                <h3>Challenge 4: Variable Fingerprint Sizes</h3>
+                <div class="example-item">
+                    <strong>Problem:</strong> Different finger sizes, different minutiae counts<br/>
+                    <strong>Solution:</strong> Loose GA with variable-length solutions (p_i ∈ {0..n_q})<br/>
+                    <strong>Why:</strong> Naturally handles one-to-one matching constraints
+                </div>
+
+                <h3>Challenge 5: Local Optima in Matching</h3>
+                <div class="example-item">
+                    <strong>Problem:</strong> Greedy matching gets stuck in local optima<br/>
+                    <strong>Solution:</strong> GA + deterministic expanding algorithm<br/>
+                    <strong>Why:</strong> GA explores space, expanding algorithm refines solution
+                </div>
+
+                <h3>Performance Metrics Rationale</h3>
+                <table class="comparison-table">
+                    <tr>
+                        <th>Metric</th>
+                        <th>Purpose</th>
+                        <th>Why Important</th>
+                    </tr>
+                    <tr>
+                        <td><strong>EER</strong></td>
+                        <td>Practical threshold</td>
+                        <td>Balanced operating point where FAR = FRR</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AUC</strong></td>
+                        <td>Overall discrimination</td>
+                        <td>System's ability to separate genuine/impostor across all thresholds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FAR</strong></td>
+                        <td>Security metric</td>
+                        <td>Tunable for security vs convenience tradeoff</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FRR</strong></td>
+                        <td>Usability metric</td>
+                        <td>Tunable to control false rejections (user frustration)</td>
+                    </tr>
+                </table>
+
+                <h3>Implementation Trade-offs</h3>
+                <div class="example-item">
+                    <strong>Ridge Count Computation:</strong> Fast (line scan) vs Accurate (multiple directions)<br/>
+                    → Choose single direction for speed, multiple for accuracy
+                </div>
+
+                <div class="example-item">
+                    <strong>CNN Model Selection:</strong> Accuracy vs Speed<br/>
+                    → NN1 (fast): 24×24 patches<br/>
+                    → NN3 (accurate): Full U-Net
+                </div>
+
+                <div class="example-item">
+                    <strong>GA Population Size:</strong> Exploration vs Computation<br/>
+                    → Larger population (100+): Better solution, slower<br/>
+                    → Smaller population (20-30): Faster, risk of local optima
+                </div>
+
+                <div class="example-item">
+                    <strong>Threshold Selection:</strong> Security vs Convenience<br/>
+                    → Low threshold (0.3): Easier access, more impostors accepted<br/>
+                    → High threshold (0.7): Harder access, more legitimate users rejected
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Contactless Fingerprint Recognition System | SIL775/7175 - Biometric Security</p>
+        <p>Implementation of "Contactless Fingerprint Recognition Based on Global Minutia Topology and Loose Genetic Algorithm" (Yin et al., 2020)</p>
+    </footer>
+
+    <script>
+        function showTab(tabName) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => section.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(tabName).classList.add('active');
+            
+            // Update button styles
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
