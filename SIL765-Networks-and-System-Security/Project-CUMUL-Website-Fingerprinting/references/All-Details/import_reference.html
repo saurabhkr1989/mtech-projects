@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CUMUL — Import & Dependency Reference</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 28px 20px;
+  font-size: 13px;
+}
+
+h1 { font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+.subtitle { font-size: 12px; color: #64748b; margin-bottom: 24px; }
+
+/* ── SECTION TITLE ── */
+.section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 32px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.sb-std   { background:#dbeafe; color:#1e40af; }
+.sb-third { background:#fef3c7; color:#92400e; }
+.sb-local { background:#dcfce7; color:#166534; }
+
+/* ── TABLE ── */
+.tbl-wrap {
+  overflow-x: auto;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  margin-bottom: 6px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+thead th {
+  background: #f8fafc;
+  padding: 9px 13px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+
+tbody td {
+  padding: 9px 13px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: top;
+  line-height: 1.6;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #fafbfc; }
+
+/* column widths */
+.c-import  { width: 16%; min-width: 130px; }
+.c-what    { width: 20%; min-width: 150px; }
+.c-usedby  { width: 30%; min-width: 200px; }
+.c-purpose { width: 34%; }
+
+/* import name */
+code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1d4ed8;
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 3px;
+  padding: 1px 5px;
+  white-space: nowrap;
+}
+code.third { color: #92400e; background: #fef3c7; border-color: #fde68a; }
+code.local { color: #166534; background: #f0fdf4; border-color: #bbf7d0; }
+code.sym   { color: #4c1d95; background: #f5f3ff; border-color: #ddd6fe; }
+
+/* module pills */
+.pill {
+  display: inline-block;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 10.5px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin: 2px 2px 2px 0;
+  white-space: nowrap;
+  border: 1px solid;
+}
+/* collect */
+.pc { background:#fff5f5; border-color:#fca5a5; color:#991b1b; }
+/* feature */
+.pf { background:#f5f3ff; border-color:#c4b5fd; color:#4c1d95; }
+/* train */
+.pt { background:#eff6ff; border-color:#93c5fd; color:#1e40af; }
+/* eval */
+.pe { background:#f0fdf4; border-color:#86efac; color:#166534; }
+/* util */
+.pu { background:#f8fafc; border-color:#cbd5e1; color:#334155; }
+/* all */
+.pa { background:#fefce8; border-color:#fde047; color:#713f12; }
+
+/* purpose text */
+.purpose-text { color: #334155; line-height: 1.6; }
+.note { font-size: 11px; color: #94a3b8; font-style: italic; margin-top: 3px; }
+
+/* specific symbol list */
+.sym-list { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 4px; }
+</style>
+</head>
+<body>
+
+<h1>CUMUL Website Fingerprinting — Import & Dependency Reference</h1>
+<p class="subtitle">Every import across all modules: what it provides, where it is used, and why &nbsp;|&nbsp; Panchenko et al., NDSS 2016</p>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 1: PYTHON STANDARD LIBRARY
+══════════════════════════════════════════════════ -->
+<div class="section-title">
+  Python Standard Library
+  <span class="section-badge sb-std">built-in</span>
+</div>
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr>
+      <th class="c-import">Import</th>
+      <th class="c-what">Symbols used</th>
+      <th class="c-usedby">Used in files</th>
+      <th class="c-purpose">Purpose in this project</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td><code>os</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">os.path</code>
+          <code class="sym">os.environ</code>
+          <code class="sym">os.makedirs</code>
+          <code class="sym">os.getcwd</code>
+          <code class="sym">os.getpid</code>
+          <code class="sym">os.remove</code>
+          <code class="sym">os.cpu_count</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pa">ALL modules</span>
+      </td>
+      <td class="purpose-text">
+        File and directory path operations throughout. Critical uses:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>Set <code>WIRESHARK_MANUF</code> env var before Scapy import in <code>capture.py</code></li>
+          <li>Delete <code>SSLKEYLOGFILE</code> env var to prevent TLS key leakage</li>
+          <li>Build absolute paths for PCAP output, model files, config</li>
+          <li><code>os.cpu_count()</code> to set <code>FEATURE_EXTRACTION_WORKERS</code> in config</li>
+          <li><code>os.getpid()</code> to create unique Chrome profile dirs per worker</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>sys</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">sys.path.insert</code>
+          <code class="sym">sys.exit</code>
+          <code class="sym">sys.stdout.write</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pa">ALL modules</span>
+      </td>
+      <td class="purpose-text">
+        Manipulate Python module search path so child processes (spawned by multiprocessing.Pool) can find the project root. <code>sys.stdout.write + flush()</code> for live progress output without newlines in collection loop.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>json</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">json.load</code>
+          <code class="sym">json.dump</code>
+          <code class="sym">json.JSONDecodeError</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pu">site_registry.py</span>
+        <span class="pill pu">show_status.py</span>
+        <span class="pill pu">sanitize.py</span>
+        <span class="pill pu">expand_lists.py</span>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pe">graphs.py</span>
+        <span class="pill pe">visualize.py</span>
+        <span class="pill pe">evaluate.py</span>
+      </td>
+      <td class="purpose-text">
+        Read/write all persistent state files: <code>capture_status.json</code> (progressive tracker), <code>master_sites.json</code> (site registry), experiment result reports, model metadata, and training history.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>time</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">time.sleep</code>
+          <code class="sym">time.time</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        All timing in the capture pipeline: page load waits (<code>PAGE_LOAD_WAIT</code>), Tor bootstrap polling loops, circuit rotation waits (<code>CIRCUIT_WAIT_SECONDS</code>), inter-capture idle (<code>INTER_CAPTURE_IDLE</code>), human scroll delays.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>random</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">random.choice</code>
+          <code class="sym">random.uniform</code>
+          <code class="sym">random.randint</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        Anti-fingerprinting randomisation: random user-agent selection, random window size, random scroll step count (5–10), random scroll amount (500–1000px), random inter-capture idle time from config range.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>glob</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">glob.glob</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pt">data.py</span>
+        <span class="pill pf">extract_features.py</span>
+        <span class="pill pu">show_status.py</span>
+        <span class="pill pu">merge_data.py</span>
+        <span class="pill pe">visualize.py</span>
+      </td>
+      <td class="purpose-text">
+        Scan directories for PCAP files using wildcard patterns like <code>data/raw/label_*.pcap</code>. Also used in <code>visualize.py</code> to find the latest JSON result file in <code>results/</code>.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>threading</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">Thread</code>
+          <code class="sym">Event</code>
+          <code class="sym">Lock</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>Thread</b> — background Scapy sniffer loop in <code>PacketCapture</code> class.<br>
+        <b>Event</b> — stop signal to cleanly terminate the sniffer thread.<br>
+        <b>Lock</b> — <code>_tracker_lock</code> in collection_menu.py serialises all reads/writes to <code>capture_status.json</code> across 30 concurrent workers.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>multiprocessing</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">Pool</code>
+          <code class="sym">Manager</code>
+          <code class="sym">Queue</code>
+          <code class="sym">freeze_support</code>
+          <code class="sym">cpu_count</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pt">data.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>Pool</b> — spawns up to 10 isolated subprocess workers, each owning one Chrome+Tor pair. <code>maxtasksperchild=1</code> ensures OS reclaims zombie Chrome processes after each capture.<br>
+        <b>Manager().Queue()</b> — shared worker-ID pool across processes for Tor port assignment.<br>
+        <b>freeze_support()</b> — required on Windows for multiprocessing under frozen executables.<br>
+        <b>ProcessPoolExecutor</b> (via <code>concurrent.futures</code>) — parallel CUMUL feature extraction in <code>data.py</code>.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>concurrent.futures</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">ThreadPoolExecutor</code>
+          <code class="sym">ProcessPoolExecutor</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pt">data.py</span>
+        <span class="pill pf">extract_features.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>ThreadPoolExecutor</b> — parallel disk scanning in <code>_sync_from_disk()</code> (4 threads, I/O-bound).<br>
+        <b>ProcessPoolExecutor</b> — parallel CUMUL feature extraction in <code>data.py</code> (cpu_count−1 processes, CPU-bound). Falls back to sequential on spawn failure.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>collections</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">defaultdict</code>
+          <code class="sym">Counter</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pt">data.py</span>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pu">show_status.py</span>
+        <span class="pill pu">merge_data.py</span>
+        <span class="pill pe">evaluate.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>defaultdict</b> — group PCAP files by site label during scanning and merging.<br>
+        <b>Counter</b> — count per-class sample sizes in <code>svm_model.py</code> to determine viable CV fold count; count class distributions in evaluation.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>datetime</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">datetime.now()</code>
+          <code class="sym">.isoformat()</code>
+          <code class="sym">.strftime()</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pe">graphs.py</span>
+        <span class="pill pe">evaluate.py</span>
+        <span class="pill pu">show_status.py</span>
+      </td>
+      <td class="purpose-text">
+        Timestamp all tracker updates (<code>last_updated</code> field in capture_status.json), model training results (<code>metadata.json</code>), result report filenames, and graph output directory names.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>dataclasses</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">@dataclass</code>
+          <code class="sym">asdict</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">data.py</span>
+        <span class="pill pt">svm_model.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>data.py</b> — <code>SampleFile</code> frozen dataclass holds label, index, path for each PCAP file in the dataset.<br>
+        <b>svm_model.py</b> — <code>SVMExperimentResult</code> dataclass structures all training metrics; <code>asdict()</code> serialises it to JSON.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>pathlib</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">Path</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+      </td>
+      <td class="purpose-text">
+        Used in <code>capture.py</code> for cleaner path construction when building PCAP output paths and Chrome profile directories.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>socket</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">socket.socket</code>
+          <code class="sym">.connect_ex</code>
+          <code class="sym">.settimeout</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pa">main.py</span>
+        <span class="pill pu">smoke_test.py</span>
+      </td>
+      <td class="purpose-text">
+        TCP socket probing to check if Tor SOCKS port (9050) is open and accepting connections. Used in <code>wait_for_tor()</code>, <code>_check_tor()</code>, and <code>main.py</code> dependency check.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>subprocess</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">subprocess.Popen</code>
+          <code class="sym">subprocess.run</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>Popen</b> — launch dedicated <code>tor.exe</code> subprocess per worker with unique SOCKS/control ports.<br>
+        <b>subprocess.run</b> — Windows <code>taskkill /F /IM chrome.exe</code> to forcibly clean up zombie Chrome and chromedriver processes after collection.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>shutil</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">shutil.rmtree</code>
+          <code class="sym">shutil.copy2</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pu">merge_data.py</span>
+      </td>
+      <td class="purpose-text">
+        <b>rmtree</b> — delete isolated Chrome profile directories after each capture to prevent disk bloat.<br>
+        <b>copy2</b> — copy pre-patched chromedriver to project root in collection_menu.py; copy PCAP files to merged output directory in merge_data.py.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>warnings</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">filterwarnings</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pe">graphs.py</span>
+      </td>
+      <td class="purpose-text">
+        Suppress noisy Selenium/Scapy deprecation warnings in capture.py. In graphs.py, suppresses Matplotlib "Axes not compatible with tight_layout" UserWarnings that appear when too many subplots are present.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>signal</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">signal.SIGINT</code>
+          <code class="sym">signal.SIG_IGN</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        Pool worker initialiser sets SIGINT to SIG_IGN so Ctrl+C is handled exclusively by the parent process. Without this, every worker subprocess would also receive the interrupt, causing chaotic parallel shutdown instead of a clean graceful teardown.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>csv</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">csv.writer</code>
+          <code class="sym">csv.reader</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">test.py</span>
+      </td>
+      <td class="purpose-text">
+        Export per-sample prediction results (true label, predicted label, confidence) to a CSV file for external analysis or submission.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>functools</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">lru_cache</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pu">site_registry.py</span>
+      </td>
+      <td class="purpose-text">
+        Caches the result of <code>load_master_registry()</code> so the 500-site JSON file is read from disk only once per process lifetime, even though it is called many times throughout the training and collection pipelines.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code>contextlib</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">nullcontext</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">model.py (var-CNN)</span>
+      </td>
+      <td class="purpose-text">
+        Used as a no-op context manager when TensorFlow's MirroredStrategy is disabled. Allows the training loop to use <code>with strategy.scope():</code> uniformly regardless of whether GPU distribution is active.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 2: THIRD-PARTY PACKAGES
+══════════════════════════════════════════════════ -->
+<div class="section-title">
+  Third-Party Packages
+  <span class="section-badge sb-third">pip install</span>
+</div>
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr>
+      <th class="c-import">Package / Import</th>
+      <th class="c-what">Symbols used</th>
+      <th class="c-usedby">Used in files</th>
+      <th class="c-purpose">Purpose in this project</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td><code class="third">numpy</code><br><small style="color:#92400e">v1.26.4</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">np.linspace</code>
+          <code class="sym">np.interp</code>
+          <code class="sym">np.array</code>
+          <code class="sym">np.zeros</code>
+          <code class="sym">np.asarray</code>
+          <code class="sym">np.save</code>
+          <code class="sym">np.load</code>
+          <code class="sym">np.unique</code>
+          <code class="sym">np.concatenate</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pf">cumul.py</span>
+        <span class="pill pt">data.py</span>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pu">scaler.py</span>
+        <span class="pill pe">graphs.py</span>
+        <span class="pill pe">closed_world.py</span>
+        <span class="pill pe">visualize.py</span>
+        <span class="pill pe">evaluate.py</span>
+      </td>
+      <td class="purpose-text">
+        Core numerical engine for the entire pipeline:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li><b>CUMUL</b>: <code>np.linspace(0, a_max, 100)</code> creates equidistant sample points; <code>np.interp()</code> does piecewise-linear interpolation of C(T) curve</li>
+          <li><b>Feature matrix</b>: <code>np.array(vectors)</code> assembles the (N, 104) feature matrix X</li>
+          <li><b>Evaluation</b>: confusion matrix computation, ROC/PR curve arrays, macro-averaging</li>
+          <li><b>Persistence</b>: <code>np.save/load</code> for feature matrix .npy files</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">scikit-learn</code><br><small style="color:#92400e">v1.5.1</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">SVC</code>
+          <code class="sym">GridSearchCV</code>
+          <code class="sym">StratifiedKFold</code>
+          <code class="sym">cross_val_score</code>
+          <code class="sym">cross_val_predict</code>
+          <code class="sym">MinMaxScaler</code>
+          <code class="sym">LabelEncoder</code>
+          <code class="sym">label_binarize</code>
+          <code class="sym">accuracy_score</code>
+          <code class="sym">classification_report</code>
+          <code class="sym">confusion_matrix</code>
+          <code class="sym">roc_curve</code>
+          <code class="sym">precision_recall_curve</code>
+          <code class="sym">auc</code>
+          <code class="sym">train_test_split</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pe">graphs.py</span>
+        <span class="pill pe">closed_world.py</span>
+        <span class="pill pe">evaluate.py</span>
+        <span class="pill pt">model.py</span>
+      </td>
+      <td class="purpose-text">
+        The classification backbone of the system:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li><b>SVC (RBF kernel)</b> — primary CUMUL classifier from the paper</li>
+          <li><b>GridSearchCV</b> — searches C∈[2¹¹…2¹⁷], γ∈[2⁻³…2³] parameter space</li>
+          <li><b>StratifiedKFold</b> — preserves class balance across CV folds (up to 10)</li>
+          <li><b>MinMaxScaler(−1,1)</b> — normalises 104-dim feature vectors before SVM</li>
+          <li><b>LabelEncoder</b> — maps string site labels to integer class indices</li>
+          <li><b>label_binarize</b> — converts labels to one-vs-rest format for ROC curves</li>
+          <li><b>confusion_matrix, classification_report</b> — all evaluation metrics</li>
+          <li><b>roc_curve, precision_recall_curve, auc</b> — graph generation in graphs.py</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">scapy</code><br><small style="color:#92400e">v2.5.0</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">sniff</code>
+          <code class="sym">wrpcap</code>
+          <code class="sym">rdpcap</code>
+          <code class="sym">TCP</code>
+          <code class="sym">IP</code>
+          <code class="sym">conf</code>
+          <code class="sym">get_if_list</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pf">cumul.py</span>
+        <span class="pill pc">collection_menu.py</span>
+        <span class="pill pu">diag_scapy.py</span>
+        <span class="pill pu">test_sniff.py</span>
+      </td>
+      <td class="purpose-text">
+        Network packet capture and parsing — the core data collection engine:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li><b>sniff()</b> — background packet sniffer in <code>PacketCapture</code> thread, filtered by TCP port</li>
+          <li><b>wrpcap()</b> — write captured packets to .pcap file on disk</li>
+          <li><b>rdpcap()</b> — load .pcap file for CUMUL feature extraction and validation</li>
+          <li><b>IP, TCP</b> — layer access to determine packet direction (<code>IP.dst == '127.0.0.1'</code>) and payload size</li>
+          <li><b>conf.route</b> — auto-detect Windows loopback interface for SOCKS traffic capture</li>
+          <li>Must be imported AFTER setting <code>WIRESHARK_MANUF</code> env var (Windows requirement)</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">stem</code><br><small style="color:#92400e">v1.8.2</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">Signal</code>
+          <code class="sym">Controller</code>
+          <code class="sym">Controller.from_port</code>
+          <code class="sym">.authenticate()</code>
+          <code class="sym">.signal(NEWNYM)</code>
+          <code class="sym">.get_info()</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+      </td>
+      <td class="purpose-text">
+        Python controller library for the Tor process:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li><b>Controller.from_port(ctrl_port)</b> — connects to each worker's dedicated Tor control port</li>
+          <li><b>signal(NEWNYM)</b> — requests a fresh Tor circuit before each capture attempt, ensuring traffic isolation between instances</li>
+          <li><b>get_info("status/bootstrap-phase")</b> — polls for <code>PROGRESS=100</code> to confirm Tor is fully bootstrapped before beginning capture</li>
+          <li>Fails gracefully with 5 s sleep fallback if Stem unavailable</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">selenium</code><br><small style="color:#92400e">v4.18.1</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">webdriver.Chrome</code>
+          <code class="sym">ChromeOptions</code>
+          <code class="sym">.get(url)</code>
+          <code class="sym">.execute_script</code>
+          <code class="sym">.execute_cdp_cmd</code>
+          <code class="sym">.quit()</code>
+          <code class="sym">.title</code>
+          <code class="sym">.page_source</code>
+          <code class="sym">.current_url</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+      </td>
+      <td class="purpose-text">
+        Browser automation fallback when undetected-chromedriver is unavailable:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>Navigate to target URL through Tor SOCKS5 proxy</li>
+          <li><code>execute_cdp_cmd</code> — inject stealth JS patches to hide <code>navigator.webdriver</code></li>
+          <li><code>execute_script</code> — poll <code>document.readyState</code>, execute scroll commands</li>
+          <li><code>page_source</code>, <code>title</code>, <code>current_url</code> — read page for bot-detection checks</li>
+          <li><code>find_element("tag name","body").text</code> — measure body text length for thin-content check</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">undetected_chromedriver</code><br><small style="color:#92400e">≥3.5.5</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">uc.Chrome</code>
+          <code class="sym">uc.ChromeOptions</code>
+          <code class="sym">uc.Patcher</code>
+          <code class="sym">patcher.auto()</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        Preferred Chrome driver that patches the chromedriver binary to remove automation detection markers:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>Replaces standard Selenium Chrome to bypass Cloudflare, Akamai, and other bot-detection systems</li>
+          <li><code>uc.Patcher().auto()</code> — pre-patches the driver once before spawning workers (prevents concurrent patch-file-in-use errors on Windows)</li>
+          <li>Uses <code>use_subprocess=True</code> for better process isolation on Windows</li>
+          <li>Wrapped in try/except; Selenium falls back automatically if absent</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">fasteners</code><br><small style="color:#92400e">v0.19</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">InterProcessLock</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+      </td>
+      <td class="purpose-text">
+        Cross-process file lock (<code>driver.lock</code>) that serialises chromedriver binary patching. Without this, simultaneous workers attempting to patch the same binary file on Windows cause "file in use" errors and zombie browsers. Falls back to a thread-level <code>threading.Lock()</code> if fasteners is missing.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">psutil</code><br><small style="color:#92400e">latest</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">Process</code>
+          <code class="sym">.children(recursive)</code>
+          <code class="sym">.kill()</code>
+          <code class="sym">process_iter</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+      </td>
+      <td class="purpose-text">
+        Process tree management for zombie browser cleanup:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li><code>Process(pid).children(recursive=True)</code> — find all child processes of a worker PID</li>
+          <li><code>process_iter(['name','cmdline'])</code> — scan all running processes for orphaned <code>chrome.exe</code> matching this worker's profile directory</li>
+          <li>Called in the <code>finally</code> block of each capture to ensure no Chrome processes survive a failed capture attempt</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">joblib</code><br><small style="color:#92400e">v1.4.2</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">joblib.dump</code>
+          <code class="sym">joblib.load</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pu">scaler.py</span>
+      </td>
+      <td class="purpose-text">
+        Efficient binary serialisation for scikit-learn objects:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>Save/load <code>svm_model.pkl</code> — fitted SVC with all support vectors</li>
+          <li>Save/load <code>scaler.pkl</code> — fitted MinMaxScaler with learned min/max per feature</li>
+          <li>Save/load <code>label_encoder.pkl</code> — LabelEncoder with class-to-integer mapping</li>
+          <li>Preferred over pickle for sklearn objects; handles numpy arrays more efficiently</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">matplotlib</code><br><small style="color:#92400e">v3.9.2</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">matplotlib.use("Agg")</code>
+          <code class="sym">plt.subplots</code>
+          <code class="sym">plt.savefig</code>
+          <code class="sym">plt.close</code>
+          <code class="sym">ax.bar</code>
+          <code class="sym">ax.plot</code>
+          <code class="sym">ax.imshow</code>
+          <code class="sym">ax.text</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pe">graphs.py</span>
+        <span class="pill pe">visualize.py</span>
+        <span class="pill pe">closed_world.py</span>
+      </td>
+      <td class="purpose-text">
+        All result visualisation plotting:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>Always imported with <code>matplotlib.use("Agg")</code> (non-interactive backend) so plots work headlessly in a Windows server context without a display</li>
+          <li>Lazy-imported inside each plot function to avoid slow startup overhead on modules that don't plot</li>
+          <li>Produces: confusion matrix heatmaps, ROC curves, PR curves, per-class F1 bars, CV fold score charts, confidence histograms, FAR/FRR summaries, accuracy comparison bars</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">tensorflow / keras</code><br><small style="color:#92400e">≥2.16.1</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">tf.distribute.MirroredStrategy</code>
+          <code class="sym">keras.Sequential</code>
+          <code class="sym">keras.layers.Conv1D</code>
+          <code class="sym">keras.layers.Dense</code>
+          <code class="sym">keras.layers.Dropout</code>
+          <code class="sym">compute_class_weight</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">model.py (var-CNN)</span>
+      </td>
+      <td class="purpose-text">
+        Powers the var-CNN classifier (Bhat et al., 2019):
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>Builds a Conv1D deep network taking raw packet sequences (2000×3) as input</li>
+          <li><code>MirroredStrategy</code> — optional multi-GPU distribution (disabled on Windows by default)</li>
+          <li><code>compute_class_weight</code> — balances imbalanced training sets</li>
+          <li>Lazy-imported; entire TF stack only loaded if the user selects var-CNN at the training prompt</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">scipy</code><br><small style="color:#92400e">v1.14.1</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">scipy.stats</code>
+          <code class="sym">scipy.interpolate</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pe">graphs.py</span>
+        <span class="pill pe">evaluate.py</span>
+      </td>
+      <td class="purpose-text">
+        Statistical utilities used in evaluation and graphing: confidence interval computation for CV score distributions; interpolation helpers for macro-averaged ROC/PR curves when the numpy interp is insufficient for edge cases.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">pandas</code><br><small style="color:#92400e">v2.2.3</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">pd.DataFrame</code>
+          <code class="sym">pd.read_csv</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pe">evaluate.py</span>
+        <span class="pill pe">visualize.py</span>
+      </td>
+      <td class="purpose-text">
+        Tabular formatting of per-class classification reports for console display and CSV export. Used in evaluation to create readable summary tables of precision/recall/F1 per website.
+        <div class="note">Listed in requirements.txt; lighter usage than numpy/sklearn in current codebase.</div>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="third">pywin32</code><br><small style="color:#92400e">v306, Windows only</small></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">win32api</code>
+          <code class="sym">win32con</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">capture.py</span>
+      </td>
+      <td class="purpose-text">
+        Windows-only process management for additional Chrome cleanup paths. Provides lower-level Windows API access for process termination that psutil alone cannot cover in some edge cases on Windows 10/11.
+        <div class="note">Conditional install: <code>pywin32==306; platform_system == "Windows"</code></div>
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 3: LOCAL PROJECT IMPORTS
+══════════════════════════════════════════════════ -->
+<div class="section-title">
+  Local Project Imports
+  <span class="section-badge sb-local">project-internal</span>
+</div>
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr>
+      <th class="c-import">Import</th>
+      <th class="c-what">Symbols used</th>
+      <th class="c-usedby">Used in files</th>
+      <th class="c-purpose">Purpose / dependency reason</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td><code class="local">config</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">BASE_DIR</code>
+          <code class="sym">DATA_RAW_DIR</code>
+          <code class="sym">SVM_MODEL_DIR</code>
+          <code class="sym">INSTANCES_PER_CLASS</code>
+          <code class="sym">MIN_PACKETS</code>
+          <code class="sym">MAX_WORKERS</code>
+          <code class="sym">BASE_SOCKS_PORT</code>
+          <code class="sym">CAPTURE_TIMEOUT</code>
+          <code class="sym">PAGE_LOAD_WAIT_*</code>
+          <code class="sym">GRID_SEARCH_C</code>
+          <code class="sym">GRID_SEARCH_GAMMA</code>
+          <code class="sym">CV_FOLDS</code>
+          <code class="sym">N_FEATURES</code>
+          <code class="sym">EXTRACTION_LAYER</code>
+          <code class="sym">TOR_EXE_PATH</code>
+          <code class="sym">VISIBLE_MODE</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pa">ALL modules</span>
+      </td>
+      <td class="purpose-text">
+        Single source of truth for every tunable parameter. Imported at the top of every module. Provides:
+        <ul style="padding-left:16px;margin-top:4px">
+          <li>All file system paths (BASE_DIR, DATA_RAW_DIR, model dirs)</li>
+          <li>Capture timing parameters (PAGE_LOAD_WAIT, CIRCUIT_WAIT, etc.)</li>
+          <li>Network ports (BASE_SOCKS_PORT, BASE_CONTROL_PORT)</li>
+          <li>SVM hyperparameter search ranges (GRID_SEARCH_C, GRID_SEARCH_GAMMA, CV_FOLDS)</li>
+          <li>Dataset targets (INSTANCES_PER_CLASS, BG_INSTANCES_PER_CLASS)</li>
+          <li>Feature extraction settings (N_FEATURES=100, EXTRACTION_LAYER)</li>
+          <li>Validation thresholds (MIN_PACKETS, MAX_SITE_FAILURES, CAPTURE_RETRIES)</li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">features.cumul</code><br><code class="local">cumul</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">build_feature_vector</code>
+          <code class="sym">parse_pcap</code>
+          <code class="sym">build_cumulative</code>
+          <code class="sym">sample_features</code>
+          <code class="sym">extract_global_stats</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">data.py</span>
+        <span class="pill pf">extract_features.py</span>
+      </td>
+      <td class="purpose-text">
+        Core CUMUL algorithm. <code>build_feature_vector(pcap_path)</code> is the single entry point called by every parallel worker. Imported lazily inside worker functions so the import only happens in the subprocess context where it is needed — avoids Scapy import in the main process.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">classifier.svm_model</code><br><code class="local">svm_model</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">train_from_selection</code>
+          <code class="sym">test_from_selection</code>
+          <code class="sym">load_artifacts</code>
+          <code class="sym">load_model</code>
+          <code class="sym">predict</code>
+          <code class="sym">save_artifacts</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">train.py</span>
+        <span class="pill pt">test.py</span>
+        <span class="pill pe">closed_world.py</span>
+      </td>
+      <td class="purpose-text">
+        The SVM training/inference engine. <code>train.py</code> and <code>test.py</code> delegate all model operations here. <code>closed_world.py</code> uses <code>load_model + predict</code> for standalone closed-world evaluation without re-running the full pipeline.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">classifier.data</code><br><code class="local">data</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">available_labels</code>
+          <code class="sym">build_split</code>
+          <code class="sym">extract_features</code>
+          <code class="sym">summarize_split</code>
+          <code class="sym">scan_dataset</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">svm_model.py</span>
+        <span class="pill pt">train.py</span>
+        <span class="pill pt">test.py</span>
+      </td>
+      <td class="purpose-text">
+        Dataset access layer. <code>svm_model.py</code> imports it as <code>data_utils</code> and uses it as the exclusive interface for all file scanning, train/test splitting, and parallel feature extraction. Keeps svm_model.py decoupled from the filesystem layout.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">utils.site_registry</code><br><code class="local">site_registry</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">labels_for_scope</code>
+          <code class="sym">label_category</code>
+          <code class="sym">is_monitored</code>
+          <code class="sym">is_background</code>
+          <code class="sym">load_master_registry</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">data.py</span>
+        <span class="pill pf">extract_features.py</span>
+        <span class="pill pe">evaluate.py</span>
+        <span class="pill pu">show_status.py</span>
+      </td>
+      <td class="purpose-text">
+        Provides the authoritative ordered site list from <code>master_sites.json</code>. <code>labels_for_scope("monitored")</code> restricts training to the 100 monitored sites. <code>label_category()</code> used in extraction reports to tag each sample as monitored vs background.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">evaluate.graphs</code><br><code class="local">graphs</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">generate_graphs</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">train.py</span>
+        <span class="pill pt">test.py</span>
+      </td>
+      <td class="purpose-text">
+        Automatically generates all evaluation plots immediately after training or testing completes. <code>generate_graphs([result])</code> is the single call both <code>train.py</code> and <code>test.py</code> make — all plot logic stays in graphs.py.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">classifier.cli</code><br><code class="local">cli</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">ask_choice</code>
+          <code class="sym">ask_dataset_root</code>
+          <code class="sym">ask_int</code>
+          <code class="sym">ask_int_or_max</code>
+          <code class="sym">ask_yes_no</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">train.py</span>
+        <span class="pill pt">test.py</span>
+      </td>
+      <td class="purpose-text">
+        Centralised interactive prompt helpers. Keeps all user input validation (range checking, default values, yes/no parsing) in one place so train.py and test.py stay clean. <code>ask_int_or_max</code> handles "all available" as a special case for instance count selection.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">collect.capture</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">capture_site</code>
+          <code class="sym">start_tor_instance</code>
+          <code class="sym">rotate_tor_circuit</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pc">collection_menu.py</span>
+      </td>
+      <td class="purpose-text">
+        Imported as <code>cap_mod</code> inside <code>_process_one_task()</code> and <code>collect_sites()</code>. The late/lazy import (inside the function body rather than at module top) is intentional: it ensures Scapy and Selenium are only imported in the worker subprocess context, not in the parent orchestration process, avoiding Windows Npcap driver conflicts.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">features.scaler</code><br><code class="local">scaler</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">transform</code>
+          <code class="sym">fit_scaler</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pe">closed_world.py</span>
+      </td>
+      <td class="purpose-text">
+        Used by <code>closed_world.py</code> for standalone evaluation mode where the full svm_model pipeline is not invoked. Loads the saved scaler and applies transform to pre-extracted features before closed-world SVM prediction.
+      </td>
+    </tr>
+
+    <tr>
+      <td><code class="local">varcnn.model</code></td>
+      <td>
+        <div class="sym-list">
+          <code class="sym">train_from_selection</code>
+          <code class="sym">test_from_selection</code>
+        </div>
+      </td>
+      <td>
+        <span class="pill pt">train.py</span>
+        <span class="pill pt">test.py</span>
+      </td>
+      <td class="purpose-text">
+        Lazy-imported only when the user selects var-CNN at the model selection prompt. Provides the same <code>train_from_selection</code> / <code>test_from_selection</code> interface as <code>svm_model.py</code> so train.py and test.py use identical calling conventions for both classifiers.
+      </td>
+    </tr>
+
+  </tbody>
+</table>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SECTION 4: LAZY / CONDITIONAL IMPORTS
+══════════════════════════════════════════════════ -->
+<div class="section-title">
+  Lazy &amp; Conditional Imports
+  <span class="section-badge sb-std">special patterns</span>
+</div>
+<div class="tbl-wrap">
+<table>
+  <thead>
+    <tr>
+      <th class="c-import">Import pattern</th>
+      <th class="c-what">Where</th>
+      <th class="c-usedby">File</th>
+      <th class="c-purpose">Why lazy / conditional</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>try: import scapy</code></td>
+      <td>Module-level try/except</td>
+      <td><span class="pill pc">capture.py</span></td>
+      <td class="purpose-text">Sets <code>SCAPY_AVAILABLE</code> flag. If Scapy/Npcap is missing, capture falls back to browser-only mode without crashing the entire application. All sniff/wrpcap calls are guarded by this flag.</td>
+    </tr>
+    <tr>
+      <td><code>try: from stem import Signal</code></td>
+      <td>Module-level try/except</td>
+      <td><span class="pill pc">capture.py</span></td>
+      <td class="purpose-text">Sets <code>STEM_AVAILABLE</code> flag. If Stem is missing, Tor circuit rotation falls back to a 5 s sleep. Bootstrap detection falls back to a fixed delay. Stem is optional for basic operation.</td>
+    </tr>
+    <tr>
+      <td><code>try: import undetected_chromedriver</code></td>
+      <td>Module-level try/except</td>
+      <td><span class="pill pc">capture.py</span></td>
+      <td class="purpose-text">Sets <code>UNDETECTED_AVAILABLE</code> flag. If undetected-chromedriver is absent, <code>create_driver()</code> silently falls back to standard Selenium Chrome. Bot detection may be less effective in fallback mode.</td>
+    </tr>
+    <tr>
+      <td><code>try: import fasteners</code></td>
+      <td>Module-level try/except</td>
+      <td><span class="pill pc">capture.py</span></td>
+      <td class="purpose-text">Sets <code>FASTENERS_AVAILABLE</code> flag. Falls back to <code>threading.Lock()</code> if fasteners is absent. The thread-lock fallback works correctly in single-process mode but cannot protect across separate OS processes.</td>
+    </tr>
+    <tr>
+      <td><code>try: import psutil</code></td>
+      <td>Module-level try/except</td>
+      <td><span class="pill pc">capture.py</span></td>
+      <td class="purpose-text">Sets <code>PSUTIL_AVAILABLE</code> flag. <code>_kill_child_processes()</code> is a no-op if psutil is absent. Chrome zombie cleanup is skipped rather than crashing.</td>
+    </tr>
+    <tr>
+      <td><code>import matplotlib</code><br><code>import matplotlib.pyplot as plt</code></td>
+      <td>Inside each plot function body</td>
+      <td><span class="pill pe">graphs.py</span> <span class="pill pe">visualize.py</span></td>
+      <td class="purpose-text">Matplotlib has a slow startup (~0.5 s) and must have its backend set to "Agg" before the first import. Lazy importing inside each function ensures <code>matplotlib.use("Agg")</code> is always called first, and avoids the overhead in modules that only train without plotting.</td>
+    </tr>
+    <tr>
+      <td><code>from features.cumul import build_feature_vector</code></td>
+      <td>Inside <code>_extract_feature_sample()</code> body</td>
+      <td><span class="pill pt">data.py</span></td>
+      <td class="purpose-text">Imported inside the worker function body so this import (which triggers a Scapy import chain) only happens in the subprocess worker, not in the main training process. Prevents Npcap driver initialisation conflicts on Windows when spawning many processes.</td>
+    </tr>
+    <tr>
+      <td><code>from . import capture as cap_mod</code></td>
+      <td>Inside <code>_process_one_task()</code> and <code>collect_sites()</code></td>
+      <td><span class="pill pc">collection_menu.py</span></td>
+      <td class="purpose-text">Same reason as above: capture.py imports Scapy at module level. Lazy import inside the worker function ensures the Scapy+Npcap driver stack is only initialised in child subprocesses, not in the parent orchestrator.</td>
+    </tr>
+    <tr>
+      <td><code>from .varcnn.model import ...</code></td>
+      <td>Inside if-branch inside <code>run()</code></td>
+      <td><span class="pill pt">train.py</span> <span class="pill pt">test.py</span></td>
+      <td class="purpose-text">TensorFlow is very heavy (~2 s startup, ~1 GB RAM). It is imported only when the user explicitly selects var-CNN. SVM-only runs incur zero TensorFlow overhead.</td>
+    </tr>
+    <tr>
+      <td><code>import numpy as np</code></td>
+      <td>Inside function bodies in some modules</td>
+      <td><span class="pill pt">data.py</span> <span class="pill pe">evaluate.py</span> <span class="pill pe">visualize.py</span></td>
+      <td class="purpose-text">In modules where numpy is only needed in specific code paths (e.g. only when features are actually extracted), numpy is imported locally rather than at module top to keep the import chain lighter for modules that may be imported for non-numerical tasks.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+</body>
+</html>

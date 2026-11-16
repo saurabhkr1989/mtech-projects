@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>var-CNN Classifier — Theory, Application & Analysis</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --purple:       #7c3aed;
+  --purple-dark:  #3b0764;
+  --purple-light: #ede9fe;
+  --purple-pale:  #faf5ff;
+  --blue:         #2563eb;
+  --blue-dark:    #1e3a8a;
+  --blue-light:   #dbeafe;
+  --blue-pale:    #eff6ff;
+  --green:        #16a34a;
+  --green-dark:   #14532d;
+  --green-light:  #dcfce7;
+  --red:          #dc2626;
+  --red-dark:     #7f1d1d;
+  --red-light:    #fee2e2;
+  --amber:        #d97706;
+  --amber-dark:   #78350f;
+  --amber-light:  #fef3c7;
+  --teal:         #0d9488;
+  --teal-light:   #ccfbf1;
+  --slate:        #1e293b;
+  --slate-mid:    #475569;
+  --slate-light:  #94a3b8;
+  --border:       #e2e8f0;
+  --bg:           #f8fafc;
+  --white:        #ffffff;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--slate);
+  font-size: 13.5px;
+  line-height: 1.7;
+  margin: 0; padding: 0;
+}
+
+/* HEADER */
+.page-header {
+  background: linear-gradient(135deg, #3b0764 0%, #6d28d9 55%, #7c3aed 100%);
+  color: white;
+  padding: 48px 40px 40px;
+}
+.page-header h1 { font-size: 28px; font-weight: 800; margin-bottom: 8px; letter-spacing: -.01em; }
+.page-header .sub { font-size: 14px; opacity: .8; margin-bottom: 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  font-size: 11px; font-weight: 600; padding: 4px 12px;
+  border-radius: 20px; background: rgba(255,255,255,.18);
+  border: 1px solid rgba(255,255,255,.3);
+}
+
+/* NAV */
+.toc-bar {
+  background: var(--white);
+  border-bottom: 2px solid var(--purple-light);
+  padding: 13px 40px;
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  position: sticky; top: 0; z-index: 100;
+}
+.toc-bar strong { font-size: 11px; color: var(--slate-mid); margin-right: 4px; }
+.toc-bar a {
+  font-size: 11.5px; font-weight: 600;
+  padding: 3px 11px; border-radius: 20px; text-decoration: none;
+  background: var(--purple-pale); color: var(--purple-dark);
+  border: 1px solid var(--purple-light);
+}
+.toc-bar a:hover { background: var(--purple-light); }
+
+/* MAIN */
+main { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+
+/* SECTION */
+.section { margin-bottom: 56px; }
+.section-title {
+  font-size: 20px; font-weight: 800; color: var(--purple-dark);
+  margin-bottom: 8px; padding-bottom: 10px;
+  border-bottom: 3px solid var(--purple-light);
+  display: flex; align-items: center; gap: 12px;
+}
+.section-num {
+  background: var(--purple); color: white;
+  font-size: 13px; font-weight: 700;
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.sub-heading {
+  font-size: 14px; font-weight: 700; color: var(--slate);
+  margin: 26px 0 10px; padding-left: 12px;
+  border-left: 4px solid var(--purple);
+}
+
+p { margin-bottom: 14px; color: var(--slate); }
+
+/* BOXES */
+.box {
+  border-radius: 8px; padding: 16px 20px;
+  margin-bottom: 14px; border-left: 5px solid;
+}
+.box-purple { background: var(--purple-pale);  border-color: var(--purple); }
+.box-blue   { background: var(--blue-pale);    border-color: var(--blue); }
+.box-green  { background: var(--green-light);  border-color: var(--green); }
+.box-red    { background: var(--red-light);    border-color: var(--red); }
+.box-amber  { background: var(--amber-light);  border-color: var(--amber); }
+.box-teal   { background: var(--teal-light);   border-color: var(--teal); }
+.box-title  { font-weight: 700; font-size: 13px; margin-bottom: 6px; }
+.box-purple .box-title { color: var(--purple-dark); }
+.box-blue   .box-title { color: var(--blue-dark); }
+.box-green  .box-title { color: var(--green-dark); }
+.box-red    .box-title { color: var(--red-dark); }
+.box-amber  .box-title { color: var(--amber-dark); }
+.box-teal   .box-title { color: var(--teal); }
+
+/* CARDS */
+.card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin-bottom: 14px; }
+.card-title { font-size: 13.5px; font-weight: 700; margin-bottom: 8px; color: var(--slate); }
+
+/* CODE */
+code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 12px; background: #f1f5f9;
+  border: 1px solid var(--border);
+  border-radius: 3px; padding: 1px 6px; color: var(--purple);
+}
+pre {
+  background: #0f172a; color: #e2e8f0;
+  border-radius: 8px; padding: 20px 24px;
+  margin: 10px 0 16px; overflow-x: auto;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 12px; line-height: 1.75;
+}
+pre .c  { color: #64748b; }
+pre .k  { color: #c4b5fd; }
+pre .f  { color: #6ee7b7; }
+pre .s  { color: #fde68a; }
+pre .n  { color: #fb923c; }
+pre .v  { color: #e2e8f0; }
+pre .m  { color: #93c5fd; }
+pre .t  { color: #f9a8d4; }
+
+/* MATH */
+.math {
+  background: #0f172a; color: #f8fafc;
+  border-radius: 8px; padding: 18px 24px;
+  margin: 10px 0 16px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 13px; line-height: 2; overflow-x: auto;
+}
+.math .label { color: #94a3b8; font-size: 11px; display: block; margin-bottom: 4px; }
+.math .eq    { color: #c4b5fd; font-size: 14px; }
+.math .note  { color: #4ade80; font-size: 11.5px; margin-left: 18px; }
+
+/* GRIDS */
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+@media (max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+/* ARCHITECTURE DIAGRAM */
+.arch {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+.arch-title { font-size: 13px; font-weight: 700; color: var(--slate-mid); margin-bottom: 16px; text-transform: uppercase; letter-spacing: .06em; }
+.layer-row {
+  display: flex; align-items: stretch; gap: 0;
+  margin-bottom: 0;
+}
+.layer-box {
+  flex: 1; min-width: 90px;
+  border-radius: 7px; padding: 10px 8px;
+  text-align: center; font-size: 11.5px; font-weight: 600;
+  line-height: 1.4; border: 1.5px solid;
+}
+.layer-input   { background:#f5f3ff; border-color:#c4b5fd; color:#4c1d95; }
+.layer-conv    { background:#eff6ff; border-color:#93c5fd; color:#1e40af; }
+.layer-norm    { background:#fef9c3; border-color:#fde047; color:#854d0e; }
+.layer-pool    { background:#dcfce7; border-color:#86efac; color:#14532d; }
+.layer-drop    { background:#fee2e2; border-color:#fca5a5; color:#991b1b; }
+.layer-gap     { background:#ccfbf1; border-color:#5eead4; color:#134e4a; }
+.layer-dense   { background:#fce7f3; border-color:#f9a8d4; color:#831843; }
+.layer-out     { background:#f5f3ff; border-color:#a78bfa; color:#3b0764; }
+.arrow-right { display: flex; align-items: center; padding: 0 4px; color: #94a3b8; font-size: 16px; flex-shrink: 0; }
+.layer-dim { font-size: 10px; color: var(--slate-light); font-weight: 400; margin-top: 3px; }
+
+/* TABLE */
+.tbl-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 16px; background: var(--white); }
+table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+thead th {
+  background: #f8fafc; padding: 10px 14px;
+  text-align: left; font-size: 11px; font-weight: 700;
+  letter-spacing: .05em; text-transform: uppercase;
+  color: var(--slate-mid); border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+tbody td { padding: 10px 14px; border-bottom: 1px solid #f1f5f9; vertical-align: top; line-height: 1.6; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #fafbfc; }
+
+/* STRENGTH / WEAKNESS */
+.sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 16px; }
+@media (max-width: 650px) { .sw-grid { grid-template-columns: 1fr; } }
+.sw-card { border-radius: 10px; padding: 18px 20px; }
+.sw-card.str { background: #f0fdf4; border: 1.5px solid #86efac; }
+.sw-card.wk  { background: #fff5f5; border: 1.5px solid #fca5a5; }
+.sw-card-title { font-size: 13px; font-weight: 800; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+.sw-card.str .sw-card-title { color: var(--green-dark); }
+.sw-card.wk  .sw-card-title { color: var(--red-dark); }
+.sw-card ul { padding-left: 18px; }
+.sw-card li { margin-bottom: 6px; font-size: 12.5px; line-height: 1.6; }
+
+/* PIPELINE STEPS */
+.pipeline { display: flex; flex-direction: column; }
+.pipe-step { display: flex; gap: 16px; align-items: flex-start; }
+.pipe-num {
+  flex-shrink: 0; width: 30px; height: 30px;
+  background: var(--purple); color: white;
+  border-radius: 50%; display: flex;
+  align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; margin-top: 2px;
+}
+.pipe-body { flex: 1; margin-bottom: 4px; }
+.pipe-title { font-weight: 700; font-size: 13px; color: var(--purple-dark); margin-bottom: 3px; }
+.pipe-desc  { font-size: 12.5px; color: var(--slate-mid); line-height: 1.6; }
+.pipe-conn  { width: 30px; flex-shrink: 0; display: flex; justify-content: center; padding: 4px 0; }
+.pipe-conn::before { content: ''; display: block; width: 2px; height: 18px; background: var(--border); }
+
+/* COMPETITOR CARDS */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+@media(max-width:650px) { .comp-grid { grid-template-columns: 1fr; } }
+.comp-card { border-radius: 10px; padding: 18px 20px; border: 1.5px solid; }
+.comp-card.chosen   { background: #f5f3ff; border-color: var(--purple); }
+.comp-card.rejected { background: #f8fafc; border-color: var(--border); }
+.comp-card.bad      { background: #fff5f5; border-color: #fca5a5; }
+.comp-title { font-size: 13.5px; font-weight: 800; margin-bottom: 8px; }
+.comp-card.chosen   .comp-title { color: var(--purple-dark); }
+.comp-card.rejected .comp-title { color: var(--slate-mid); }
+.comp-card.bad      .comp-title { color: var(--red-dark); }
+.verdict {
+  display: inline-block; font-size: 10.5px; font-weight: 700;
+  padding: 2px 9px; border-radius: 20px; margin-bottom: 8px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.v-chosen   { background: #ede9fe; color: var(--purple-dark); }
+.v-partial  { background: var(--amber-light); color: var(--amber-dark); }
+.v-rejected { background: var(--red-light);   color: var(--red-dark); }
+
+/* FAILURE ANALYSIS */
+.fail-row { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+.fail-row:last-child { border-bottom: none; }
+.fail-num { flex-shrink:0; width:26px; height:26px; background:var(--red-light); color:var(--red-dark); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; margin-top:2px; }
+.fail-body { flex:1; }
+.fail-title { font-weight:700; font-size:13px; color:var(--red-dark); margin-bottom:3px; }
+.fail-desc  { font-size:12.5px; color:var(--slate-mid); line-height:1.6; }
+
+/* SUMMARY BOX */
+.summary-box { background: linear-gradient(135deg, var(--purple-pale), #f0fdf4); border: 1.5px solid var(--purple-light); border-radius: 12px; padding: 24px 28px; margin-bottom: 16px; }
+.summary-box h3 { font-size: 15px; font-weight: 800; color: var(--purple-dark); margin-bottom: 10px; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>var-CNN Classifier — Theory, Application &amp; Analysis</h1>
+  <p class="sub">CUMUL Website Fingerprinting · Bhat et al. (2019) · Implementation in model.py · Comparison with SVM, k-NN, Triplet-CNN</p>
+  <div class="chips">
+    <span class="chip">Conv1D Deep Network</span>
+    <span class="chip">Raw Sequence Input (2000 × 3)</span>
+    <span class="chip">Swish Activation</span>
+    <span class="chip">LayerNorm + Dropout</span>
+    <span class="chip">EarlyStopping</span>
+    <span class="chip">TensorFlow / Keras</span>
+    <span class="chip">MirroredStrategy (multi-GPU)</span>
+    <span class="chip">100-class Softmax</span>
+  </div>
+</div>
+
+<div class="toc-bar">
+  <strong>Sections:</strong>
+  <a href="#s1">1. What is var-CNN</a>
+  <a href="#s2">2. Input Representation</a>
+  <a href="#s3">3. Architecture</a>
+  <a href="#s4">4. Training</a>
+  <a href="#s5">5. Code Walkthrough</a>
+  <a href="#s6">6. Strengths</a>
+  <a href="#s7">7. Shortcomings</a>
+  <a href="#s8">8. vs SVM Failures</a>
+  <a href="#s9">9. Why not k-NN?</a>
+  <a href="#s10">10. Why not Triplet-CNN?</a>
+  <a href="#s11">11. Why var-CNN?</a>
+  <a href="#s12">12. Summary</a>
+</div>
+
+<main>
+
+<!-- ═══════════════════════════════════════
+     SECTION 1: WHAT IS VAR-CNN
+═══════════════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="section-title"><span class="section-num">1</span>What is var-CNN?</div>
+
+  <p>var-CNN (Variable-length CNN) is a <strong>1D convolutional neural network</strong> designed specifically for website fingerprinting attacks, introduced by Bhat et al. (2019) as an extension to the work on deep learning for traffic analysis. Unlike the SVM classifier which requires pre-engineered CUMUL features, var-CNN operates <strong>directly on raw packet sequences</strong> — it learns its own feature representations automatically from the raw traffic data.</p>
+
+  <p>The core idea is to treat a network traffic trace as a <strong>time-series signal</strong>: a sequence of packets with direction, size, and inter-arrival timing information. Convolutional filters slide over this sequence to detect local patterns — a burst of incoming packets, a sequence of small ACKs followed by a large response, a characteristic upload-download rhythm — that distinguish one website from another.</p>
+
+  <div class="box box-purple">
+    <div class="box-title">Why "variable-length"?</div>
+    Different website visits produce traces of different lengths (different number of packets). A CNN with fixed-size input would require truncation or padding to the same length for every trace. The "var" prefix refers to the architecture's ability to handle variable-length sequences through its use of <strong>Global Average Pooling (GAP)</strong> and <strong>Global Max Pooling (GMP)</strong>, which reduce any-length feature maps to a fixed-size vector regardless of input sequence length.
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Original paper: Bhat et al. (2019)</div>
+      <p>Introduced var-CNN as an improvement over earlier deep learning WFP classifiers (AWF, SDAE). Demonstrated that a relatively shallow CNN architecture with variable-length input handling could match or exceed SVM+CUMUL accuracy while being significantly faster at inference time. The key innovation was GAP+GMP concatenation instead of flattening.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">This implementation</div>
+      <p>An enhanced variant with <strong>Swish activations</strong> (replacing ReLU for smoother gradients), <strong>LayerNormalization</strong> (instead of BatchNorm for small batch sizes), and a deeper feature extraction stack (4 conv blocks vs original 2). These changes improve performance on the small-data regime (50 instances/site) characteristic of this project.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 2: INPUT REPRESENTATION
+═══════════════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="section-title"><span class="section-num">2</span>Input Representation — Raw Sequences</div>
+
+  <p>The most fundamental difference between var-CNN and the SVM is their input format. While the SVM receives a 104-dimensional engineered feature vector, var-CNN receives the raw packet trace as a 2D matrix.</p>
+
+  <div class="sub-heading">The 2000 × 3 input matrix</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Index</th>
+          <th>What it encodes</th>
+          <th>Value range</th>
+          <th>Why it matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Direction</strong></td>
+          <td><code>[:, 0]</code></td>
+          <td>+1 for incoming packets (server→client), −1 for outgoing (client→server)</td>
+          <td>{−1, +1}</td>
+          <td>Encodes the direction rhythm — the sequence of uploads and downloads that characterises a site's loading pattern</td>
+        </tr>
+        <tr>
+          <td><strong>Size</strong></td>
+          <td><code>[:, 1]</code></td>
+          <td>Packet payload size in bytes, normalised by <code>scale_factor</code></td>
+          <td>[0, 1] after scaling</td>
+          <td>Captures the size distribution — sites with many small requests vs few large transfers have distinct size channels</td>
+        </tr>
+        <tr>
+          <td><strong>Inter-arrival time</strong></td>
+          <td><code>[:, 2]</code></td>
+          <td>Time delta between consecutive packets, normalised</td>
+          <td>[0, 1] after scaling</td>
+          <td>Encodes timing rhythm — server think-time, CDN response latency, browser pipeline behaviour</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-heading">Sequence length: MAX_TRACE_PACKETS = 2000</div>
+
+  <div class="box box-amber">
+    <div class="box-title">Truncation and zero-padding</div>
+    Traces are truncated to the first 2000 packets if longer, and zero-padded if shorter. The <strong>scale_factor</strong> is computed from the 95th percentile of all packet sizes in the training set, normalising the size channel to [0,1]. This same scale_factor is stored in <code>metadata.json</code> and applied identically at test time — critical for consistent normalisation.
+  </div>
+
+  <div class="math">
+    <span class="label">Input tensor shape</span>
+    <span class="eq">X_train shape: (N_samples, 2000, 3)</span>
+    <span class="note">← N_samples = sites × instances, e.g. 100 × 40 = 4000 for 40 train instances/site</span>
+    <span class="eq">X_test  shape: (M_samples, 2000, 3)</span>
+    <span class="note">← each sample is a single PCAP file → 2000 time steps × 3 channels</span>
+    <span class="eq">Compared to SVM input: (N_samples, 104) — 19× fewer features</span>
+    <span class="note">← but var-CNN's input contains more raw information before compression</span>
+  </div>
+
+  <div class="box box-blue">
+    <div class="box-title">Why 2000 packets specifically?</div>
+    The config parameter <code>MAX_TRACE_PACKETS = 2000</code> is the standard used in the WFP literature (AWF, DF, var-CNN papers). Empirically, the first 2000 packets of a web page load contain the majority of the fingerprinting information — most of the distinguishing traffic happens in the initial burst phase. Packets beyond 2000 are often retransmissions, keep-alive signals, and background analytics that add noise rather than signal.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 3: ARCHITECTURE
+═══════════════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="section-title"><span class="section-num">3</span>Neural Network Architecture — Layer by Layer</div>
+
+  <p>The var-CNN architecture in this project is a carefully designed stack of 1D convolutional blocks followed by dual global pooling and a classification head. Every architectural choice has a specific justification for the traffic fingerprinting task.</p>
+
+  <div class="sub-heading">Full architecture diagram</div>
+
+  <div class="arch">
+    <div class="arch-title">var-CNN Architecture — Input (2000, 3) → Output (N_classes,)</div>
+    <div style="overflow-x:auto">
+      <div class="layer-row" style="margin-bottom:6px">
+        <div class="layer-box layer-input">Input<div class="layer-dim">(2000, 3)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-conv">Conv1D<br>64 filters, k=7<div class="layer-dim">(2000, 64)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-norm">LayerNorm<div class="layer-dim">(2000, 64)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-pool">MaxPool1D<br>pool=2<div class="layer-dim">(1000, 64)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-drop">Dropout<br>5%<div class="layer-dim">(1000, 64)</div></div>
+      </div>
+      <div style="text-align:center;color:#94a3b8;font-size:12px;margin:2px 0">↓ Conv Block 1</div>
+      <div class="layer-row" style="margin-bottom:6px">
+        <div class="layer-box layer-conv">Conv1D<br>96 filters, k=5<div class="layer-dim">(1000, 96)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-norm">LayerNorm<div class="layer-dim">(1000, 96)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-conv">Conv1D<br>96 filters, k=5<div class="layer-dim">(1000, 96)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-norm">LayerNorm<div class="layer-dim">(1000, 96)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-pool">MaxPool1D<br>pool=2<div class="layer-dim">(500, 96)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-drop">Dropout<br>10%<div class="layer-dim">(500, 96)</div></div>
+      </div>
+      <div style="text-align:center;color:#94a3b8;font-size:12px;margin:2px 0">↓ Conv Block 2</div>
+      <div class="layer-row" style="margin-bottom:6px">
+        <div class="layer-box layer-conv">Conv1D<br>128 filters, k=3<div class="layer-dim">(500, 128)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-norm">LayerNorm<div class="layer-dim">(500, 128)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-conv">Conv1D<br>128 filters, k=3<div class="layer-dim">(500, 128)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-norm">LayerNorm<div class="layer-dim">(500, 128)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-pool">MaxPool1D<br>pool=2<div class="layer-dim">(250, 128)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-drop">Dropout<br>10%<div class="layer-dim">(250, 128)</div></div>
+      </div>
+      <div style="text-align:center;color:#94a3b8;font-size:12px;margin:2px 0">↓ Final Conv + Dual Pooling</div>
+      <div class="layer-row" style="margin-bottom:6px">
+        <div class="layer-box layer-conv">Conv1D<br>192 filters, k=3<div class="layer-dim">(250, 192)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-norm">LayerNorm<div class="layer-dim">(250, 192)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-gap">GAP + GMP<br>concatenated<div class="layer-dim">(384,)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-dense">Dense 256<br>Swish<div class="layer-dim">(256,)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-drop">Dropout 15%<div class="layer-dim">(256,)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-dense">Dense 128<br>Swish<div class="layer-dim">(128,)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-drop">Dropout 10%<div class="layer-dim">(128,)</div></div>
+        <div class="arrow-right">→</div>
+        <div class="layer-box layer-out">Dense N<br>Softmax<div class="layer-dim">(N_classes,)</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sub-heading">Layer-by-layer explanation</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Parameters</th>
+          <th>What it learns</th>
+          <th>Why this choice</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Conv1D (k=7, 64f)</strong></td>
+          <td>64 filters, kernel=7, padding=same, activation=Swish</td>
+          <td>Low-level temporal patterns across 7 consecutive packets: short bursts, request-response pairs, ACK patterns</td>
+          <td>Large kernel (7) captures local packet-level interactions without being too localised. First layer needs wide receptive field to see packet bursts.</td>
+        </tr>
+        <tr>
+          <td><strong>LayerNormalization</strong></td>
+          <td>Normalises across feature dimension (not batch)</td>
+          <td>Stabilises activations after each conv layer</td>
+          <td>Chosen over BatchNorm because batch_size=8 is too small for reliable batch statistics. LayerNorm operates independently per sample, stable at any batch size.</td>
+        </tr>
+        <tr>
+          <td><strong>MaxPooling1D (pool=2)</strong></td>
+          <td>Halves the sequence length</td>
+          <td>Retains the strongest activation within each 2-step window (dominant pattern, not average)</td>
+          <td>Reduces computational cost and creates translation invariance: a burst pattern shifted by 1 packet still fires the same filter.</td>
+        </tr>
+        <tr>
+          <td><strong>Conv Block 1 (k=5, 96f × 2)</strong></td>
+          <td>Two stacked Conv1D layers before pooling</td>
+          <td>Mid-level patterns: HTTP request sequences, TLS handshake structure, CDN response patterns</td>
+          <td>Double-conv before pooling (VGG-style) increases representational depth before spatial reduction.</td>
+        </tr>
+        <tr>
+          <td><strong>Conv Block 2 (k=3, 128f × 2)</strong></td>
+          <td>Small kernel as sequence gets shorter</td>
+          <td>High-level patterns: resource loading order, page structure (header → content → ads)</td>
+          <td>Kernel shrinks to 3 because after two MaxPool halvings, the sequence is already compressed; wide kernels would over-span the remaining signal.</td>
+        </tr>
+        <tr>
+          <td><strong>Final Conv1D (k=3, 192f)</strong></td>
+          <td>Deepest conv layer, no pool</td>
+          <td>Most abstract traffic fingerprint features at full 192-channel depth</td>
+          <td>No pooling here — the sequence is already at 250 steps; dual global pooling handles the final aggregation more informatively than another MaxPool.</td>
+        </tr>
+        <tr>
+          <td><strong>GAP + GMP → Concat</strong></td>
+          <td>GlobalAveragePooling1D + GlobalMaxPooling1D, concatenated to (384,)</td>
+          <td>GAP: average traffic pattern over the entire trace. GMP: most distinctive single-point pattern in the trace</td>
+          <td>This is the key var-CNN innovation. GAP captures global structure; GMP captures the single most distinctive moment. Together they provide richer features than either alone.</td>
+        </tr>
+        <tr>
+          <td><strong>Dense 256 → Dense 128</strong></td>
+          <td>Fully connected layers with Swish activation and Dropout</td>
+          <td>Non-linear combinations of the pooled features for final classification</td>
+          <td>Two-layer head provides sufficient capacity without excessive parameters. Dropout rates decrease (15% → 10%) toward the output to avoid excessive regularisation at the classification stage.</td>
+        </tr>
+        <tr>
+          <td><strong>Dense N_classes + Softmax</strong></td>
+          <td>One neuron per monitored website, softmax activation</td>
+          <td>Converts logits to probability distribution over classes</td>
+          <td>Softmax ensures probabilities sum to 1; the argmax gives the predicted class; the full distribution gives confidence scores for ROC curves and open-world thresholding.</td>
+        </tr>
+        <tr>
+          <td><strong>Swish activation</strong></td>
+          <td><code>f(x) = x · σ(x)</code></td>
+          <td>Smooth non-linearity replacing ReLU throughout</td>
+          <td>Swish outperforms ReLU on deep networks empirically. Unlike ReLU it is smooth and non-monotonic, providing better gradient flow during backpropagation with small batch sizes.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-heading">Debug overfit mode (sanity check architecture)</div>
+  <div class="box box-amber">
+    <div class="box-title">VARCNN_DEBUG_OVERFIT = True → simplified architecture</div>
+    When <code>config.VARCNN_DEBUG_OVERFIT = True</code>, the full Conv1D stack is replaced with a simple <code>Flatten → Dense(1024) → Dense(512) → Dense(256) → Softmax</code>. This is a deliberate sanity check: if the simplified architecture cannot even overfit the training data, it indicates a data preprocessing bug rather than a model capacity issue. Used during development to verify sequence extraction correctness.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 4: TRAINING
+═══════════════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="section-title"><span class="section-num">4</span>Training Configuration &amp; Strategies</div>
+
+  <div class="sub-heading">Optimiser: Adam</div>
+  <div class="box box-purple">
+    <div class="box-title">Adam with learning rate 5×10⁻⁴</div>
+    Adam (Adaptive Moment Estimation) maintains per-parameter learning rates adjusted by running estimates of first and second moments of gradients. <code>VARCNN_LEARNING_RATE = 5e-4</code> is faster than the standard 3×10⁻⁴ to compensate for the very small dataset (50 instances/site) — slower learning would not converge within 120 epochs. The <code>ReduceLROnPlateau</code> callback halves the learning rate after 2 epochs without validation loss improvement, with a floor of 1×10⁻⁵.
+  </div>
+
+  <div class="math">
+    <span class="label">Loss function: Sparse Categorical Crossentropy</span>
+    <span class="eq">L = − (1/N) Σᵢ log( p(yᵢ | xᵢ) )</span>
+    <span class="note">← where p(yᵢ | xᵢ) is the softmax probability assigned to the true class</span>
+    <span class="note">← "sparse" means integer labels are accepted directly (no one-hot encoding needed)</span>
+  </div>
+
+  <div class="sub-heading">Training configuration (from config.py)</div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Parameter</th><th>Value</th><th>Why this value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>VARCNN_EPOCHS</code></td><td>120</td><td>Maximum epochs; EarlyStopping usually terminates earlier. 120 is sufficient for the dataset to converge.</td></tr>
+        <tr><td><code>VARCNN_BATCH_SIZE</code></td><td>8</td><td>Small batch forces more weight updates per epoch. With 4000 training samples, batch=8 gives 500 gradient steps/epoch. Chosen because larger batches underfit on this small dataset.</td></tr>
+        <tr><td><code>VARCNN_LEARNING_RATE</code></td><td>5×10⁻⁴</td><td>Slightly above default Adam LR to accelerate convergence on small data.</td></tr>
+        <tr><td><code>VARCNN_DROPOUT_SCALE</code></td><td>0.1</td><td>Multiplies all dropout rates. Effective rates: 0.05×0.1=0.005%, 0.10×0.1=1%, 0.15×0.1=1.5%. Drastically reduced dropout because the small dataset cannot afford aggressive regularisation.</td></tr>
+        <tr><td><code>VARCNN_ENABLE_MIXED_PRECISION</code></td><td>False</td><td>FP16 mixed precision disabled for stability on small batch. Enabled on Linux CUDA builds for throughput.</td></tr>
+        <tr><td><code>VARCNN_ENABLE_MIRRORED_STRATEGY</code></td><td>True</td><td>If multiple GPUs detected, distributes training across them automatically via tf.distribute.MirroredStrategy.</td></tr>
+        <tr><td>Validation split</td><td>20%</td><td>80% of training data used for gradient updates; 20% held out to monitor for overfitting and trigger EarlyStopping.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-heading">Callbacks: EarlyStopping + ReduceLROnPlateau</div>
+<pre><span class="v">callbacks</span> = [
+    keras.callbacks.<span class="f">EarlyStopping</span>(
+        monitor=<span class="s">"val_accuracy"</span>,
+        patience=<span class="n">4</span>,              <span class="c"># stop if val_accuracy doesn't improve for 4 epochs</span>
+        restore_best_weights=<span class="k">True</span>, <span class="c"># revert to best epoch's weights (not last)</span>
+    ),
+    keras.callbacks.<span class="f">ReduceLROnPlateau</span>(
+        monitor=<span class="s">"val_loss"</span>,
+        factor=<span class="n">0.5</span>,             <span class="c"># halve the learning rate</span>
+        patience=<span class="n">2</span>,             <span class="c"># trigger after 2 non-improving epochs</span>
+        min_lr=<span class="n">1e-5</span>,           <span class="c"># never go below this learning rate</span>
+    ),
+]</pre>
+
+  <div class="sub-heading">Class weight balancing</div>
+<pre><span class="k">if</span> <span class="m">len</span>(<span class="v">np</span>.<span class="m">unique</span>(<span class="v">y_train_enc</span>)) > <span class="n">1</span>:
+    <span class="v">weights</span> = <span class="f">compute_class_weight</span>(
+        class_weight=<span class="s">"balanced"</span>,    <span class="c"># sklearn formula: N / (K * n_k)</span>
+        classes=<span class="v">np</span>.<span class="m">unique</span>(<span class="v">y_train_enc</span>),
+        y=<span class="v">y_train_enc</span>,
+    )
+    <span class="c"># Sites with fewer captures get higher weight in the loss function</span>
+    <span class="c"># Prevents the model from ignoring minority classes</span>
+    <span class="v">class_weights</span> = {<span class="t">int</span>(c): <span class="t">float</span>(w) <span class="k">for</span> c, w <span class="k">in</span> <span class="m">zip</span>(..., <span class="v">weights</span>)}</pre>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 5: CODE WALKTHROUGH
+═══════════════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="section-title"><span class="section-num">5</span>Full Code Walkthrough — train_from_selection()</div>
+
+  <div class="pipeline">
+    <div class="pipe-step">
+      <div class="pipe-num">1</div>
+      <div class="pipe-body">
+        <div class="pipe-title">Configure TensorFlow runtime</div>
+        <div class="pipe-desc">Suppress TF log noise (<code>TF_CPP_MIN_LOG_LEVEL=3</code>). Set inter/intra-op thread counts from config. Enable GPU memory growth to avoid pre-allocating all VRAM. Optionally enable MirroredStrategy for multi-GPU. Returns <code>(tf, strategy, gpus)</code>.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">2</div>
+      <div class="pipe-body">
+        <div class="pipe-title">build_varcnn_split → extract_sequences</div>
+        <div class="pipe-desc">Same file scanning as SVM (<code>build_split</code>), but <code>extract_sequences</code> replaces <code>extract_features</code>. Each PCAP → padded/truncated (2000, 3) matrix. Scale factor computed from 95th percentile of all training packet sizes. Returns <code>(X_train, y_train, paths, failures, scale_factor)</code>. Scale_factor persisted in metadata for consistent test-time normalisation.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">3</div>
+      <div class="pipe-body">
+        <div class="pipe-title">build_model(input_length, num_classes)</div>
+        <div class="pipe-desc">Constructs the Conv1D network inside the MirroredStrategy scope (if multi-GPU). Uses Keras functional API for the main path. Compiles with Adam optimizer, sparse categorical crossentropy loss, accuracy metric. Returns compiled Keras Model.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">4</div>
+      <div class="pipe-body">
+        <div class="pipe-title">Stratified 80/20 train/validation split</div>
+        <div class="pipe-desc">Splits training data into fit set (80%) and validation set (20%) using sklearn <code>train_test_split</code> with <code>stratify=y</code>. Validation set is used by EarlyStopping and ReduceLROnPlateau callbacks — it is distinct from the held-out test set.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">5</div>
+      <div class="pipe-body">
+        <div class="pipe-title">tf.data.Dataset pipeline</div>
+        <div class="pipe-desc"><code>_make_dataset(tf, X, y, training=True, batch_size=8)</code> creates a TF Dataset: shuffle (training only) → batch(8) → prefetch(AUTOTUNE). Prefetching overlaps data loading with GPU computation for maximum throughput.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">6</div>
+      <div class="pipe-body">
+        <div class="pipe-title">model.fit(train_ds, …, callbacks, class_weight)</div>
+        <div class="pipe-desc">Runs up to 120 epochs. EarlyStopping monitors val_accuracy with patience=4 and restores best weights. ReduceLROnPlateau halves LR after 2 non-improving epochs. Class weights compensate for imbalanced capture counts per site.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">7</div>
+      <div class="pipe-body">
+        <div class="pipe-title">Evaluate: _predict_array → argmax → inverse_transform</div>
+        <div class="pipe-desc">Predictions are raw softmax probabilities (N, N_classes). <code>np.argmax(axis=1)</code> gives predicted class indices. <code>le.inverse_transform()</code> maps indices back to string site labels. Accuracy computed via sklearn <code>accuracy_score</code>.</div>
+      </div>
+    </div>
+    <div class="pipe-conn"></div>
+    <div class="pipe-step">
+      <div class="pipe-num">8</div>
+      <div class="pipe-body">
+        <div class="pipe-title">save_artifacts → varcnn_model.keras + label_encoder.pkl + metadata.json + history.json</div>
+        <div class="pipe-desc">Model saved in Keras native format (not pickle). Training history (loss, val_loss, accuracy, val_accuracy per epoch) saved to <code>history.json</code> for learning curve visualisation. Scale_factor persisted in metadata for test-time use.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 6: STRENGTHS
+═══════════════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="section-title"><span class="section-num">6</span>Strengths of var-CNN for Website Fingerprinting</div>
+
+  <div class="sw-grid">
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ No manual feature engineering</div>
+      <ul>
+        <li>The Conv1D filters learn to detect whatever packet patterns distinguish websites best. There is no assumption that cumulative curves are the optimal representation.</li>
+        <li>If a site's distinguishing feature is a timing pattern rather than a size pattern, the network can learn to weight the inter-arrival channel accordingly.</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Fixed-size inference regardless of training set</div>
+      <ul>
+        <li>Once trained, prediction is a fixed forward pass through the network: O(1) in the number of training examples. SVM prediction scales with support vector count.</li>
+        <li>Adding 10,000 more training examples does not slow down inference at all — the model weights have fixed size.</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Richer information from raw input</div>
+      <ul>
+        <li>The (2000, 3) input contains all timing, direction, and size information from the first 2000 packets — far more raw information than the 104-dim CUMUL summary.</li>
+        <li>The CNN decides which aspects of this information are discriminative; CUMUL pre-decides for you.</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Scale well to larger datasets</div>
+      <ul>
+        <li>Training time grows roughly linearly with dataset size (not quadratically like SVM). Adding more sites or more instances per site incurs manageable cost.</li>
+        <li>With enough data (200+ instances/site, 200+ sites), CNNs typically outperform SVMs significantly.</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Compact deployable model</div>
+      <ul>
+        <li>The trained <code>varcnn_model.keras</code> file contains fixed weight matrices — typically 5–20 MB regardless of training set size.</li>
+        <li>SVM's <code>svm_model.pkl</code> grows with the number of support vectors, potentially reaching 100–500 MB for 100 classes.</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Multi-GPU training support</div>
+      <ul>
+        <li><code>tf.distribute.MirroredStrategy</code> transparently distributes training across all available GPUs. Linear speedup with GPU count.</li>
+        <li>SVM has no native multi-GPU support (ThunderSVM is single-GPU only).</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Natural open-world extension</div>
+      <ul>
+        <li>Adding an "unknown" class to the softmax output is natural. Confidence thresholding on the maximum softmax probability provides a principled open-world detector.</li>
+        <li>The system already uses <code>ALERT_THRESHOLD = 0.60</code> for open-world mode.</li>
+      </ul>
+    </div>
+    <div class="sw-card str">
+      <div class="sw-card-title">✦ Transfer learning potential</div>
+      <ul>
+        <li>The convolutional feature extractor (everything before the Dense head) can be fine-tuned on new sites or new network conditions, rather than retraining from scratch.</li>
+        <li>Pre-trained weights can serve as a strong initialisation for new deployment scenarios.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 7: SHORTCOMINGS
+═══════════════════════════════════════ -->
+<div class="section" id="s7">
+  <div class="section-title"><span class="section-num">7</span>Shortcomings &amp; Limitations</div>
+
+  <div class="sw-grid">
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ Data-hungry — 50 instances/site is too few</div>
+      <ul>
+        <li>The current project targets 50 instances per monitored site. This is <em>barely sufficient</em> for a CNN to learn robust convolutional filters. With 80/20 train/val split and 50 instances, the model trains on only 40 samples per site — critically low for a 100-class problem.</li>
+        <li>SVM with kernel methods achieves near-optimal boundaries with as few as 20–30 examples per class. CNNs typically require 100–500 per class.</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ Non-deterministic — stochastic results</div>
+      <ul>
+        <li>Random weight initialisation, batch shuffling, and EarlyStopping epoch selection all introduce randomness. Two training runs with identical data produce different models.</li>
+        <li>For a scientific reproducibility study (replicating Panchenko et al.), this is a significant disadvantage over the deterministic SVM.</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ TensorFlow dependency — heavy and fragile</div>
+      <ul>
+        <li>TensorFlow ≥2.16 requires careful environment setup. GPU support on Windows requires specific CUDA/cuDNN versions. Training without GPU is very slow (hours for 120 epochs × 500 steps/epoch).</li>
+        <li>The lazy-import pattern is used precisely because TF startup costs ~2 s and ~1 GB RAM even for CPU-only use.</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ Overfitting risk on small dataset</div>
+      <ul>
+        <li>The handover.md notes an observed gap: <em>"18.4% CV accuracy vs 81% training accuracy (significant overfit)"</em>. With 50 instances/site and 100 classes, the model has millions of parameters relative to the ~4000 training samples — a severe over-parameterisation.</li>
+        <li>Reducing <code>VARCNN_DROPOUT_SCALE = 0.1</code> mitigates this but also reduces regularisation on an already low-sample dataset.</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ Hyperparameter sensitivity</div>
+      <ul>
+        <li>Learning rate, dropout scale, batch size, and number of epochs interact in complex ways. A learning rate 2× too high causes divergence; 2× too low means 120 epochs aren't enough. SVM's hyperparameters (C, γ) are searched exhaustively; CNN's are tuned manually.</li>
+        <li>There is no GridSearchCV equivalent for CNNs in this project — the hyperparameters are fixed in config.py.</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ Padding noise in input sequences</div>
+      <ul>
+        <li>Traces shorter than 2000 packets are zero-padded. The network must learn to ignore trailing zeros, which are meaningless. Despite the model theoretically being able to learn this, zero regions in the input contribute noise to pooling operations.</li>
+        <li>Masking layers (Keras Masking layer) are not used in the current implementation, meaning all 2000 time steps are treated equally.</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ No cross-validation scoring</div>
+      <ul>
+        <li>SVM training produces a cross-validated accuracy score (<code>cv_mean_accuracy ± cv_std</code>) from <code>cross_val_score()</code>, providing a reliable generalisation estimate. var-CNN uses a single train/validation split — the val_accuracy is more sensitive to the random split.</li>
+        <li>K-fold CV for deep learning is computationally impractical here (it would require K full training runs).</li>
+      </ul>
+    </div>
+    <div class="sw-card wk">
+      <div class="sw-card-title">✗ Opaque feature representation</div>
+      <ul>
+        <li>The Conv1D filters are not directly interpretable. It is not possible to say "this filter detects CDN requests" — the representations are distributed across hundreds of filter activations.</li>
+        <li>SVM support vectors are actual training PCAP traces that can be inspected and understood.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 8: WHERE VAR-CNN FAILS vs SVM
+═══════════════════════════════════════ -->
+<div class="section" id="s8">
+  <div class="section-title"><span class="section-num">8</span>Where var-CNN Fails Specifically vs SVM — In This Project</div>
+
+  <p>This section addresses the most important question: <strong>given that both classifiers are implemented, why does var-CNN produce worse results than SVM in the current project configuration?</strong> The handover document explicitly notes this with the observation of 18.4% CV vs 81% training accuracy in var-CNN.</p>
+
+  <div class="card" style="border-left:5px solid var(--red)">
+    <div class="card-title" style="color:var(--red-dark)">Root cause diagnosis: the 50 instances/site bottleneck</div>
+    <p>The fundamental reason var-CNN fails here is not architectural — it is a <strong>data starvation problem</strong>. The CNN is trained with approximately 40 instances per site (80% of 50). With 100 classes, this means the model must learn discriminative Conv1D filters from a training set of just 4,000 samples across a 6,000,000-dimensional raw input space. The SVM operates in 104-dimensional pre-compressed space, where 4,000 samples provides excellent coverage.</p>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Failure mode</th>
+          <th>Why SVM doesn't have this problem</th>
+          <th>Evidence in codebase</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Overfitting (81% train, 18% CV)</strong></td>
+          <td>SVM's margin maximisation explicitly optimises generalisation. With RBF kernel and large C, it creates tight but well-regularised boundaries. CV accuracy tracks training accuracy closely.</td>
+          <td>handover.md: "18.4% CV accuracy vs 81% training accuracy (significant overfit)"</td>
+        </tr>
+        <tr>
+          <td><strong>Under-trained convolutional filters</strong></td>
+          <td>SVM doesn't learn filters — it relies on CUMUL to pre-extract the signal. CUMUL is a mathematically principled representation that works with any sample count.</td>
+          <td>40 train samples per class × 3 channels × 2000 time steps = filters see too few examples of each class to generalise</td>
+        </tr>
+        <tr>
+          <td><strong>EarlyStopping fires too early</strong></td>
+          <td>SVM either converges to optimal or doesn't — there is no "early stopping epoch" concept. The optimal solution is unique and always found (given the convex objective).</td>
+          <td>patience=4 means the model stops after seeing val_accuracy plateau for 4 epochs — likely around epoch 15–25, well before the model has learned robust representations</td>
+        </tr>
+        <tr>
+          <td><strong>Batch size 8 is too small for stable gradient estimates</strong></td>
+          <td>SVM uses the entire training set in each optimisation step — no batch variance. The optimal hyperplane is found exactly, not approximated by noisy mini-batch gradients.</td>
+          <td><code>VARCNN_BATCH_SIZE = 8</code> means each gradient step sees only 8 of 4000 samples — high variance estimates, slow convergence</td>
+        </tr>
+        <tr>
+          <td><strong>Validation split reduces already tiny training set</strong></td>
+          <td>SVM is cross-validated internally by GridSearchCV, which uses all training data across folds — every sample contributes to every fold's training set at some point.</td>
+          <td>20% validation split → 32 samples/site for fit, 8 for validation. This is a critically small split.</td>
+        </tr>
+        <tr>
+          <td><strong>No CV score — single split evaluation is unreliable</strong></td>
+          <td>SVM produces <code>cv_mean ± cv_std</code> across 10 stratified folds — a statistically reliable estimate. The stochastic val split of var-CNN may accidentally be easy or hard.</td>
+          <td>var-CNN metadata only stores <code>train_accuracy</code> and <code>test_accuracy</code> — no fold-averaged score</td>
+        </tr>
+        <tr>
+          <td><strong>DROPOUT_SCALE=0.1 disables regularisation</strong></td>
+          <td>SVM's regularisation (C parameter) is already tuned via GridSearchCV to the optimal value. Reducing it would explicitly reduce the grid search range.</td>
+          <td>Effective dropout rates: 0.5%, 1%, 1.5% — essentially no dropout. The model is unregularised and memorises training traces.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-green">
+    <div class="box-title">When would var-CNN surpass SVM in this project?</div>
+    If the dataset were expanded to 200+ instances per monitored site (requiring ~4× more collection time), var-CNN would become competitive. At 500+ instances per site, var-CNN would likely outperform SVM, as the Conv1D filters would have sufficient examples to learn generalised traffic patterns that go beyond what the CUMUL representation captures. The infrastructure for this is already in place — only the data volume is the bottleneck.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 9: WHY NOT k-NN?
+═══════════════════════════════════════ -->
+<div class="section" id="s9">
+  <div class="section-title"><span class="section-num">9</span>Why Not k-Nearest Neighbours (k-NN)?</div>
+
+  <p>k-NN was the dominant classifier in early website fingerprinting research (Herrmann et al. 2009, Panchenko et al. 2011) before the SVM era. It is instructive to understand exactly why it was not chosen for this implementation.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card rejected">
+      <div class="comp-title">k-NN: How it would work here</div>
+      <span class="verdict v-rejected">Not suitable</span>
+      <p>Given a test traffic trace's 104-dim CUMUL vector, find the k training traces with smallest Euclidean distance. Assign the majority class among those k neighbours.</p>
+    </div>
+    <div class="comp-card rejected">
+      <div class="comp-title">k-NN on raw sequences</div>
+      <span class="verdict v-rejected">Impractical</span>
+      <p>Computing Euclidean or DTW distance between 2000×3 sequences for every test-training pair. At 5000 training samples, each test prediction requires 5000 distance computations — O(N × L) where L=6000.</p>
+    </div>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Problem</th><th>Detail</th><th>How SVM/CNN solves it</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>O(N) inference</strong></td>
+          <td>Every prediction requires comparing to ALL 5,000 training vectors. For a real-time Tor exit node monitor making thousands of predictions per minute, this is prohibitively slow.</td>
+          <td>SVM: O(N_sv × d) where N_sv ≪ N. CNN: O(1) fixed forward pass.</td>
+        </tr>
+        <tr>
+          <td><strong>O(N × d) memory</strong></td>
+          <td>The entire training set must be held in memory for inference. At 5000 samples × 104 features = 520K floats — manageable now but scales linearly.</td>
+          <td>SVM stores only support vectors. CNN stores only weight matrices.</td>
+        </tr>
+        <tr>
+          <td><strong>Curse of dimensionality</strong></td>
+          <td>In 104-dimensional space, Euclidean distance becomes increasingly meaningless — all points become approximately equidistant ("concentration of measure"). k-NN relies on meaningful distance geometry.</td>
+          <td>SVM's kernel explicitly addresses this. CNN learns a discriminative low-dim embedding.</td>
+        </tr>
+        <tr>
+          <td><strong>k hyperparameter sensitivity</strong></td>
+          <td>k=1 overfits. k=N underfits. Optimal k depends heavily on class density and varies per class. Finding it requires cross-validation over many k values.</td>
+          <td>SVM has only 2 hyperparameters with well-understood effects. CNN's are tunable via callbacks.</td>
+        </tr>
+        <tr>
+          <td><strong>No natural probability output</strong></td>
+          <td>k-NN "probability" = fraction of k neighbours in each class — a very coarse estimate, especially for small k. Poor for ROC curves and open-world thresholding.</td>
+          <td>SVM: Platt scaling. CNN: softmax probabilities directly.</td>
+        </tr>
+        <tr>
+          <td><strong>No feature learning</strong></td>
+          <td>k-NN in raw packet space gives meaningless distances. k-NN with CUMUL features is slightly better but still assumes the Euclidean metric is appropriate for fingerprint comparison.</td>
+          <td>CNN learns its own metric implicitly through its feature representation.</td>
+        </tr>
+        <tr>
+          <td><strong>Historically superseded</strong></td>
+          <td>Panchenko et al. (2016) — the exact paper this project implements — explicitly showed that SVM+CUMUL outperforms k-NN+CUMUL by a large margin across all dataset sizes tested.</td>
+          <td>SVM chosen as the paper's primary result. var-CNN as the more modern extension.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 10: WHY NOT TRIPLET-CNN?
+═══════════════════════════════════════ -->
+<div class="section" id="s10">
+  <div class="section-title"><span class="section-num">10</span>Why Not Triplet CNN?</div>
+
+  <p>Triplet networks have been used in advanced WFP research (Oh et al. 2019, Rimmer et al. 2018 "Automated Website Fingerprinting through Deep Learning") and offer interesting theoretical properties. Understanding why they were not chosen illuminates the design space of the field.</p>
+
+  <div class="sub-heading">What a Triplet CNN is</div>
+  <div class="box box-teal">
+    <div class="box-title">Triplet loss learning: (anchor, positive, negative)</div>
+    A Triplet CNN is a <strong>metric learning</strong> approach. Rather than directly classifying into N classes, it trains a CNN to produce an <strong>embedding</strong> — a fixed-size vector in a learned metric space — such that:
+    <ul style="padding-left:18px;margin-top:8px">
+      <li><strong>Same class → close embeddings</strong>: two traces from bbc.com should map to nearby points in embedding space</li>
+      <li><strong>Different class → far embeddings</strong>: a trace from bbc.com and one from cnn.com should be far apart</li>
+    </ul>
+    Training uses triplets (anchor, positive, negative): anchor and positive are same-class traces; negative is a different-class trace. The loss pushes anchor closer to positive and further from negative.
+  </div>
+
+  <div class="math">
+    <span class="label">Triplet loss function</span>
+    <span class="eq">L = max(0,  ‖f(a) − f(p)‖² − ‖f(a) − f(n)‖² + margin)</span>
+    <span class="note">← f(·) = CNN embedding function</span>
+    <span class="note">← a = anchor trace, p = positive (same site), n = negative (different site)</span>
+    <span class="note">← margin: minimum distance separation required between classes</span>
+  </div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Consideration</th>
+          <th>Triplet CNN</th>
+          <th>Why var-CNN was chosen instead</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Data required</strong></td>
+          <td>Triplet mining requires enough samples per class to find hard negatives. With 50 instances/site, triplet mining produces very few informative triplets (easy triplets dominate and contribute zero gradient).</td>
+          <td>var-CNN's cross-entropy loss is effective with as few as 10–20 samples per class. No triplet mining needed.</td>
+        </tr>
+        <tr>
+          <td><strong>Training complexity</strong></td>
+          <td>Must implement online/offline triplet mining strategy (random, semi-hard, or hard). Semi-hard mining requires careful distance monitoring during training. Much more engineering overhead.</td>
+          <td>var-CNN trains with standard categorical cross-entropy — the simplest, most robust loss. No special mining needed.</td>
+        </tr>
+        <tr>
+          <td><strong>Adding new classes</strong></td>
+          <td>Major advantage: adding a new website requires no retraining. Just capture a few traces and add them as reference points in embedding space (few-shot / open-set recognition).</td>
+          <td>var-CNN requires full retraining to add new classes. But so does SVM — and SVM is already the baseline here.</td>
+        </tr>
+        <tr>
+          <td><strong>Open-world performance</strong></td>
+          <td>Naturally handles open-world: unmonitored sites produce embeddings far from all monitored site clusters. Distance to nearest cluster is a reliable "unknown" detector.</td>
+          <td>var-CNN handles open-world via softmax thresholding — less principled but sufficient for current scope.</td>
+        </tr>
+        <tr>
+          <td><strong>Closed-world accuracy (50 inst/site)</strong></td>
+          <td>Typically lower than cross-entropy CNN in the closed-world regime when data is sparse. The embedding space is harder to train correctly without many intra-class examples.</td>
+          <td>var-CNN's cross-entropy directly optimises the classification objective. More efficient use of limited data.</td>
+        </tr>
+        <tr>
+          <td><strong>Implementation complexity</strong></td>
+          <td>Requires: triplet sampler, embedding extraction, nearest-centroid/k-NN classifier on embeddings, separate distance metric tuning. 3× more code than a standard CNN classifier.</td>
+          <td>var-CNN is a standard Keras model trained end-to-end. Minimal implementation complexity. Easier to debug and maintain.</td>
+        </tr>
+        <tr>
+          <td><strong>Existing literature baseline</strong></td>
+          <td>Not directly comparable to the Panchenko et al. (2016) SVM+CUMUL baseline which this project implements. Introduces architectural differences that obscure the CUMUL contribution.</td>
+          <td>var-CNN was explicitly designed as an extension to the same-data WFP problem, making direct comparison fair.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box box-amber">
+    <div class="box-title">When would Triplet CNN be the right choice?</div>
+    If the project needed to: (1) fingerprint thousands of websites with only 5–10 examples each (few-shot), (2) deploy a system where new monitored sites are added frequently without full retraining, (3) operate in open-world mode as the primary use case, or (4) transfer fingerprinting models between different network environments (domain adaptation). None of these are the current project's primary goal.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 11: WHY VAR-CNN?
+═══════════════════════════════════════ -->
+<div class="section" id="s11">
+  <div class="section-title"><span class="section-num">11</span>Why var-CNN — The Deliberate Design Choice</div>
+
+  <p>Given that var-CNN underperforms SVM in the current data-sparse configuration, why is it included at all? The answer is forward-looking and grounded in the project's longer-term goals.</p>
+
+  <div class="comp-grid">
+    <div class="comp-card chosen">
+      <div class="comp-title">var-CNN — Chosen</div>
+      <span class="verdict v-chosen">Included</span>
+      <p>Direct literature comparison (Bhat et al. 2019). Same interface as SVM (<code>train_from_selection / test_from_selection</code>). Operates on raw sequences — no CUMUL needed. Will outperform SVM when dataset reaches 200+ instances/site. Already implemented and tested.</p>
+    </div>
+    <div class="comp-card rejected">
+      <div class="comp-title">k-NN — Rejected</div>
+      <span class="verdict v-rejected">Excluded</span>
+      <p>O(N) inference, curse of dimensionality in 104-dim space, historically inferior to SVM+CUMUL per the Panchenko paper, no natural probability output for open-world detection.</p>
+    </div>
+    <div class="comp-card rejected">
+      <div class="comp-title">Triplet CNN — Excluded</div>
+      <span class="verdict v-partial">Future work</span>
+      <p>Requires 5× more data per class for effective triplet mining, significantly higher implementation complexity, not directly comparable to the SVM baseline. Excellent future direction for few-shot and open-world WFP.</p>
+    </div>
+    <div class="comp-card rejected">
+      <div class="comp-title">Random Forest — Excluded</div>
+      <span class="verdict v-rejected">Excluded</span>
+      <p>Strong competitor on tabular features, but operates in the same CUMUL-feature space as SVM — would not add a new data modality. Inferior to RBF-SVM empirically in the traffic fingerprinting literature.</p>
+    </div>
+  </div>
+
+  <div class="sub-heading">The unified interface — why this matters</div>
+  <div class="box box-purple">
+    <div class="box-title">train.py and test.py call both classifiers identically</div>
+    Both <code>svm_model.train_from_selection()</code> and <code>varcnn.model.train_from_selection()</code> have identical call signatures and return identical result dicts (<code>y_true, y_pred, y_score, class_labels, accuracy, ...</code>). <code>graphs.py:generate_graphs()</code> accepts either result transparently. This means once the dataset grows to 200+ instances per site, switching from SVM to var-CNN requires changing exactly one line in <code>train.py</code>. The system is designed for this migration.
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     SECTION 12: SUMMARY
+═══════════════════════════════════════ -->
+<div class="section" id="s12">
+  <div class="section-title"><span class="section-num">12</span>Summary &amp; Key Takeaways</div>
+
+  <div class="summary-box">
+    <h3>var-CNN in the CUMUL system — current state</h3>
+    <p>var-CNN is a 1D convolutional network taking raw (2000, 3) packet sequences as input. It learns its own traffic fingerprint features through 4 convolutional blocks, dual GAP+GMP pooling, and a 2-layer classification head. It is trained with Adam optimiser, sparse categorical crossentropy loss, EarlyStopping, ReduceLROnPlateau, and class weight balancing.</p>
+    <p>In the current project configuration (50 instances/site, 100 classes), var-CNN underperforms SVM+CUMUL due to data starvation — the CNN cannot learn generalised convolutional filters from only 40 training traces per class. SVM with pre-engineered CUMUL features is more data-efficient and achieves better cross-validated accuracy with the current dataset size.</p>
+    <p>var-CNN is included because: (1) it provides a direct comparison with the Bhat et al. (2019) literature, (2) it will surpass SVM when the dataset reaches 200+ instances/site, and (3) the unified interface allows zero-code-change switching between classifiers when the data volume milestone is reached.</p>
+  </div>
+
+  <div class="sub-heading">Quick-reference parameter table</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>Parameter</th><th>Value</th><th>Effect</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>input_length</code></td><td>2000 (MAX_TRACE_PACKETS)</td><td>Sequence length after truncation/padding. 2000 packets ≈ first load burst.</td></tr>
+        <tr><td><code>channels</code></td><td>3 (direction, size, inter-arrival)</td><td>Multi-channel input enables joint learning of direction+size+timing patterns</td></tr>
+        <tr><td><code>VARCNN_BATCH_SIZE</code></td><td>8</td><td>Small batches → more gradient steps per epoch → better convergence on small data</td></tr>
+        <tr><td><code>VARCNN_EPOCHS</code></td><td>120 max (EarlyStopping)</td><td>Usually terminates at 20–40 epochs via EarlyStopping patience=4</td></tr>
+        <tr><td><code>VARCNN_LEARNING_RATE</code></td><td>5×10⁻⁴</td><td>Slightly above default Adam LR for faster convergence on small data</td></tr>
+        <tr><td><code>VARCNN_DROPOUT_SCALE</code></td><td>0.1</td><td>Effective rates: 0.5%, 1%, 1.5% — minimal regularisation for sparse data</td></tr>
+        <tr><td>Activation</td><td>Swish everywhere except output</td><td>Smoother gradients than ReLU; better for deep networks with small batches</td></tr>
+        <tr><td>Normalisation</td><td>LayerNormalization</td><td>Stable at batch_size=8 (unlike BatchNorm which needs large batches)</td></tr>
+        <tr><td>Pooling</td><td>GAP + GMP concatenated → (384,)</td><td>Handles variable-length input; GAP captures global structure, GMP captures peak features</td></tr>
+        <tr><td>Output</td><td>Dense(N_classes, softmax)</td><td>Probability distribution over all monitored sites; used for confidence thresholding</td></tr>
+        <tr><td>Loss</td><td>Sparse categorical crossentropy</td><td>Integer labels directly, no one-hot needed; optimises per-class log-probability</td></tr>
+        <tr><td>GPU strategy</td><td>MirroredStrategy (if multi-GPU)</td><td>Linear training speedup with GPU count; transparent to calling code</td></tr>
+        <tr><td>Artefacts</td><td>varcnn_model.keras + label_encoder.pkl + metadata.json + history.json</td><td>Keras native format, includes full training history for learning curve analysis</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="sub-heading">File map</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th>File</th><th>Role</th><th>Key var-CNN content</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>model.py</code></td><td>Full var-CNN implementation</td><td><code>build_model()</code>, <code>train_from_selection()</code>, <code>test_from_selection()</code>, artefact I/O, TF runtime config</td></tr>
+        <tr><td><code>config.py</code></td><td>All hyperparameters</td><td><code>VARCNN_BATCH_SIZE</code>, <code>VARCNN_EPOCHS</code>, <code>VARCNN_LEARNING_RATE</code>, <code>VARCNN_DROPOUT_SCALE</code>, <code>MAX_TRACE_PACKETS</code></td></tr>
+        <tr><td><code>train.py</code></td><td>Training CLI</td><td>Lazy-imports <code>varcnn.model.train_from_selection</code> when user selects var-CNN</td></tr>
+        <tr><td><code>test.py</code></td><td>Testing CLI</td><td>Lazy-imports <code>varcnn.model.test_from_selection</code> when user selects var-CNN</td></tr>
+        <tr><td><code>graphs.py</code></td><td>Visualisation</td><td>Accepts var-CNN result dict identically to SVM — no special handling needed</td></tr>
+        <tr><td><code>data/models/varcnn/</code></td><td>Saved artefacts</td><td><code>varcnn_model.keras</code>, <code>label_encoder.pkl</code>, <code>metadata.json</code>, <code>history.json</code></td></tr>
+        <tr><td><code>requirements.txt</code></td><td>Dependencies</td><td><code>tensorflow[and-cuda]≥2.16.1</code> (Linux), <code>tensorflow≥2.16.1</code> (Windows)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</main>
+</body>
+</html>

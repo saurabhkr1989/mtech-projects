@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CUMUL — Function Reference Table</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+  padding: 28px 20px;
+  font-size: 13px;
+}
+
+h1 { font-size: 21px; font-weight: 700; color: #0f172a; margin-bottom: 3px; }
+.subtitle { font-size: 12px; color: #64748b; margin-bottom: 24px; }
+
+/* ── TOC ── */
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-bottom: 28px;
+}
+.toc a {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 11px;
+  border-radius: 20px;
+  text-decoration: none;
+}
+.toc a:hover { opacity: .75; }
+.tc { background:#fee2e2; color:#991b1b; }
+.tf { background:#ede9fe; color:#4c1d95; }
+.tt { background:#dbeafe; color:#1e40af; }
+.te { background:#dcfce7; color:#166534; }
+.tu { background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; }
+
+/* ── MODULE BLOCK ── */
+.mod { margin-bottom: 36px; }
+
+.mod-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 18px;
+  border-radius: 8px 8px 0 0;
+  border: 1px solid transparent;
+}
+.mod-name  { font-size: 15px; font-weight: 700; letter-spacing: .01em; }
+.mod-phase {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.55);
+}
+.mod-desc { font-size: 12px; margin-left: auto; opacity: .85; }
+
+/* color themes for mod headers */
+.mh-collect { background:#fee2e2; border-color:#fca5a5; color:#7f1d1d; }
+.mh-feature { background:#ede9fe; border-color:#c4b5fd; color:#3b0764; }
+.mh-train   { background:#dbeafe; border-color:#93c5fd; color:#1e3a8a; }
+.mh-eval    { background:#dcfce7; border-color:#86efac; color:#14532d; }
+.mh-util    { background:#f8fafc; border-color:#cbd5e1; color:#1e293b; }
+
+/* ── TABLE ── */
+.tbl-wrap {
+  overflow-x: auto;
+  border: 1px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  background: #fff;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+thead th {
+  background: #f8fafc;
+  padding: 9px 12px;
+  text-align: left;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: #64748b;
+  border-bottom: 2px solid #e2e8f0;
+  white-space: nowrap;
+}
+tbody td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: top;
+  line-height: 1.55;
+}
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:hover td { background: #f8fafc; }
+
+/* column widths */
+.col-fn   { width: 18%; min-width: 140px; }
+.col-sig  { width: 22%; min-width: 180px; }
+.col-what { width: 22%; }
+.col-how  { width: 20%; }
+.col-ret  { width: 18%; }
+
+/* function name */
+.fn {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #1d4ed8;
+}
+.fn-private { color: #7c3aed; }
+.fn-class   { color: #0369a1; }
+
+/* code inline */
+code {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 11px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 3px;
+  padding: 1px 5px;
+  color: #374151;
+}
+
+/* tags */
+.tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-right: 3px;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+.tag-pub    { background:#dbeafe; color:#1e40af; }
+.tag-priv   { background:#ede9fe; color:#4c1d95; }
+.tag-entry  { background:#dcfce7; color:#166534; }
+.tag-thread { background:#fef3c7; color:#92400e; }
+.tag-io     { background:#fee2e2; color:#991b1b; }
+.tag-pure   { background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; }
+.tag-cls    { background:#f0f9ff; color:#0369a1; border:1px solid #bae6fd; }
+
+/* caller pill */
+.caller {
+  display: inline-block;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 10.5px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: #475569;
+  margin: 1px 0;
+}
+
+/* return badge */
+.ret-badge {
+  display: inline-block;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 10.5px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: #9a3412;
+}
+.ret-none {
+  color: #94a3b8;
+  font-style: italic;
+  font-size: 11px;
+}
+</style>
+</head>
+<body>
+
+<h1>CUMUL Website Fingerprinting — Complete Function Reference</h1>
+<p class="subtitle">Every function across all modules: signature · purpose · caller · return value &nbsp;|&nbsp; Panchenko et al., NDSS 2016</p>
+
+<!-- TOC -->
+<div class="toc">
+  <strong style="font-size:11.5px;color:#64748b;align-self:center;margin-right:4px">Jump to:</strong>
+  <a href="#capture"    class="tc">capture.py</a>
+  <a href="#collection" class="tc">collection_menu.py</a>
+  <a href="#cumul"      class="tf">cumul.py</a>
+  <a href="#extract"    class="tf">extract_features.py</a>
+  <a href="#data"       class="tt">data.py</a>
+  <a href="#svm"        class="tt">svm_model.py</a>
+  <a href="#train"      class="tt">train.py</a>
+  <a href="#test"       class="tt">test.py</a>
+  <a href="#graphs"     class="te">graphs.py</a>
+  <a href="#visualize"  class="te">visualize.py</a>
+  <a href="#closed"     class="te">closed_world.py</a>
+  <a href="#sanitize"   class="tu">sanitize.py</a>
+  <a href="#scaler"     class="tu">scaler.py</a>
+  <a href="#registry"   class="tu">site_registry.py</a>
+  <a href="#status"     class="tu">show_status.py</a>
+  <a href="#merge"      class="tu">merge_data.py</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     capture.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="capture">
+  <div class="mod-header mh-collect">
+    <span class="mod-name">capture.py</span>
+    <span class="mod-phase">Phase 1 — Data Collection</span>
+    <span class="mod-desc">Tor browser automation + Scapy packet capture per website instance</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">wait_for_tor</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>wait_for_tor(socks_port, ctrl_port, timeout=90, proc=None)</code></td>
+          <td>Polls SOCKS port until open, then verifies 100% Tor bootstrap via Stem control port. Falls back to a 5 s sleep if Stem is absent.</td>
+          <td><span class="caller">start_tor_instance()</span><br><span class="caller">run_collection()</span></td>
+          <td><span class="ret-badge">bool</span> — <code>True</code> if Tor ready, <code>False</code> on timeout</td>
+        </tr>
+        <tr>
+          <td><span class="fn">start_tor_instance</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>start_tor_instance(worker_id)</code></td>
+          <td>Launches a dedicated <code>tor.exe</code> subprocess for a worker. Assigns unique SOCKS + control ports using <code>BASE_*_PORT + worker_id</code>. Creates isolated data directory per session.</td>
+          <td><span class="caller">collect_sites()</span> in collection_menu.py<br><span class="caller">run_collection()</span></td>
+          <td><span class="ret-badge">(proc, socks_port, ctrl_port)</span> or <span class="ret-badge">(None, None, None)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">rotate_tor_circuit</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>rotate_tor_circuit(control_port)</code></td>
+          <td>Sends NEWNYM signal to a specific Tor instance via Stem. Waits <code>CIRCUIT_WAIT_SECONDS</code> for new circuit to establish.</td>
+          <td><span class="caller">capture_site()</span> before each attempt<br><span class="caller">_capture_task()</span> on retry</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">create_driver</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>create_driver(socks_port, worker_id=0, driver_exec_path=None)</code></td>
+          <td>Creates a Chrome WebDriver routed through a specific Tor SOCKS5 proxy. Acquires an inter-process file lock before patching chromedriver. Injects JS stealth patches to hide automation signals. Tries up to 3 times.</td>
+          <td><span class="caller">capture_site()</span></td>
+          <td><span class="ret-badge">(driver, profile_dir)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_stealth_scripts</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_stealth_scripts(driver)</code></td>
+          <td>Injects CDP scripts to override <code>navigator.webdriver</code>, <code>plugins.length</code>, <code>languages</code>, <code>hardwareConcurrency</code>, and <code>deviceMemory</code> to hide automation.</td>
+          <td><span class="caller">create_driver()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_check_bot_block</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_check_bot_block(driver, expected_domain)</code></td>
+          <td>4-layer bot detection: (1) page title keywords, (2) source signatures (Cloudflare, CAPTCHA, DDoS-Guard), (3) URL drift from expected domain, (4) body text &lt; 3000 chars.</td>
+          <td><span class="caller">capture_site()</span></td>
+          <td><span class="ret-badge">(is_blocked: bool, reason: str)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">capture_site</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>capture_site(url, label, instance_idx, worker_id=0, driver_exec_path=None)</code></td>
+          <td>Full capture pipeline for one website instance: rotate Tor circuit → start Scapy sniffer → launch browser → navigate → wait for page load → simulate scroll → bot check → stop sniffer → validate PCAP → write to disk.</td>
+          <td><span class="caller">_process_one_task()</span> in collection_menu.py<br><span class="caller">run_collection()</span></td>
+          <td><span class="ret-badge">(pcap_path, "ok")</span> or <span class="ret-badge">(None, reason_str)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">PacketCapture</span><br><span class="tag tag-cls">class</span><span class="tag tag-thread">thread</span></td>
+          <td><code>PacketCapture(interface, output_file, filter_str, timeout)</code></td>
+          <td>Background Scapy sniffer. <code>.start()</code> spawns a daemon thread calling <code>scapy.sniff()</code> in 2 s loops. <code>.stop()</code> sets the stop event, joins thread, and writes PCAP via <code>wrpcap()</code>.</td>
+          <td><span class="caller">capture_site()</span></td>
+          <td><code>.stop()</code> → <span class="ret-badge">int</span> packet count</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_wait_for_ready</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_wait_for_ready(driver, timeout=20)</code></td>
+          <td>Polls <code>document.readyState == 'complete'</code> every 1 s until timeout. Used after initial page load to ensure DOM is stable.</td>
+          <td><span class="caller">capture_site()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_human_scroll</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_human_scroll(driver)</code></td>
+          <td>Simulates human scrolling with 5–10 random JS <code>window.scrollBy()</code> calls, 2–4 s apart. Raises exception if browser closes mid-scroll.</td>
+          <td><span class="caller">capture_site()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_cleanup</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_cleanup(path)</code></td>
+          <td>Silently deletes a partial or invalid PCAP file. Called when capture fails validation to avoid polluting the dataset.</td>
+          <td><span class="caller">capture_site()</span> on failure</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_kill_child_processes</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_kill_child_processes(parent_pid, profile_keyword=None)</code></td>
+          <td>Uses psutil to kill all child processes of <code>parent_pid</code> and any <code>chrome.exe</code> whose cmdline contains <code>profile_keyword</code>. Prevents zombie browser accumulation.</td>
+          <td><span class="caller">capture_site()</span> in finally block</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">run_collection</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run_collection()</code></td>
+          <td>Legacy single-pass sequential collection loop. Iterates over all monitored sites and instances, calling <code>capture_site()</code> directly. Kept for backward compatibility.</td>
+          <td>Called from <code>__main__</code></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     collection_menu.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="collection">
+  <div class="mod-header mh-collect">
+    <span class="mod-name">collection_menu.py</span>
+    <span class="mod-phase">Phase 1 — Orchestration</span>
+    <span class="mod-desc">Interactive collection menu, progressive tracker, parallel Pool management</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">_load_status</span><br><span class="tag tag-priv">private</span><span class="tag tag-io">I/O</span></td>
+          <td><code>_load_status()</code></td>
+          <td>Reads <code>capture_status.json</code> from <code>DATA_PROC_DIR</code>. Returns empty dict if missing or corrupt (graceful degradation).</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-badge">dict</span> status map</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_save_status</span><br><span class="tag tag-priv">private</span><span class="tag tag-io">I/O</span></td>
+          <td><code>_save_status(status)</code></td>
+          <td>Writes status dict to JSON atomically. Adds <code>_last_updated</code> timestamp. Creates parent dirs if needed.</td>
+          <td><span class="caller">_mark_success()</span><br><span class="caller">_mark_failed()</span><br><span class="caller">_sync_from_disk()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_entry</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_entry(status, label)</code></td>
+          <td>Returns (lazily creating) the status dict for a label. Ensures keys: <code>valid, failed_attempts, blacklisted, blacklist_reason, last_updated</code>.</td>
+          <td>All tracker mutation functions</td>
+          <td><span class="ret-badge">dict</span> site entry</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_count_on_disk</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_count_on_disk(label)</code></td>
+          <td>Globs <code>data/raw/label_*.pcap</code> and returns the count. Authoritative source for valid capture count.</td>
+          <td><span class="caller">_sync_from_disk()</span><br><span class="caller">show_status_table()</span><br><span class="caller">_mark_success()</span></td>
+          <td><span class="ret-badge">int</span> file count</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_sync_from_disk</span><br><span class="tag tag-priv">private</span><span class="tag tag-thread">thread</span></td>
+          <td><code>_sync_from_disk(status, all_labels)</code></td>
+          <td>Parallel file counting via <code>ThreadPoolExecutor(4 workers)</code>. Updates <code>valid</code> count for all labels from actual disk state. Does not reset failure counts.</td>
+          <td><span class="caller">run()</span> before and after collection</td>
+          <td><span class="ret-none">None</span> (mutates status in-place)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_get_missing_indices</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_get_missing_indices(label, target)</code></td>
+          <td>Scans existing PCAP filenames to find which numeric indices are present. Returns an ordered list of missing indices up to <code>target</code>, filling gaps first then extending.</td>
+          <td><span class="caller">collect_sites()</span></td>
+          <td><span class="ret-badge">list[int]</span> missing indices</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_mark_success_locked</span><br><span class="tag tag-priv">private</span><span class="tag tag-thread">thread-safe</span></td>
+          <td><code>_mark_success_locked(status, label)</code></td>
+          <td>Thread-safe wrapper: acquires <code>_tracker_lock</code> then calls <code>_mark_success()</code>. Refreshes valid count from disk and resets failed_attempts to 0.</td>
+          <td><span class="caller">collect_sites()</span> on task OK</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_mark_failed_locked</span><br><span class="tag tag-priv">private</span><span class="tag tag-thread">thread-safe</span></td>
+          <td><code>_mark_failed_locked(status, label, reason)</code></td>
+          <td>Thread-safe wrapper: acquires <code>_tracker_lock</code> then calls <code>_mark_failed()</code>. Increments <code>failed_attempts</code>. Auto-blacklists if ≥ <code>MAX_SITE_FAILURES</code>.</td>
+          <td><span class="caller">collect_sites()</span> on task FAIL/ERROR</td>
+          <td><span class="ret-badge">bool</span> — <code>True</code> if newly blacklisted</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_validate_pcap</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_validate_pcap(args)</code></td>
+          <td>Validates a single PCAP: loads with Scapy, checks packet count ≥ MIN_PACKETS and total bytes ≥ MIN_BYTES. Pool-worker-friendly (accepts tuple args).</td>
+          <td><span class="caller">_validate_existing_robust()</span></td>
+          <td><span class="ret-badge">(path, is_valid: bool)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_validate_existing_robust</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_validate_existing_robust()</code></td>
+          <td>Groups PCAPfiles by site. Computes per-site Q1/Q3/IQR from file sizes. Deletes files below <code>Q1 − 1.5×IQR</code>. Skips aggressive filter when fewer than 4 captures per site.</td>
+          <td><span class="caller">validate_existing()</span></td>
+          <td><span class="ret-badge">dict</span> <code>{valid: int, deleted: int}</code></td>
+        </tr>
+        <tr>
+          <td><span class="fn">show_status_table</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>show_status_table(status, sites_dict, target, label_prefix="")</code></td>
+          <td>Prints a formatted per-site progress table with progress bars, counts, and status labels (COMPLETE / PARTIAL / MISSING / BLACKLISTED).</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span> (prints to stdout)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_init_worker</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_init_worker()</code></td>
+          <td>Pool initialiser: sets SIGINT to SIG_IGN so Ctrl+C is handled only by the parent process, not by worker subprocesses.</td>
+          <td>Passed to <code>Pool(initializer=...)</code></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_process_one_task</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_process_one_task(task_info)</code></td>
+          <td>Pool worker function. Checks blacklist before starting, acquires a worker_id from the shared ID queue, calls <code>capture.capture_site()</code> once, releases worker_id. Returns status tuple.</td>
+          <td>Passed to <code>pool.imap_unordered()</code></td>
+          <td><span class="ret-badge">(site, label, idx, code, msg)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">collect_sites</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>collect_sites(monitored_sites, background_sites, target_m, target_bg, status)</code></td>
+          <td>Starts N Tor instances, pre-patches chromedriver, builds full task queue, dispatches via <code>multiprocessing.Pool</code> with <code>imap_unordered</code>. Handles Ctrl+C gracefully. Terminates all Tor procs in finally block.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code></td>
+          <td>Interactive collection menu. Loads tracker, syncs from disk, shows status table, prompts user for site counts and instance targets, confirms task breakdown, validates existing PCAPfiles, then calls <code>collect_sites()</code>.</td>
+          <td><span class="caller">main.py</span> menu option 1</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     cumul.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="cumul">
+  <div class="mod-header mh-feature">
+    <span class="mod-name">cumul.py</span>
+    <span class="mod-phase">Phase 3 — CUMUL Core Algorithm</span>
+    <span class="mod-desc">Pure-math implementation of the CUMUL feature extraction algorithm</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">parse_pcap</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>parse_pcap(pcap_path, layer='cells')</code></td>
+          <td>Loads PCAP via Scapy <code>rdpcap()</code>. For TCP layer: assigns sign by <code>IP.dst == '127.0.0.1'</code> (loopback = incoming). For cells layer: uses 512-byte Tor cells. Returns signed packet size list T.</td>
+          <td><span class="caller">build_feature_vector()</span></td>
+          <td><span class="ret-badge">list[int]</span> signed packet sizes T</td>
+        </tr>
+        <tr>
+          <td><span class="fn">build_cumulative</span><br><span class="tag tag-pub">public</span><span class="tag tag-pure">pure</span></td>
+          <td><code>build_cumulative(T)</code></td>
+          <td>Builds the C(T) curve from signed sequence T. Computes <code>aᵢ = aᵢ₋₁ + |pᵢ|</code> (cumulative bytes, x-axis) and <code>cᵢ = cᵢ₋₁ + pᵢ</code> (cumulative signed sum, y-axis). Starting point is (0, 0).</td>
+          <td><span class="caller">build_feature_vector()</span></td>
+          <td><span class="ret-badge">(a_vals, c_vals)</span> two float lists</td>
+        </tr>
+        <tr>
+          <td><span class="fn">sample_features</span><br><span class="tag tag-pub">public</span><span class="tag tag-pure">pure</span></td>
+          <td><code>sample_features(a_vals, c_vals, n_points=100)</code></td>
+          <td>Creates <code>n_points</code> equidistant x-positions via <code>np.linspace(0, a_max, 100)</code>. Uses <code>np.interp()</code> for piecewise linear interpolation of c-values. Normalises variable-length traces to fixed-length vector.</td>
+          <td><span class="caller">build_feature_vector()</span></td>
+          <td><span class="ret-badge">list[float]</span> length n_points (100)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">extract_global_stats</span><br><span class="tag tag-pub">public</span><span class="tag tag-pure">pure</span></td>
+          <td><code>extract_global_stats(T)</code></td>
+          <td>Computes 4 scalars from signed packet sequence: Nin (count p&gt;0), Nout (count p&lt;0), Sin (sum of incoming bytes), Sout (sum of outgoing bytes). These append to the 100-point vector.</td>
+          <td><span class="caller">build_feature_vector()</span></td>
+          <td><span class="ret-badge">(Nin, Nout, Sin, Sout)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">build_feature_vector</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>build_feature_vector(pcap_path, layer='cells')</code></td>
+          <td>Full CUMUL pipeline for one PCAP: parse → build_cumulative → sample_features → extract_global_stats → concatenate. Returns zero vector if trace has &lt;10 packets. Vector layout: [0:100]=CUMUL, [100]=Nin, [101]=Nout, [102]=Sin, [103]=Sout.</td>
+          <td><span class="caller">data._extract_feature_sample()</span><br><span class="caller">extract_features.py</span></td>
+          <td><span class="ret-badge">ndarray (104,)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">extract_all_features</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>extract_all_features(pcap_dir, output_path)</code></td>
+          <td>Batch-extracts features from all PCAPfiles in a directory. Saves feature matrix as <code>.npy</code> and labels as <code>_labels.npy</code>. Prints progress every 10 files.</td>
+          <td>Can be called directly for standalone batch extraction</td>
+          <td><span class="ret-badge">(X, y, labels)</span> or <span class="ret-badge">(None, None, None)</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     extract_features.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="extract">
+  <div class="mod-header mh-feature">
+    <span class="mod-name">extract_features.py</span>
+    <span class="mod-phase">Phase 3 — Feature Pipeline</span>
+    <span class="mod-desc">Standalone batch feature extraction with progress reporting and .npy output</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">print_progress</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>print_progress(current, total, prefix="", bar_length=40)</code></td>
+          <td>Renders an ASCII progress bar on a single overwritten console line using <code>\r</code>. Shows count and percentage.</td>
+          <td><span class="caller">extract_features()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_extract_feature_sample</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_extract_feature_sample(path)</code></td>
+          <td>Calls <code>cumul.build_feature_vector(path)</code> for one file. Returns tuple including the path for error tracking. Designed for use as a Pool worker.</td>
+          <td><span class="caller">extract_features()</span> via ProcessPoolExecutor</td>
+          <td><span class="ret-badge">(path, vector)</span> or <span class="ret-badge">(path, None)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">check_dependencies</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>check_dependencies()</code></td>
+          <td>Verifies NumPy, Scapy, and model files are available. Prints status for each dependency. Returns bool indicating readiness.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-badge">bool</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">extract_features</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>extract_features(pcap_files)</code></td>
+          <td>Batch-extracts CUMUL features with progress bar. Processes files sequentially (standalone version). Returns X matrix and y label array assembled from results.</td>
+          <td><span class="caller">run()</span><br>Also usable standalone</td>
+          <td><span class="ret-badge">(X ndarray, y ndarray)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">save_features</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>save_features(X, y)</code></td>
+          <td>Saves feature matrix to <code>data/processed/features.npy</code> and labels to <code>labels.npy</code> via <code>np.save()</code>. Creates directories as needed.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code></td>
+          <td>Standalone extraction pipeline: check deps → scan PCAP dir → extract features → save to disk. Prints step headers and timing.</td>
+          <td><span class="caller">main.py</span> or direct invocation</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     data.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="data">
+  <div class="mod-header mh-train">
+    <span class="mod-name">data.py</span>
+    <span class="mod-phase">Phase 3/4 — Data Management</span>
+    <span class="mod-desc">Dataset scanning, train/test splitting, parallel feature extraction for the training pipeline</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">scan_dataset</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>scan_dataset(dataset_root)</code></td>
+          <td>Globs all <code>.pcap</code> and <code>.pcapng</code> files in <code>dataset_root</code>. Parses filenames as <code>label_index.ext</code> into <code>SampleFile</code> dataclasses. Groups by label, sorted by index.</td>
+          <td><span class="caller">available_labels()</span><br><span class="caller">build_split()</span></td>
+          <td><span class="ret-badge">dict[label → list[SampleFile]]</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">available_labels</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>available_labels(dataset_root, label_mode="monitored")</code></td>
+          <td>Returns labels present on disk AND in the site registry for the given scope. Ranked by descending sample count, then registry order. Drives the "top N sites" selection.</td>
+          <td><span class="caller">train.py</span><br><span class="caller">test.py</span></td>
+          <td><span class="ret-badge">list[str]</span> ranked labels</td>
+        </tr>
+        <tr>
+          <td><span class="fn">build_split</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>build_split(dataset_root, site_count, train_instances, test_instances, label_mode, same_set)</code></td>
+          <td>Selects top <code>site_count</code> labels. For each label, slices first <code>train_instances</code> files → train set, next <code>test_instances</code> → test set. Validates min availability. Handles <code>same_set=True</code> mode.</td>
+          <td><span class="caller">svm_model.train_from_selection()</span><br><span class="caller">svm_model.test_from_selection()</span></td>
+          <td><span class="ret-badge">(train_files, test_files, labels, error)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_extract_feature_sample</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_extract_feature_sample(payload)</code></td>
+          <td>Pool worker: calls <code>cumul.build_feature_vector(sample.path)</code>. Validates output shape (must be 104). Returns tuple with index for result assembly.</td>
+          <td><span class="caller">extract_features()</span> via ProcessPoolExecutor</td>
+          <td><span class="ret-badge">(index, vector, label, path, error)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">extract_features</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>extract_features(file_paths, layer=None, show_progress=False)</code></td>
+          <td>Dispatches CUMUL extraction across <code>FEATURE_EXTRACTION_WORKERS</code> processes. Falls back to sequential on multiprocessing failure. Assembles X matrix, y label array, valid paths, and failure list.</td>
+          <td><span class="caller">svm_model.train_from_selection()</span><br><span class="caller">svm_model.test_from_selection()</span></td>
+          <td><span class="ret-badge">(X, y, valid_paths, failures)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">summarize_split</span><br><span class="tag tag-pub">public</span><span class="tag tag-pure">pure</span></td>
+          <td><code>summarize_split(train_files, test_files, selected_labels)</code></td>
+          <td>Computes a summary dict with site_count, selected_labels, train/test sample totals, and instances-per-site. Used to populate metadata JSON.</td>
+          <td><span class="caller">svm_model.train_from_selection()</span></td>
+          <td><span class="ret-badge">dict</span> split summary</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     svm_model.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="svm">
+  <div class="mod-header mh-train">
+    <span class="mod-name">svm_model.py</span>
+    <span class="mod-phase">Phase 4 — SVM Training & Inference</span>
+    <span class="mod-desc">RBF-kernel SVM with GridSearchCV, artefact persistence, and prediction utilities</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">_resolve_svm_backend</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_resolve_svm_backend()</code></td>
+          <td>Checks config for "auto"/"sklearn"/"thundersvm". Tries to import ThunderSVM (GPU backend). Falls back to sklearn SVC. Returns the class and backend name string.</td>
+          <td><span class="caller">_fit_estimator()</span></td>
+          <td><span class="ret-badge">(SVCClass, backend_name)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_fit_estimator</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_fit_estimator(X_train, y_train, grid_search=True)</code></td>
+          <td>Core training logic. If grid_search and min class ≥ 2: runs <code>GridSearchCV</code> over C=[2¹¹…2¹⁷] × γ=[2⁻³…2³] with StratifiedKFold. Otherwise fits SVC directly with config defaults.</td>
+          <td><span class="caller">train_from_selection()</span><br><span class="caller">train()</span></td>
+          <td><span class="ret-badge">(best_model, best_params, backend)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">save_artifacts</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>save_artifacts(model, scaler, label_encoder, metadata, model_dir=None)</code></td>
+          <td>Persists all training artefacts via <code>joblib.dump()</code>: svm_model.pkl, scaler.pkl, label_encoder.pkl. Writes metadata dict to <code>metadata.json</code>.</td>
+          <td><span class="caller">train_from_selection()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">load_artifacts</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>load_artifacts(model_dir=None)</code></td>
+          <td>Loads model, scaler, label_encoder via <code>joblib.load()</code>. Reads metadata JSON if present. Raises on missing files.</td>
+          <td><span class="caller">test_from_selection()</span><br><span class="caller">test.py run()</span></td>
+          <td><span class="ret-badge">(model, scaler, label_encoder, metadata)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_score_matrix</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_score_matrix(model, X)</code></td>
+          <td>Gets confidence scores: tries <code>predict_proba()</code>, falls back to <code>decision_function()</code>, then one-hot encodes hard predictions. Ensures 2D output for ROC curve computation.</td>
+          <td><span class="caller">train_from_selection()</span><br><span class="caller">test_from_selection()</span></td>
+          <td><span class="ret-badge">ndarray (N, n_classes)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">train_from_selection</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>train_from_selection(dataset_root, site_count, train_instances, test_instances, *, label_mode, grid_search, model_dir, show_progress, same_set)</code></td>
+          <td>Full training pipeline: build_split → extract_features → MinMaxScaler → LabelEncoder → _fit_estimator → cross_val_score → save_artifacts. Returns complete result dict for graph generation.</td>
+          <td><span class="caller">train.py run()</span></td>
+          <td><span class="ret-badge">dict</span> full result (accuracy, y_true, y_pred, y_score, …)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">test_from_selection</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>test_from_selection(dataset_root, site_count, train_instances, test_instances, *, label_mode, model_dir, show_progress, same_set)</code></td>
+          <td>Loads saved artefacts, re-extracts test features, applies saved scaler, runs prediction, computes accuracy + classification report + confusion matrix. Saves result JSON.</td>
+          <td><span class="caller">test.py run()</span></td>
+          <td><span class="ret-badge">dict</span> full result</td>
+        </tr>
+        <tr>
+          <td><span class="fn">predict</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>predict(model, X)</code></td>
+          <td>Thin wrapper around <code>model.predict(X)</code>. Kept for API consistency.</td>
+          <td>External callers needing standalone inference</td>
+          <td><span class="ret-badge">ndarray</span> predicted labels</td>
+        </tr>
+        <tr>
+          <td><span class="fn">train</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>train(X, y, grid_search=False)</code></td>
+          <td>Legacy helper for callers that have pre-extracted features. Applies LabelEncoder if grid_search, then calls <code>_fit_estimator()</code>.</td>
+          <td>Older evaluation code</td>
+          <td><span class="ret-badge">fitted model</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     train.py & test.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="train">
+  <div class="mod-header mh-train">
+    <span class="mod-name">train.py &amp; test.py</span>
+    <span class="mod-phase">Phase 4/5 — Interactive CLI</span>
+    <span class="mod-desc">User-facing interactive prompts for training and testing classifiers</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function / File</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">train.run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code> in train.py</td>
+          <td>Prompts user for model family (SVM/var-CNN), dataset root, label scope, site count, instance counts. For SVM: calls <code>svm_model.train_from_selection()</code> then <code>generate_graphs()</code>. For var-CNN: delegates to <code>varcnn.train.run()</code>.</td>
+          <td><span class="caller">main.py</span> menu option 2</td>
+          <td><span class="ret-none">None</span> (prints results)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">test.run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code> in test.py</td>
+          <td>Prompts user for dataset root, label scope, site count, instance counts. Calls <code>svm_model.test_from_selection()</code> with loaded artefacts. Prints accuracy, confusion matrix, classification report. Calls <code>generate_graphs()</code> on result.</td>
+          <td><span class="caller">main.py</span> menu option 3</td>
+          <td><span class="ret-none">None</span> (prints results)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     graphs.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="graphs">
+  <div class="mod-header mh-eval">
+    <span class="mod-name">graphs.py</span>
+    <span class="mod-phase">Phase 5 — Visualisation</span>
+    <span class="mod-desc">Matplotlib-based plot generation: confusion matrices, ROC, PR curves, FAR/FRR, accuracy sweeps</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">generate_graphs</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>generate_graphs(results, comparison=False)</code></td>
+          <td>Top-level dispatcher. For single result: calls <code>_plot_single_dashboard()</code>. For multiple results with comparison=True: calls <code>_plot_comparison_dashboard()</code>. Creates timestamped output directory.</td>
+          <td><span class="caller">train.run()</span><br><span class="caller">test.run()</span></td>
+          <td><span class="ret-none">None</span> (saves PNG files)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_plot_single_dashboard</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_plot_single_dashboard(exp, out_dir)</code></td>
+          <td>Creates a multi-panel Matplotlib figure: normalised confusion matrix heatmap, ROC curves per class + macro average, PR curves, per-class F1 bar chart, confidence histogram, FAR/FRR bar chart.</td>
+          <td><span class="caller">generate_graphs()</span></td>
+          <td><span class="ret-none">None</span> (saves to out_dir)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_plot_comparison_dashboard</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_plot_comparison_dashboard(experiments, out_dir)</code></td>
+          <td>Overlays multiple experiment results for side-by-side comparison. Plots accuracy bars, ROC curve overlays, and per-class F1 comparison for SVM vs var-CNN or multiple runs.</td>
+          <td><span class="caller">generate_graphs()</span> when comparison=True</td>
+          <td><span class="ret-none">None</span> (saves to out_dir)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">_far_frr_from_cm</span><br><span class="tag tag-priv">private</span><span class="tag tag-pure">pure</span></td>
+          <td><code>_far_frr_from_cm(cm)</code></td>
+          <td>Computes per-class FAR (False Accept Rate) and FRR (False Reject Rate) from a confusion matrix. Uses TP/FP/FN/TN breakdown per class.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-badge">(far_array, frr_array)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_extract_class_metrics</span><br><span class="tag tag-priv">private</span><span class="tag tag-pure">pure</span></td>
+          <td><code>_extract_class_metrics(exp)</code></td>
+          <td>Parses the classification_report dict from an experiment result into a sorted list of per-class dicts (label, precision, recall, f1, support), sorted by F1 descending.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-badge">list[dict]</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_normalise_cm</span><br><span class="tag tag-priv">private</span><span class="tag tag-pure">pure</span></td>
+          <td><code>_normalise_cm(cm)</code></td>
+          <td>Row-normalises confusion matrix to [0,1] range. Uses safe divide to handle zero rows.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-badge">ndarray (N, N) float</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_macro_average_curve</span><br><span class="tag tag-priv">private</span><span class="tag tag-pure">pure</span></td>
+          <td><code>_macro_average_curve(curves_x, curves_y)</code></td>
+          <td>Computes macro-averaged ROC/PR curve by interpolating all per-class curves to a unified x-axis and averaging y-values.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-badge">(x_array, mean_y_array)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_top_confusions</span><br><span class="tag tag-priv">private</span><span class="tag tag-pure">pure</span></td>
+          <td><code>_top_confusions(cm, labels, limit=5)</code></td>
+          <td>Finds the top-N most frequent off-diagonal confusions in a confusion matrix. Returns list of (count, true_label, pred_label) tuples, sorted descending.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-badge">list[tuple]</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_annotate_heatmap</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_annotate_heatmap(ax, matrix, fmt, small, vcenter)</code></td>
+          <td>Adds text annotations to a heatmap, auto-choosing white or black text based on cell value vs threshold. Supports custom format strings.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">_prediction_confidence</span><br><span class="tag tag-priv">private</span><span class="tag tag-pure">pure</span></td>
+          <td><code>_prediction_confidence(exp)</code></td>
+          <td>Extracts max probability from y_score matrix (confidence of top predicted class) for histogram plotting.</td>
+          <td><span class="caller">_plot_single_dashboard()</span></td>
+          <td><span class="ret-badge">ndarray (N,) float</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     visualize.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="visualize">
+  <div class="mod-header mh-eval">
+    <span class="mod-name">visualize.py</span>
+    <span class="mod-phase">Phase 5 — Result Visualisation</span>
+    <span class="mod-desc">Standalone result visualiser reading saved JSON reports</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">get_latest_results</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>get_latest_results()</code></td>
+          <td>Scans <code>results/</code> directory for JSON files matching the result report naming pattern. Returns path to the most recently modified file.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-badge">str</span> path or <span class="ret-badge">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">plot_cv_results</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>plot_cv_results(report, timestamp)</code></td>
+          <td>Plots cross-validation fold scores as a bar chart with mean ± std overlay. Saved as <code>cv_results_TIMESTAMP.png</code>.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">plot_per_class_metrics</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>plot_per_class_metrics(report, timestamp)</code></td>
+          <td>Generates grouped bar chart of per-class precision, recall, and F1. Sorted by F1 score descending. Saved as <code>per_class_metrics_TIMESTAMP.png</code>.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">plot_confusion_matrix</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>plot_confusion_matrix(cm_data, report, timestamp)</code></td>
+          <td>Plots both raw-count and row-normalised confusion matrices side-by-side. Annotates cells. Uses Seaborn heatmap styling.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">plot_summary_dashboard</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>plot_summary_dashboard(report, timestamp)</code></td>
+          <td>Creates a 4-panel summary figure: accuracy bar, CV box plot, precision-recall scatter per class, support distribution. Saved as <code>summary_TIMESTAMP.png</code>.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code></td>
+          <td>Loads the latest JSON result, generates all 4 visualisation plots with progress messages.</td>
+          <td><span class="caller">main.py</span> or standalone</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     closed_world.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="closed">
+  <div class="mod-header mh-eval">
+    <span class="mod-name">closed_world.py</span>
+    <span class="mod-phase">Phase 5 — Closed-World Evaluation</span>
+    <span class="mod-desc">Closed-world scenario evaluation: SVM classification with per-class breakdown</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">run_closed_world_eval</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>run_closed_world_eval(X, y, save_dir=None)</code></td>
+          <td>Runs a closed-world evaluation: StratifiedKFold cross-validation on pre-extracted features X, y. Trains SVM on each fold, aggregates predictions, computes accuracy + classification report + confusion matrix.</td>
+          <td>Standalone evaluation scripts</td>
+          <td><span class="ret-badge">dict</span> with accuracy, report, confusion matrix, fold scores</td>
+        </tr>
+        <tr>
+          <td><span class="fn">plot_confusion_matrix</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>plot_confusion_matrix(cm, labels, save_dir)</code></td>
+          <td>Standalone confusion matrix plotter (separate from graphs.py version). Creates normalised heatmap with Seaborn. Saves to <code>save_dir/confusion_matrix.png</code>.</td>
+          <td><span class="caller">run_closed_world_eval()</span> if save_dir provided</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     sanitize.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="sanitize">
+  <div class="mod-header mh-util">
+    <span class="mod-name">sanitize.py</span>
+    <span class="mod-phase">Utility — Data Cleaning</span>
+    <span class="mod-desc">Two-stage PCAP validation: fault-filter for corrupt files, IQR filter for undersized outliers</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">fault_filter</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>fault_filter(pcap_path)</code></td>
+          <td>Attempts to open PCAP with Scapy. Checks: file readable, packet count ≥ MIN_PACKETS, has TCP packets with payload, bidirectional traffic. Returns (path, is_valid, reason).</td>
+          <td><span class="caller">run_sanitization()</span></td>
+          <td><span class="ret-badge">(path, bool, reason_str)</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">iqr_filter</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>iqr_filter(pcap_paths, labels)</code></td>
+          <td>Groups files by label. Computes per-site file-size Q1/Q3/IQR. Marks files below <code>Q1 − 1.5×IQR</code> as outliers. Skips aggressive filter for sites with &lt;4 captures.</td>
+          <td><span class="caller">run_sanitization()</span></td>
+          <td><span class="ret-badge">list[str]</span> paths to delete</td>
+        </tr>
+        <tr>
+          <td><span class="fn">run_sanitization</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run_sanitization()</code></td>
+          <td>Interactive pipeline: scan PCAP dir → fault_filter (remove corrupt) → iqr_filter (remove undersized outliers) → delete marked files → print report (kept/deleted/per-site).</td>
+          <td><span class="caller">main.py</span> or standalone</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     scaler.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="scaler">
+  <div class="mod-header mh-util">
+    <span class="mod-name">scaler.py</span>
+    <span class="mod-phase">Utility — Feature Normalisation</span>
+    <span class="mod-desc">MinMaxScaler wrapper with joblib persistence for consistent train/test normalisation</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function / Class</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">FeatureScaler</span><br><span class="tag tag-cls">class</span></td>
+          <td><code>class FeatureScaler</code></td>
+          <td>Wrapper around <code>sklearn.MinMaxScaler(feature_range=(−1, 1))</code>. Methods: <code>fit(X)</code>, <code>transform(X)</code>, <code>fit_transform(X)</code>, <code>save(path)</code>, <code>load(path)</code>.</td>
+          <td>Used by <code>fit_scaler()</code>, <code>transform()</code>, <code>fit_transform()</code></td>
+          <td>Scaler instance</td>
+        </tr>
+        <tr>
+          <td><span class="fn">fit_scaler</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>fit_scaler(X)</code></td>
+          <td>Fits a new <code>FeatureScaler</code> on training data X. Saves to <code>SCALER_PATH</code> via joblib. Prevents test-set data leakage by fitting on train only.</td>
+          <td>Legacy callers outside svm_model.py pipeline</td>
+          <td><span class="ret-badge">FeatureScaler</span> fitted instance</td>
+        </tr>
+        <tr>
+          <td><span class="fn">transform</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>transform(X, scaler_path=None)</code></td>
+          <td>Loads saved scaler from <code>scaler_path</code> (or default) and applies transform. Ensures test data uses the same min/max as training data.</td>
+          <td>Legacy callers outside svm_model.py pipeline</td>
+          <td><span class="ret-badge">ndarray</span> scaled X in [−1, 1]</td>
+        </tr>
+        <tr>
+          <td><span class="fn">fit_transform</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>fit_transform(X)</code></td>
+          <td>Convenience: fit and transform in one call. Returns scaled X. Does not save to disk (use <code>fit_scaler()</code> when persistence is needed).</td>
+          <td>Quick one-off normalisation</td>
+          <td><span class="ret-badge">ndarray</span> scaled X</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     site_registry.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="registry">
+  <div class="mod-header mh-util">
+    <span class="mod-name">site_registry.py</span>
+    <span class="mod-phase">Utility — Site List Management</span>
+    <span class="mod-desc">Loads and queries the 500-site master registry from master_sites.json</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">ensure_master_registry</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>ensure_master_registry(path=None)</code></td>
+          <td>Creates <code>master_sites.json</code> from <code>_default_registry()</code> if it does not exist. Called once at startup to guarantee the file is present.</td>
+          <td><span class="caller">load_master_registry()</span></td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">load_master_registry</span><br><span class="tag tag-pub">public</span><span class="tag tag-io">I/O</span></td>
+          <td><code>load_master_registry(path=None)</code></td>
+          <td>Reads <code>master_sites.json</code>. Returns a dict with keys <code>monitored</code> (100 entries) and <code>background</code> (400 entries), each being <code>{label: url}</code> maps.</td>
+          <td><span class="caller">labels_for_scope()</span><br><span class="caller">config.py</span></td>
+          <td><span class="ret-badge">dict</span> <code>{monitored: {…}, background: {…}}</code></td>
+        </tr>
+        <tr>
+          <td><span class="fn">labels_for_scope</span><br><span class="tag tag-pub">public</span></td>
+          <td><code>labels_for_scope(scope="monitored")</code></td>
+          <td>Returns an ordered list of site label strings filtered by scope: <code>"monitored"</code> (100), <code>"background"</code> (400), or <code>"all"</code> (500). Used to restrict dataset scanning and training label selection.</td>
+          <td><span class="caller">data.available_labels()</span><br><span class="caller">evaluate.py</span></td>
+          <td><span class="ret-badge">list[str]</span> labels</td>
+        </tr>
+        <tr>
+          <td><span class="fn">label_category</span><br><span class="tag tag-pub">public</span><span class="tag tag-pure">pure</span></td>
+          <td><code>label_category(label)</code></td>
+          <td>Returns <code>"monitored"</code>, <code>"background"</code>, or <code>"unknown"</code> for a given label string. Used in reporting and filtering logic.</td>
+          <td><span class="caller">show_status.py</span></td>
+          <td><span class="ret-badge">str</span> category</td>
+        </tr>
+        <tr>
+          <td><span class="fn">is_monitored</span> / <span class="fn">is_background</span><br><span class="tag tag-pub">public</span><span class="tag tag-pure">pure</span></td>
+          <td><code>is_monitored(label)</code><br><code>is_background(label)</code></td>
+          <td>Convenience predicates. Return True if the label belongs to the monitored (or background) site list.</td>
+          <td>Filtering throughout the pipeline</td>
+          <td><span class="ret-badge">bool</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     show_status.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="status">
+  <div class="mod-header mh-util">
+    <span class="mod-name">show_status.py</span>
+    <span class="mod-phase">Utility — Progress Dashboard</span>
+    <span class="mod-desc">Reads tracker + scans disk to produce a collection progress report</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code></td>
+          <td>Loads <code>capture_status.json</code> (tracker). Independently counts actual PCAP files on disk per label via glob. Cross-references tracker vs disk to detect drift. Prints summary table: complete/partial/missing/blacklisted per site plus aggregate stats.</td>
+          <td><span class="caller">main.py</span> menu option 5</td>
+          <td><span class="ret-none">None</span> (prints dashboard)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════
+     merge_data.py
+═══════════════════════════════════════════════════ -->
+<div class="mod" id="merge">
+  <div class="mod-header mh-util">
+    <span class="mod-name">merge_data.py</span>
+    <span class="mod-phase">Utility — Dataset Merging</span>
+    <span class="mod-desc">Combines two PCAP capture directories with de-duplication and sequential re-indexing</span>
+  </div>
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="col-fn">Function</th>
+          <th class="col-sig">Signature</th>
+          <th class="col-what">What it does</th>
+          <th class="col-how">Called by / how invoked</th>
+          <th class="col-ret">Returns</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="fn">_collect_pcaps</span><br><span class="tag tag-priv">private</span></td>
+          <td><code>_collect_pcaps(source_dirs)</code></td>
+          <td>Globs all <code>.pcap</code> and <code>.pcapng</code> files from a list of source directories. Parses filenames into (label, index, path) tuples. Returns grouped dict by label.</td>
+          <td><span class="caller">merge_directories()</span></td>
+          <td><span class="ret-badge">dict[label → list[tuple]]</span></td>
+        </tr>
+        <tr>
+          <td><span class="fn">merge_directories</span><br><span class="tag tag-pub">public</span><span class="tag tag-entry">entry</span></td>
+          <td><code>merge_directories(first_dir, second_dir, output_dir=None)</code></td>
+          <td>Scans both source directories. For each label, merges file lists, de-duplicates by content hash, re-indexes sequentially. Copies to output_dir with corrected names. Skips files already in destination.</td>
+          <td><span class="caller">run()</span></td>
+          <td><span class="ret-badge">dict</span> merge summary (per-label counts before/after)</td>
+        </tr>
+        <tr>
+          <td><span class="fn">run</span><br><span class="tag tag-entry">entry</span></td>
+          <td><code>run()</code></td>
+          <td>Interactive prompt for two source directories and optional output directory. Calls <code>merge_directories()</code> and prints final per-label count report.</td>
+          <td><span class="caller">main.py</span> menu option 4</td>
+          <td><span class="ret-none">None</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</body>
+</html>

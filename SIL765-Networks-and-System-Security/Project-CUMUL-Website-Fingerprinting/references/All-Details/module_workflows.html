@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CUMUL — Per-Module Workflows</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: #f8fafc;
+  color: #1e293b;
+  padding: 32px 24px;
+}
+
+/* ── PAGE TITLE ── */
+.page-title { font-size: 22px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+.page-sub   { font-size: 13px; color: #64748b; margin-bottom: 40px; }
+
+/* ── MODULE SECTION ── */
+.module {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 32px;
+}
+.module-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #f1f5f9;
+}
+.module-name  { font-size: 17px; font-weight: 700; color: #0f172a; }
+.module-role  { font-size: 12px; font-weight: 600; letter-spacing: .07em; text-transform: uppercase; padding: 3px 10px; border-radius: 20px; }
+
+/* role badge colors */
+.role-collect { background:#fee2e2; color:#991b1b; }
+.role-feature { background:#ede9fe; color:#4c1d95; }
+.role-train   { background:#dbeafe; color:#1e40af; }
+.role-eval    { background:#dcfce7; color:#166534; }
+.role-util    { background:#f1f5f9; color:#475569; }
+.role-config  { background:#fef3c7; color:#92400e; }
+
+/* ── FLOW LAYOUT ── */
+.flow {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* one step row */
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+/* step number bubble */
+.step-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* step card */
+.step-card {
+  flex: 1;
+  border-radius: 8px;
+  padding: 12px 16px;
+  border-left: 4px solid transparent;
+  margin-bottom: 0;
+}
+.step-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.step-desc  { font-size: 12px; line-height: 1.6; }
+.step-desc ul { padding-left: 16px; margin-top: 4px; }
+.step-desc li { margin-bottom: 2px; }
+.step-code  {
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 11px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 6px 10px;
+  margin-top: 6px;
+  display: block;
+  color: #374151;
+  white-space: pre;
+}
+
+/* connector between steps */
+.connector {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 0;
+}
+.connector-line {
+  width: 28px;
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+}
+.connector-line::before {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 20px;
+  background: #cbd5e1;
+}
+.connector-label {
+  font-size: 11px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* decision diamond */
+.decision {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.diamond-wrap {
+  flex-shrink: 0;
+  width: 28px;
+  display: flex;
+  justify-content: center;
+  margin-top: 4px;
+}
+.diamond {
+  width: 18px; height: 18px;
+  background: #fbbf24;
+  transform: rotate(45deg);
+  border-radius: 2px;
+}
+.decision-card {
+  flex: 1;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.decision-card .step-title { color: #92400e; }
+.decision-card .step-desc  { color: #78350f; }
+
+/* outcomes row */
+.outcomes {
+  display: flex;
+  gap: 12px;
+  margin-left: 44px;
+  flex-wrap: wrap;
+}
+.outcome {
+  flex: 1;
+  min-width: 160px;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+}
+.outcome-title { font-weight: 700; margin-bottom: 2px; font-size: 12px; }
+.out-ok   { background:#dcfce7; border:1px solid #86efac; color:#166534; }
+.out-fail { background:#fee2e2; border:1px solid #fca5a5; color:#991b1b; }
+.out-warn { background:#fef9c3; border:1px solid #fde047; color:#854d0e; }
+
+/* step card color themes */
+.s-collect { background:#fff5f5; border-left-color:#f87171; }
+.s-collect .step-title { color:#b91c1c; }
+.s-collect .step-num   { background:#fee2e2; color:#991b1b; }
+
+.s-feature { background:#f5f3ff; border-left-color:#a78bfa; }
+.s-feature .step-title { color:#5b21b6; }
+.s-feature .step-num   { background:#ede9fe; color:#4c1d95; }
+
+.s-train { background:#eff6ff; border-left-color:#60a5fa; }
+.s-train .step-title { color:#1d4ed8; }
+.s-train .step-num   { background:#dbeafe; color:#1e40af; }
+
+.s-eval { background:#f0fdf4; border-left-color:#4ade80; }
+.s-eval .step-title { color:#15803d; }
+.s-eval .step-num   { background:#dcfce7; color:#166534; }
+
+.s-util { background:#f8fafc; border-left-color:#94a3b8; }
+.s-util .step-title { color:#334155; }
+.s-util .step-num   { background:#f1f5f9; color:#475569; }
+
+.s-config { background:#fffbeb; border-left-color:#fbbf24; }
+.s-config .step-title { color:#92400e; }
+.s-config .step-num   { background:#fef3c7; color:#92400e; }
+
+/* output box */
+.output-box {
+  margin-left: 44px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 12px;
+  color: #166534;
+}
+.output-box strong { display: block; font-size: 12px; margin-bottom: 4px; color: #15803d; }
+
+/* two-column grid for wide modules */
+.flow-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.flow-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: #94a3b8;
+  margin-bottom: 10px;
+}
+
+/* info table */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  margin-top: 12px;
+}
+.info-table th {
+  background: #f1f5f9;
+  text-align: left;
+  padding: 7px 10px;
+  font-weight: 700;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+.info-table td {
+  padding: 7px 10px;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  vertical-align: top;
+}
+.info-table tr:nth-child(even) td { background: #f8fafc; }
+
+/* ── TOC ── */
+.toc {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.toc a {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 20px;
+  text-decoration: none;
+  transition: opacity .15s;
+}
+.toc a:hover { opacity: .75; }
+.toc-collect { background:#fee2e2; color:#991b1b; }
+.toc-feature { background:#ede9fe; color:#4c1d95; }
+.toc-train   { background:#dbeafe; color:#1e40af; }
+.toc-eval    { background:#dcfce7; color:#166534; }
+.toc-util    { background:#f1f5f9; color:#475569; }
+.toc-config  { background:#fef3c7; color:#92400e; }
+</style>
+</head>
+<body>
+
+<div class="page-title">CUMUL Website Fingerprinting — Per-Module Workflows</div>
+<div class="page-sub">Panchenko et al., NDSS 2016 · Detailed internal logic for every module</div>
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <strong style="font-size:12px;color:#64748b;align-self:center">Jump to:</strong>
+  <a href="#capture"    class="toc-collect">capture.py</a>
+  <a href="#collection" class="toc-collect">collection_menu.py</a>
+  <a href="#cumul"      class="toc-feature">cumul.py</a>
+  <a href="#extract"    class="toc-feature">extract_features.py</a>
+  <a href="#data"       class="toc-train">data.py</a>
+  <a href="#svm"        class="toc-train">svm_model.py</a>
+  <a href="#train"      class="toc-train">train.py</a>
+  <a href="#test"       class="toc-eval">test.py</a>
+  <a href="#evaluate"   class="toc-eval">evaluate.py</a>
+  <a href="#graphs"     class="toc-eval">graphs.py</a>
+  <a href="#sanitize"   class="toc-util">sanitize.py</a>
+  <a href="#scaler"     class="toc-util">scaler.py</a>
+  <a href="#registry"   class="toc-util">site_registry.py</a>
+  <a href="#status"     class="toc-util">show_status.py</a>
+  <a href="#merge"      class="toc-util">merge_data.py</a>
+  <a href="#config"     class="toc-config">config.py</a>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     1. capture.py
+══════════════════════════════════════════ -->
+<div class="module" id="capture">
+  <div class="module-header">
+    <span class="module-name">capture.py</span>
+    <span class="module-role role-collect">Phase 1 — Data Collection</span>
+  </div>
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num s-collect">1</div>
+      <div class="step-card s-collect">
+        <div class="step-title">Setup environment</div>
+        <div class="step-desc">Set WIRESHARK_MANUF env var before any Scapy import. Remove SSLKEYLOGFILE to prevent TLS key leakage. Import Scapy, Stem, psutil, undetected-chromedriver (with fallback to Selenium).</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div><span class="connector-label">driver creation</span></div>
+
+    <div class="step">
+      <div class="step-num s-collect">2</div>
+      <div class="step-card s-collect">
+        <div class="step-title">start_tor_instance(worker_id)</div>
+        <div class="step-desc">
+          <ul>
+            <li>Launches dedicated <code>tor.exe</code> subprocess for this worker</li>
+            <li>Assigns unique SOCKS port: <code>BASE_SOCKS_PORT + worker_id</code></li>
+            <li>Assigns unique control port: <code>BASE_CONTROL_PORT + worker_id</code></li>
+            <li>Waits up to 90 s for 100% bootstrap via Stem control port</li>
+            <li>Returns <code>(proc, socks_port, ctrl_port)</code> or <code>(None, None, None)</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div><span class="connector-label">browser launch</span></div>
+
+    <div class="step">
+      <div class="step-num s-collect">3</div>
+      <div class="step-card s-collect">
+        <div class="step-title">create_driver(socks_port, worker_id)</div>
+        <div class="step-desc">
+          <ul>
+            <li>Builds Chrome options: SOCKS5 proxy, random user-agent, random window size</li>
+            <li>Creates isolated profile dir per worker+PID</li>
+            <li>Acquires <strong>InterProcessLock</strong> (fasteners) before patching chromedriver</li>
+            <li>Injects JS stealth patches (hide webdriver flag, fake plugins/languages)</li>
+            <li>Returns <code>(driver, profile_dir)</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div><span class="connector-label">start sniffer thread</span></div>
+
+    <div class="step">
+      <div class="step-num s-collect">4</div>
+      <div class="step-card s-collect">
+        <div class="step-title">Start Scapy background sniffer</div>
+        <div class="step-desc">
+          A background <code>threading.Thread</code> calls <code>scapy.sniff()</code> on the capture interface. A <code>threading.Event</code> signals when to stop. All captured packets are collected into a list.
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div><span class="connector-label">page visit</span></div>
+
+    <div class="step">
+      <div class="step-num s-collect">5</div>
+      <div class="step-card s-collect">
+        <div class="step-title">driver.get(url) — navigate to target</div>
+        <div class="step-desc">
+          <ul>
+            <li>Wait <code>PAGE_LOAD_WAIT_MIN–MAX</code> (10–15 s) for initial page render</li>
+            <li>Poll <code>document.readyState == complete</code> up to <code>READY_STATE_TIMEOUT</code> (20 s)</li>
+            <li>Wait <code>DYNAMIC_CONTENT_WAIT_MIN–MAX</code> (5–10 s) for React/AJAX loads</li>
+            <li>Simulate human scroll (random 5–15 s)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div><span class="connector-label">bot check</span></div>
+
+    <div class="decision">
+      <div class="diamond-wrap"><div class="diamond"></div></div>
+      <div class="decision-card">
+        <div class="step-title">_check_bot_block(driver, domain)</div>
+        <div class="step-desc">4-layer check: (1) page title keywords, (2) page source signatures (Cloudflare, hCaptcha, reCAPTCHA…), (3) URL drift from expected domain, (4) body text &lt; 3000 chars</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="outcomes">
+      <div class="outcome out-fail">
+        <div class="outcome-title">Bot detected</div>
+        Stop sniffer. Rotate Tor circuit (NEWNYM). Return <code>(None, reason)</code> for retry.
+      </div>
+      <div class="outcome out-ok">
+        <div class="outcome-title">Page OK</div>
+        Stop sniffer. Proceed to packet validation.
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div><span class="connector-label">validate capture</span></div>
+
+    <div class="decision">
+      <div class="diamond-wrap"><div class="diamond"></div></div>
+      <div class="decision-card">
+        <div class="step-title">Validate packet trace</div>
+        <div class="step-desc">Check: packet count ≥ <code>MIN_PACKETS</code> (500) AND trace has both incoming + outgoing packets (bidirectionality)</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="outcomes">
+      <div class="outcome out-fail">
+        <div class="outcome-title">Invalid trace</div>
+        Discard. Return <code>(None, "too_few_packets")</code>. Caller retries.
+      </div>
+      <div class="outcome out-ok">
+        <div class="outcome-title">Valid trace</div>
+        Write PCAP to disk via <code>scapy.wrpcap()</code>.
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box">
+      <strong>Output</strong>
+      <code>label_N.pcap</code> written to <code>data/raw/</code>. Returns <code>(pcap_path, None)</code>.
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     2. collection_menu.py
+══════════════════════════════════════════ -->
+<div class="module" id="collection">
+  <div class="module-header">
+    <span class="module-name">collection_menu.py</span>
+    <span class="module-role role-collect">Phase 1 — Orchestration</span>
+  </div>
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num s-collect">1</div>
+      <div class="step-card s-collect">
+        <div class="step-title">Load / initialise tracker</div>
+        <div class="step-desc">Read <code>capture_status.json</code>. If missing, create empty dict. Each site entry tracks: <code>valid</code>, <code>failed_attempts</code>, <code>blacklisted</code>, <code>blacklist_reason</code>, <code>last_updated</code>.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-collect">2</div>
+      <div class="step-card s-collect">
+        <div class="step-title">Build task queue</div>
+        <div class="step-desc">For each non-blacklisted site: count valid PCAPfiles on disk. Compute missing = target − valid. Add (site, missing_indices) tasks to queue. Monitored target: 50 instances; background: 1.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-collect">3</div>
+      <div class="step-card s-collect">
+        <div class="step-title">ThreadPoolExecutor(max_workers=30)</div>
+        <div class="step-desc">Submit all tasks concurrently. Each worker runs <code>_capture_task(task, status, cap_mod)</code> independently. Results processed in real-time via <code>as_completed()</code>.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-collect">4</div>
+      <div class="step-card s-collect">
+        <div class="step-title">_capture_task: per-instance execution</div>
+        <div class="step-desc">
+          <ul>
+            <li>Call <code>capture.capture_site(url, output_path)</code> up to <code>CAPTURE_RETRIES</code> (3) times</li>
+            <li>On each retry: rotate Tor circuit (fresh NEWNYM signal)</li>
+            <li>On success: acquire <code>_tracker_lock</code>, call <code>_mark_success_locked()</code></li>
+            <li>On all retries exhausted: call <code>_mark_failed_locked()</code></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="decision">
+      <div class="diamond-wrap"><div class="diamond"></div></div>
+      <div class="decision-card">
+        <div class="step-title">Failure count ≥ MAX_SITE_FAILURES (7)?</div>
+        <div class="step-desc">After each failure, check cumulative failed_attempts for this site.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="outcomes">
+      <div class="outcome out-fail">
+        <div class="outcome-title">Blacklist site</div>
+        Set <code>blacklisted=True</code>, record reason. Skip all future tasks for this site.
+      </div>
+      <div class="outcome out-ok">
+        <div class="outcome-title">Continue</div>
+        Increment failed_attempts. Save tracker. Move to next task.
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-collect">5</div>
+      <div class="step-card s-collect">
+        <div class="step-title">Atomic tracker save</div>
+        <div class="step-desc">After every capture result (success or fail): acquire <code>_tracker_lock</code>, update in-memory status dict, write <code>capture_status.json</code> atomically. Ensures progress survives crashes.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box">
+      <strong>Output</strong>
+      PCAP files in <code>data/raw/</code>. Updated <code>capture_status.json</code> with per-site valid/failed/blacklist counts.
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     3. cumul.py
+══════════════════════════════════════════ -->
+<div class="module" id="cumul">
+  <div class="module-header">
+    <span class="module-name">cumul.py</span>
+    <span class="module-role role-feature">Phase 3 — CUMUL Core Algorithm</span>
+  </div>
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num s-feature">1</div>
+      <div class="step-card s-feature">
+        <div class="step-title">parse_pcap(pcap_path, layer)</div>
+        <div class="step-desc">Load PCAP via Scapy <code>rdpcap()</code>. For each TCP packet: compute direction from <code>IP.dst == '127.0.0.1'</code> (loopback = incoming). Build signed sequence T = [+size if incoming, −size if outgoing].</div>
+        <code class="step-code">T = [+1024, -64, +512, -32, +2048, ...]</code>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-feature">2</div>
+      <div class="step-card s-feature">
+        <div class="step-title">build_cumulative(T) → C(T)</div>
+        <div class="step-desc">Iterate over T to compute the cumulative curve. Starting at (0, 0):<br>
+        <code>aᵢ = aᵢ₋₁ + |pᵢ|</code> (total bytes — x-axis, always grows)<br>
+        <code>cᵢ = cᵢ₋₁ + pᵢ</code> (signed sum — y-axis, rises on in, falls on out)</div>
+        <code class="step-code">a_vals = [0, 1024, 1088, 1600, 1632, 3680, ...]
+c_vals = [0, 1024,  960, 1472, 1440, 3488, ...]</code>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-feature">3</div>
+      <div class="step-card s-feature">
+        <div class="step-title">sample_features(a_vals, c_vals, n=100)</div>
+        <div class="step-desc">Create 100 evenly-spaced x-positions from 0 to <code>a_max</code> using <code>np.linspace()</code>. Use <code>np.interp()</code> to read off the corresponding c-values via piecewise linear interpolation. This normalises variable-length traces to a fixed 100-element vector.</div>
+        <code class="step-code">sample_points = np.linspace(0, a_max, 100)
+v = np.interp(sample_points, a_vals, c_vals)  # shape: (100,)</code>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-feature">4</div>
+      <div class="step-card s-feature">
+        <div class="step-title">extract_global_stats(T)</div>
+        <div class="step-desc">Compute 4 scalar statistics over the full packet sequence:<br>
+        <code>Nin</code> = count of incoming packets (p &gt; 0)<br>
+        <code>Nout</code> = count of outgoing packets (p &lt; 0)<br>
+        <code>Sin</code> = total bytes incoming<br>
+        <code>Sout</code> = total bytes outgoing</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-feature">5</div>
+      <div class="step-card s-feature">
+        <div class="step-title">Concatenate → 104-dim vector</div>
+        <div class="step-desc">Combine interpolated samples with global stats into final numpy array.</div>
+        <code class="step-code">vector = np.array(sampled[0:100] + [Nin, Nout, Sin, Sout])
+# shape: (104,)
+# [0:100] = CUMUL interpolation points
+# [100]   = Nin   (incoming packet count)
+# [101]   = Nout  (outgoing packet count)
+# [102]   = Sin   (total incoming bytes)
+# [103]   = Sout  (total outgoing bytes)</code>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box">
+      <strong>Output</strong>
+      <code>numpy.ndarray</code> of shape <code>(104,)</code> — one feature vector per PCAP file.
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     4. extract_features.py / data.py
+══════════════════════════════════════════ -->
+<div class="module" id="extract">
+  <div class="module-header">
+    <span class="module-name">extract_features.py &amp; data.py</span>
+    <span class="module-role role-feature">Phase 3 — Feature Pipeline</span>
+  </div>
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num s-feature">1</div>
+      <div class="step-card s-feature">
+        <div class="step-title">scan_dataset(dataset_root)</div>
+        <div class="step-desc">Glob all <code>.pcap</code> / <code>.pcapng</code> files. Parse filenames as <code>label_index.pcap</code>. Group into dict keyed by label, sorted by index. Returns a <code>SampleFile</code> dataclass per file.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-feature">2</div>
+      <div class="step-card s-feature">
+        <div class="step-title">build_split(root, site_count, train_n, test_n)</div>
+        <div class="step-desc">Select top N sites by sample count. Slice each site's file list: first <code>train_n</code> → train set, next <code>test_n</code> → test set. Validates that all sites have enough captures. Returns <code>(train_files, test_files, labels, error)</code>.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-feature">3</div>
+      <div class="step-card s-feature">
+        <div class="step-title">extract_features(file_paths) — parallel dispatch</div>
+        <div class="step-desc">
+          <ul>
+            <li>Workers = <code>FEATURE_EXTRACTION_WORKERS</code> (cpu_count − 1)</li>
+            <li>Uses <code>ProcessPoolExecutor</code> for true parallelism</li>
+            <li>Each worker calls <code>cumul.build_feature_vector(pcap_path)</code></li>
+            <li>Falls back to sequential if multiprocessing fails</li>
+            <li>Invalid vectors (wrong shape or None) logged as failures</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box">
+      <strong>Output</strong>
+      <code>X: ndarray (N, 104)</code> feature matrix · <code>y: ndarray (N,)</code> string labels · <code>failures: list</code> of skipped paths
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     5. svm_model.py
+══════════════════════════════════════════ -->
+<div class="module" id="svm">
+  <div class="module-header">
+    <span class="module-name">svm_model.py</span>
+    <span class="module-role role-train">Phase 4 — SVM Training</span>
+  </div>
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num s-train">1</div>
+      <div class="step-card s-train">
+        <div class="step-title">train_from_selection(…)</div>
+        <div class="step-desc">Entry point. Calls <code>data.build_split()</code> then <code>data.extract_features()</code> for both train and test splits. Raises <code>ValueError</code> if no valid vectors produced.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-train">2</div>
+      <div class="step-card s-train">
+        <div class="step-title">Normalise features</div>
+        <div class="step-desc">Fit <code>MinMaxScaler(feature_range=(−1, 1))</code> on <code>X_train</code>. Transform both train and test sets. Encode string labels to integers via <code>LabelEncoder</code>.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="decision">
+      <div class="diamond-wrap"><div class="diamond"></div></div>
+      <div class="decision-card">
+        <div class="step-title">grid_search enabled AND min class size ≥ 2?</div>
+        <div class="step-desc">Checks <code>min(class_counts.values())</code> to determine viable CV folds.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="outcomes">
+      <div class="outcome out-ok">
+        <div class="outcome-title">GridSearchCV</div>
+        Search C=[2¹¹…2¹⁷], γ=[2⁻³…2³] with StratifiedKFold (up to 10 folds). Select best estimator.
+      </div>
+      <div class="outcome out-warn">
+        <div class="outcome-title">Direct fit</div>
+        Use config defaults C=1.0, γ='scale'. Fit single SVC directly.
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-train">3</div>
+      <div class="step-card s-train">
+        <div class="step-title">Evaluate &amp; cross-validate</div>
+        <div class="step-desc">Compute train accuracy, test accuracy, confusion matrix. Run <code>cross_val_score</code> on the fitted model for mean ± std CV accuracy. Generate classification report.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="step">
+      <div class="step-num s-train">4</div>
+      <div class="step-card s-train">
+        <div class="step-title">save_artifacts(model, scaler, label_encoder, metadata)</div>
+        <div class="step-desc">Persist all artefacts to <code>data/models/svm/</code> via <code>joblib.dump()</code>. Write experiment metadata (timestamp, best params, accuracy) to <code>metadata.json</code>.</div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box">
+      <strong>Output files in data/models/svm/</strong>
+      svm_model.pkl · scaler.pkl · label_encoder.pkl · metadata.json
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     6. train.py
+══════════════════════════════════════════ -->
+<div class="module" id="train">
+  <div class="module-header">
+    <span class="module-name">train.py</span>
+    <span class="module-role role-train">Phase 4 — Interactive Training CLI</span>
+  </div>
+  <div class="flow">
+
+    <div class="step">
+      <div class="step-num s-train">1</div>
+      <div class="step-card s-train">
+        <div class="step-title">Prompt: model family</div>
+        <div class="step-desc">User chooses: <strong>SVM</strong> (paper implementation) or <strong>var-CNN</strong> (Bhat et al. extension).</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-train">2</div>
+      <div class="step-card s-train">
+        <div class="step-title">Prompt: dataset root, label scope, site count, instance counts</div>
+        <div class="step-desc">User sets dataset directory, monitored/all label mode, number of sites (1–N available), train and test instances per site. Validates that enough PCAP files exist.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="decision">
+      <div class="diamond-wrap"><div class="diamond"></div></div>
+      <div class="decision-card">
+        <div class="step-title">SVM or var-CNN?</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="outcomes">
+      <div class="outcome out-ok">
+        <div class="outcome-title">SVM path</div>
+        Ask grid_search, show_progress. Call <code>svm_model.train_from_selection()</code>. Then <code>generate_graphs([result])</code>.
+      </div>
+      <div class="outcome out-ok">
+        <div class="outcome-title">var-CNN path</div>
+        Optionally ask sanity test. Call <code>varcnn.train.run()</code> with TensorFlow Conv1D model.
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>Prints train/test accuracy, CV scores, best params, saved model path.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     7. test.py
+══════════════════════════════════════════ -->
+<div class="module" id="test">
+  <div class="module-header">
+    <span class="module-name">test.py</span>
+    <span class="module-role role-eval">Phase 5 — Model Testing CLI</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-eval">1</div>
+      <div class="step-card s-eval">
+        <div class="step-title">Load trained artefacts</div>
+        <div class="step-desc">Call <code>svm_model.load_artifacts()</code>. Load svm_model.pkl, scaler.pkl, label_encoder.pkl, metadata.json. Abort with clear error if any file missing.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-eval">2</div>
+      <div class="step-card s-eval">
+        <div class="step-title">Load &amp; extract test features</div>
+        <div class="step-desc">Re-run <code>data.build_split()</code> for test portion. Call <code>data.extract_features(test_files)</code> to get X_test. Apply saved scaler: <code>scaler.transform(X_test)</code>. Encode labels.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-eval">3</div>
+      <div class="step-card s-eval">
+        <div class="step-title">Predict &amp; score</div>
+        <div class="step-desc">Run <code>model.predict(X_test_scaled)</code>. Compute accuracy, confusion matrix, per-class precision/recall/F1. Also runs <code>evaluate.py</code> for full report generation.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>Console metrics report. JSON result saved to <code>results/</code>. Graphs generated via <code>graphs.py</code>.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     8. evaluate.py
+══════════════════════════════════════════ -->
+<div class="module" id="evaluate">
+  <div class="module-header">
+    <span class="module-name">evaluate.py</span>
+    <span class="module-role role-eval">Phase 5 — Evaluation Engine</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-eval">1</div>
+      <div class="step-card s-eval">
+        <div class="step-title">Check dependencies &amp; load artefacts</div>
+        <div class="step-desc">Verify model, scaler, label encoder files exist. Load features.npy if present. Otherwise re-extract from PCAPfiles.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-eval">2</div>
+      <div class="step-card s-eval">
+        <div class="step-title">Compute metrics</div>
+        <div class="step-desc">
+          <ul>
+            <li>Overall accuracy: <code>accuracy_score(y_true, y_pred)</code></li>
+            <li>Per-class: precision, recall, F1 via <code>classification_report()</code></li>
+            <li>Confusion matrix: <code>confusion_matrix()</code></li>
+            <li>Top-k accuracy (k=1, k=5)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-eval">3</div>
+      <div class="step-card s-eval">
+        <div class="step-title">Save JSON report</div>
+        <div class="step-desc">Write full results dict (accuracy, params, labels, confusion matrix, timestamp) to <code>results/eval_TIMESTAMP.json</code>.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong><code>results/eval_TIMESTAMP.json</code> — full evaluation report with all metrics.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     9. graphs.py
+══════════════════════════════════════════ -->
+<div class="module" id="graphs">
+  <div class="module-header">
+    <span class="module-name">graphs.py</span>
+    <span class="module-role role-eval">Phase 5 — Visualisation</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-eval">1</div>
+      <div class="step-card s-eval">
+        <div class="step-title">generate_graphs(results, comparison)</div>
+        <div class="step-desc">Entry point. Accepts list of experiment result dicts. If <code>comparison=True</code>, overlays multiple runs on the same axes.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+
+    <div class="flow-cols">
+      <div>
+        <div class="flow-col-title">Plot 1</div>
+        <div class="step-card s-eval">
+          <div class="step-title">Confusion matrix heatmap</div>
+          <div class="step-desc">Seaborn <code>heatmap()</code> of predicted vs true labels. Normalised by row. Saved as <code>confusion_matrix.png</code>.</div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-col-title">Plot 2</div>
+        <div class="step-card s-eval">
+          <div class="step-title">Accuracy bar chart</div>
+          <div class="step-desc">Train vs test accuracy per experiment. Grouped bars. Saved as <code>accuracy_comparison.png</code>.</div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-col-title">Plot 3</div>
+        <div class="step-card s-eval">
+          <div class="step-title">ROC curves</div>
+          <div class="step-desc">One-vs-rest ROC per class. AUC reported. Saved as <code>roc_curves.png</code>.</div>
+        </div>
+      </div>
+      <div>
+        <div class="flow-col-title">Plot 4</div>
+        <div class="step-card s-eval">
+          <div class="step-title">Per-class F1 bar chart</div>
+          <div class="step-desc">F1 score for each monitored website. Sorted descending. Saved as <code>per_class_f1.png</code>.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>PNG plots in <code>results/</code>: confusion_matrix.png · accuracy_comparison.png · roc_curves.png · per_class_f1.png</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     10. sanitize.py
+══════════════════════════════════════════ -->
+<div class="module" id="sanitize">
+  <div class="module-header">
+    <span class="module-name">sanitize.py</span>
+    <span class="module-role role-util">Utility — Data Cleaning</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-util">1</div>
+      <div class="step-card s-util">
+        <div class="step-title">Scan raw PCAP directory</div>
+        <div class="step-desc">Find all <code>.pcap</code> / <code>.pcapng</code> files. Parse filenames for label and index. Report counts per label.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">2</div>
+      <div class="step-card s-util">
+        <div class="step-title">Validate each file</div>
+        <div class="step-desc">Open with Scapy. Check: file readable, packet count ≥ MIN_PACKETS, has both incoming and outgoing TCP packets. Flag corrupt or empty files.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="decision">
+      <div class="diamond-wrap"><div class="diamond"></div></div>
+      <div class="decision-card">
+        <div class="step-title">File valid?</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="outcomes">
+      <div class="outcome out-fail"><div class="outcome-title">Invalid</div>Move to quarantine folder or delete. Log reason.</div>
+      <div class="outcome out-ok"><div class="outcome-title">Valid</div>Keep in place. Count as usable sample.</div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>Clean <code>data/raw/</code> directory. Sanitation report printed to console.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     11. scaler.py
+══════════════════════════════════════════ -->
+<div class="module" id="scaler">
+  <div class="module-header">
+    <span class="module-name">scaler.py</span>
+    <span class="module-role role-util">Utility — Feature Normalisation</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-util">1</div>
+      <div class="step-card s-util">
+        <div class="step-title">fit_scaler(X_train)</div>
+        <div class="step-desc">Instantiate <code>MinMaxScaler(feature_range=(−1, 1))</code>. Call <code>.fit(X_train)</code> to learn per-feature min/max from training data only. Prevents data leakage from test set.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">2</div>
+      <div class="step-card s-util">
+        <div class="step-title">transform(X)</div>
+        <div class="step-desc">Apply learned min/max scaling. Each feature i: <code>x' = 2*(x − min_i)/(max_i − min_i) − 1</code>. Applied to both train and test (using train-fitted params).</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">3</div>
+      <div class="step-card s-util">
+        <div class="step-title">save / load scaler</div>
+        <div class="step-desc">Persist via <code>joblib.dump(scaler, 'scaler.pkl')</code>. Reload at test time with <code>joblib.load()</code> to ensure identical transformation.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong><code>scaler.pkl</code> saved to <code>data/models/svm/</code>. Returns <code>X_scaled</code> in range [−1, 1].</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     12. site_registry.py
+══════════════════════════════════════════ -->
+<div class="module" id="registry">
+  <div class="module-header">
+    <span class="module-name">site_registry.py</span>
+    <span class="module-role role-util">Utility — Site List Management</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-util">1</div>
+      <div class="step-card s-util">
+        <div class="step-title">Load master_sites.json</div>
+        <div class="step-desc">Reads the master site registry. Contains 500 entries: 100 monitored (high-value, 50 captures each) and 400 background (1 capture each). Zero URL overlaps verified at config load time.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">2</div>
+      <div class="step-card s-util">
+        <div class="step-title">labels_for_scope(scope)</div>
+        <div class="step-desc">Returns ordered list of site labels filtered by scope: <code>"monitored"</code> = 100 sites, <code>"background"</code> = 400 sites, <code>"all"</code> = 500 sites. Used by <code>data.py</code> to restrict dataset scanning.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>Ordered list of site label strings used for PCAP filename matching and training scope.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     13. show_status.py
+══════════════════════════════════════════ -->
+<div class="module" id="status">
+  <div class="module-header">
+    <span class="module-name">show_status.py</span>
+    <span class="module-role role-util">Utility — Progress Dashboard</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-util">1</div>
+      <div class="step-card s-util">
+        <div class="step-title">Read capture_status.json</div>
+        <div class="step-desc">Load the progressive tracker. Get per-site valid counts, failed_attempts, blacklist status.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">2</div>
+      <div class="step-card s-util">
+        <div class="step-title">Disk scan reconciliation</div>
+        <div class="step-desc">Independently count actual PCAP files on disk per label. Cross-reference with tracker to detect any drift (manual deletes, crashes mid-write).</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">3</div>
+      <div class="step-card s-util">
+        <div class="step-title">Print summary table</div>
+        <div class="step-desc">Display per-site status: complete / partial / missing / blacklisted. Show aggregate stats: total captured, total needed, % complete. List blacklisted sites with reasons.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>Console dashboard. No files written.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     14. merge_data.py
+══════════════════════════════════════════ -->
+<div class="module" id="merge">
+  <div class="module-header">
+    <span class="module-name">merge_data.py</span>
+    <span class="module-role role-util">Utility — Dataset Merging</span>
+  </div>
+  <div class="flow">
+    <div class="step">
+      <div class="step-num s-util">1</div>
+      <div class="step-card s-util">
+        <div class="step-title">Prompt for two source directories</div>
+        <div class="step-desc">User provides path to folder A and folder B. Both must be valid PCAP directories with <code>label_index.pcap</code> naming convention.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">2</div>
+      <div class="step-card s-util">
+        <div class="step-title">Scan &amp; de-duplicate</div>
+        <div class="step-desc">Scan both directories. For each label, merge file lists. Re-index files sequentially (avoid duplicate index collisions). Skip files that already exist in destination.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="step">
+      <div class="step-num s-util">3</div>
+      <div class="step-card s-util">
+        <div class="step-title">Copy to output directory</div>
+        <div class="step-desc">Copy all files to merged destination with corrected sequential naming. Print per-label counts before and after merge.</div>
+      </div>
+    </div>
+    <div class="connector"><div class="connector-line"></div></div>
+    <div class="output-box"><strong>Output</strong>Merged PCAP directory with re-indexed filenames. Console report of file counts per label.</div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════
+     15. config.py
+══════════════════════════════════════════ -->
+<div class="module" id="config">
+  <div class="module-header">
+    <span class="module-name">config.py</span>
+    <span class="module-role role-config">Global Configuration</span>
+  </div>
+
+  <table class="info-table">
+    <thead>
+      <tr><th>Parameter group</th><th>Key parameters</th><th>Values / purpose</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Paths</strong></td>
+        <td>TOR_EXE_PATH, DATA_RAW_DIR, SVM_MODEL_DIR, SITE_STATUS_PATH</td>
+        <td>All paths relative to BASE_DIR (project root). Models under <code>data/models/svm/</code> and <code>data/models/varcnn/</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Network</strong></td>
+        <td>MAX_WORKERS, BASE_SOCKS_PORT, BASE_CONTROL_PORT</td>
+        <td>10 parallel browsers; SOCKS ports 9050–9059; control ports 9150–9159.</td>
+      </tr>
+      <tr>
+        <td><strong>Capture timing</strong></td>
+        <td>PAGE_LOAD_WAIT, READY_STATE_TIMEOUT, DYNAMIC_CONTENT_WAIT, INTER_CAPTURE_IDLE</td>
+        <td>Min ~35 s / capture; typical 60–90 s. 50 instances × 100 sites ≈ 83 hrs total.</td>
+      </tr>
+      <tr>
+        <td><strong>Validation</strong></td>
+        <td>MIN_PACKETS, MAX_SITE_FAILURES, CAPTURE_RETRIES</td>
+        <td>500 packets minimum; blacklist after 7 failures; 3 retries per instance.</td>
+      </tr>
+      <tr>
+        <td><strong>Feature extraction</strong></td>
+        <td>EXTRACTION_LAYER, N_FEATURES, FEATURE_EXTRACTION_WORKERS</td>
+        <td>TCP layer; 100 interpolation points; cpu_count−1 workers.</td>
+      </tr>
+      <tr>
+        <td><strong>SVM hyperparams</strong></td>
+        <td>GRID_SEARCH_C, GRID_SEARCH_GAMMA, CV_FOLDS</td>
+        <td>C ∈ [2¹¹…2¹⁷]; γ ∈ [2⁻³…2³]; 10-fold stratified CV.</td>
+      </tr>
+      <tr>
+        <td><strong>var-CNN</strong></td>
+        <td>VARCNN_BATCH_SIZE, VARCNN_EPOCHS, VARCNN_MODEL_PATH</td>
+        <td>Batch 8; 120 epochs; saved as <code>varcnn_model.keras</code>.</td>
+      </tr>
+      <tr>
+        <td><strong>Dataset</strong></td>
+        <td>INSTANCES_PER_CLASS, BG_INSTANCES_PER_CLASS, MONITORED_SITES, BACKGROUND_SITES</td>
+        <td>50 captures/monitored site; 1 capture/background site; 100+400 = 500 total sites.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,4 @@
+# Python packages used by the app (bundled in the portable package's python\Lib\site-packages).
+# Packet capture and pcap reading need no third-party package.
+selenium==4.18.1
+stem==1.8.2
