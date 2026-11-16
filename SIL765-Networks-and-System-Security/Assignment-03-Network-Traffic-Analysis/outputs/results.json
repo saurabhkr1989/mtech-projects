@@ -1,0 +1,2206 @@
+{
+  "s1": {
+    "total_flows": 2071657,
+    "date_min": "2010-06-11 20:10:00",
+    "date_max": "2010-06-17 23:58:00",
+    "unique_src_ips": 2478,
+    "unique_dst_ips": 34555,
+    "unique_protocols": 6,
+    "total_bytes": 76547840561,
+    "top_k_protocols": {
+      "tcp_ip": 1644056,
+      "udp_ip": 419246,
+      "icmp_ip": 8211,
+      "igmp": 77,
+      "ip": 66
+    },
+    "top10_src": [
+      {
+        "source": "192.168.2.107",
+        "totalSourceBytes": 1766723841
+      },
+      {
+        "source": "192.168.4.121",
+        "totalSourceBytes": 348236805
+      },
+      {
+        "source": "192.168.2.109",
+        "totalSourceBytes": 279555269
+      },
+      {
+        "source": "192.168.1.105",
+        "totalSourceBytes": 233991932
+      },
+      {
+        "source": "192.168.1.101",
+        "totalSourceBytes": 229244162
+      },
+      {
+        "source": "192.168.2.112",
+        "totalSourceBytes": 219642794
+      },
+      {
+        "source": "192.168.2.113",
+        "totalSourceBytes": 219011411
+      },
+      {
+        "source": "192.168.4.118",
+        "totalSourceBytes": 201191844
+      },
+      {
+        "source": "192.168.1.103",
+        "totalSourceBytes": 190875178
+      },
+      {
+        "source": "192.168.2.110",
+        "totalSourceBytes": 176514136
+      }
+    ],
+    "top10_dst": [
+      {
+        "destination": "192.168.5.122",
+        "totalDestinationBytes": 9583092752
+      },
+      {
+        "destination": "69.84.133.138",
+        "totalDestinationBytes": 5619014157
+      },
+      {
+        "destination": "95.154.240.242",
+        "totalDestinationBytes": 3879482850
+      },
+      {
+        "destination": "68.178.178.97",
+        "totalDestinationBytes": 2801780566
+      },
+      {
+        "destination": "203.73.24.75",
+        "totalDestinationBytes": 1998532100
+      },
+      {
+        "destination": "79.125.17.124",
+        "totalDestinationBytes": 1294872433
+      },
+      {
+        "destination": "68.178.178.33",
+        "totalDestinationBytes": 1222199452
+      },
+      {
+        "destination": "91.190.170.71",
+        "totalDestinationBytes": 1037257359
+      },
+      {
+        "destination": "72.32.84.3",
+        "totalDestinationBytes": 784108572
+      },
+      {
+        "destination": "195.189.143.147",
+        "totalDestinationBytes": 752319357
+      }
+    ],
+    "mean_pkt": 315.78901161706864,
+    "median_pkt": 195.3846153846154,
+    "std_pkt": 266.07482451256163,
+    "skew_pkt": 1.0647972976446596,
+    "pkt_var": 70795.81223939046,
+    "pair_counts": [
+      {
+        "source": "192.168.5.122",
+        "destination": "198.164.30.2",
+        "flow_count": 232409
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "125.6.164.51",
+        "flow_count": 58744
+      },
+      {
+        "source": "192.168.3.115",
+        "destination": "203.73.24.75",
+        "flow_count": 43785
+      }
+    ],
+    "total_windows": 146,
+    "consistent_ips": [
+      {
+        "source": "192.168.1.101",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.106",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.1.102",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.1.103",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.1.104",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.107",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.1.105",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.109",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.108",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.3.116",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.4.118",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.110",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.111",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.112",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.2.113",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.3.114",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.3.115",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.5.122",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.4.120",
+        "windows_active": 145
+      },
+      {
+        "source": "192.168.4.119",
+        "windows_active": 145
+      }
+    ],
+    "bin_mean": 1197.4895953757225,
+    "bin_std": 1265.6152663800883,
+    "spike_thresh": 3728.7201281358994,
+    "spike_count": 92,
+    "spikes_top5": [
+      {
+        "bin_5min": "2010-06-13 09:40:00",
+        "flow_count": 7598,
+        "is_spike": true
+      },
+      {
+        "bin_5min": "2010-06-13 10:00:00",
+        "flow_count": 6718,
+        "is_spike": true
+      },
+      {
+        "bin_5min": "2010-06-13 10:05:00",
+        "flow_count": 7570,
+        "is_spike": true
+      },
+      {
+        "bin_5min": "2010-06-13 10:10:00",
+        "flow_count": 5570,
+        "is_spike": true
+      },
+      {
+        "bin_5min": "2010-06-13 10:15:00",
+        "flow_count": 4702,
+        "is_spike": true
+      }
+    ],
+    "pkt_lo": -389.5869565217391,
+    "pkt_hi": 966.6449275362319,
+    "pkt_anomaly_count": 14483
+  },
+  "s2": {
+    "hll": {
+      "estimate": 34763,
+      "exact": 34801,
+      "error_pct": 0.10919226459009798,
+      "space_kb": 4.0,
+      "exact_space_kb": 543.765625,
+      "b": 12,
+      "m": 4096
+    },
+    "cms": {
+      "hh_threshold": 20716.57,
+      "sketch_hh_count": 9,
+      "exact_hh_count": 9,
+      "mean_pct_err": 0.018070191346968308,
+      "space_kb": 195.3125,
+      "exact_space_kb": 809.8828125,
+      "top20_comparison": [
+        {
+          "IP": "198.164.30.2",
+          "exact_count": 232409,
+          "sketch_count": 232411,
+          "abs_error": 2,
+          "pct_error": 0.0008605518719154594
+        },
+        {
+          "IP": "192.168.5.122",
+          "exact_count": 199437,
+          "sketch_count": 199440,
+          "abs_error": 3,
+          "pct_error": 0.001504234419891996
+        },
+        {
+          "IP": "203.73.24.75",
+          "exact_count": 193200,
+          "sketch_count": 193200,
+          "abs_error": 0,
+          "pct_error": 0.0
+        },
+        {
+          "IP": "125.6.164.51",
+          "exact_count": 106826,
+          "sketch_count": 106828,
+          "abs_error": 2,
+          "pct_error": 0.0018722033961769606
+        },
+        {
+          "IP": "67.220.214.50",
+          "exact_count": 49298,
+          "sketch_count": 49299,
+          "abs_error": 1,
+          "pct_error": 0.002028479857195018
+        },
+        {
+          "IP": "202.210.143.140",
+          "exact_count": 36189,
+          "sketch_count": 36200,
+          "abs_error": 11,
+          "pct_error": 0.030395976677996078
+        },
+        {
+          "IP": "82.98.86.183",
+          "exact_count": 25214,
+          "sketch_count": 25216,
+          "abs_error": 2,
+          "pct_error": 0.007932101213611487
+        },
+        {
+          "IP": "95.211.98.12",
+          "exact_count": 25095,
+          "sketch_count": 25100,
+          "abs_error": 5,
+          "pct_error": 0.019924287706714484
+        },
+        {
+          "IP": "209.112.44.10",
+          "exact_count": 21824,
+          "sketch_count": 21825,
+          "abs_error": 1,
+          "pct_error": 0.004582111436950147
+        },
+        {
+          "IP": "62.140.213.243",
+          "exact_count": 20509,
+          "sketch_count": 20513,
+          "abs_error": 4,
+          "pct_error": 0.01950363255156273
+        },
+        {
+          "IP": "64.38.193.26",
+          "exact_count": 20015,
+          "sketch_count": 20017,
+          "abs_error": 2,
+          "pct_error": 0.009992505620784412
+        },
+        {
+          "IP": "67.111.12.102",
+          "exact_count": 19480,
+          "sketch_count": 19483,
+          "abs_error": 3,
+          "pct_error": 0.01540041067761807
+        },
+        {
+          "IP": "125.6.176.113",
+          "exact_count": 16434,
+          "sketch_count": 16435,
+          "abs_error": 1,
+          "pct_error": 0.006084945843981989
+        },
+        {
+          "IP": "91.190.170.71",
+          "exact_count": 15000,
+          "sketch_count": 15002,
+          "abs_error": 2,
+          "pct_error": 0.013333333333333334
+        },
+        {
+          "IP": "208.116.9.82",
+          "exact_count": 14725,
+          "sketch_count": 14725,
+          "abs_error": 0,
+          "pct_error": 0.0
+        },
+        {
+          "IP": "95.211.98.14",
+          "exact_count": 12975,
+          "sketch_count": 12977,
+          "abs_error": 2,
+          "pct_error": 0.015414258188824664
+        },
+        {
+          "IP": "125.6.164.41",
+          "exact_count": 12242,
+          "sketch_count": 12255,
+          "abs_error": 13,
+          "pct_error": 0.10619179872569842
+        },
+        {
+          "IP": "192.168.2.255",
+          "exact_count": 12017,
+          "sketch_count": 12023,
+          "abs_error": 6,
+          "pct_error": 0.04992926687193143
+        },
+        {
+          "IP": "82.98.86.181",
+          "exact_count": 11476,
+          "sketch_count": 11479,
+          "abs_error": 3,
+          "pct_error": 0.02614151272220286
+        },
+        {
+          "IP": "125.6.164.43",
+          "exact_count": 9897,
+          "sketch_count": 9900,
+          "abs_error": 3,
+          "pct_error": 0.03031221582297666
+        }
+      ]
+    },
+    "bloom": {
+      "m_bits": 23752,
+      "k_hashes": 7,
+      "n_elements": 2478,
+      "fn_count": 0,
+      "fp_count": 982,
+      "probe_count": 100000,
+      "actual_fpr_pct": 0.9820000000000001,
+      "space_kb": 2.8994140625,
+      "exact_space_kb": 121.19140625
+    }
+  },
+  "s3": {
+    "pkt_iqr_lo": -389.5869565217391,
+    "pkt_iqr_hi": 966.6449275362319,
+    "pkt_anomaly_count": 14483,
+    "fc_lo": -2.0,
+    "fc_hi": 6.0,
+    "high_flow_ips_count": 304,
+    "high_flow_ips_top10": [
+      {
+        "192.168.5.122": 268267
+      },
+      {
+        "192.168.2.107": 208379
+      },
+      {
+        "192.168.4.118": 135374
+      },
+      {
+        "192.168.1.101": 116292
+      },
+      {
+        "192.168.4.121": 105454
+      },
+      {
+        "192.168.1.105": 101359
+      },
+      {
+        "192.168.2.109": 99183
+      },
+      {
+        "192.168.3.116": 97241
+      },
+      {
+        "192.168.2.110": 90658
+      },
+      {
+        "192.168.3.115": 88915
+      }
+    ],
+    "anomalous_hours_count": 17,
+    "byte_mean": 30890976.82041969,
+    "byte_std": 364254785.20960677,
+    "outlier_ips_count": 21,
+    "outlier_ips_top10": [
+      {
+        "192.168.2.109": 7369281030.0
+      },
+      {
+        "192.168.1.101": 6353065591.0
+      },
+      {
+        "192.168.2.112": 5759816514.0
+      },
+      {
+        "192.168.1.103": 5392234742.0
+      },
+      {
+        "192.168.2.107": 4861094682.0
+      },
+      {
+        "192.168.2.113": 4811521438.0
+      },
+      {
+        "192.168.4.118": 4006130354.0
+      },
+      {
+        "192.168.4.121": 3749783991.0
+      },
+      {
+        "192.168.1.102": 3719467167.0
+      },
+      {
+        "192.168.2.110": 3642212173.0
+      }
+    ],
+    "behavior_anomalies_count": 178,
+    "behavior_anomalies_top10": [
+      {
+        "source": "131.202.243.90",
+        "hour": "2010-06-17 14:00:00",
+        "flow_count": 5116,
+        "rolling_mean": 3.6666666666666665,
+        "spike_ratio": 1395.2727272727273
+      },
+      {
+        "source": "192.168.2.110",
+        "hour": "2010-06-13 10:00:00",
+        "flow_count": 11370,
+        "rolling_mean": 38.666666666666664,
+        "spike_ratio": 294.05172413793105
+      },
+      {
+        "source": "192.168.2.110",
+        "hour": "2010-06-17 05:00:00",
+        "flow_count": 3267,
+        "rolling_mean": 18.666666666666668,
+        "spike_ratio": 175.01785714285714
+      },
+      {
+        "source": "131.202.240.209",
+        "hour": "2010-06-14 16:00:00",
+        "flow_count": 491,
+        "rolling_mean": 4.0,
+        "spike_ratio": 122.75
+      },
+      {
+        "source": "192.168.3.116",
+        "hour": "2010-06-17 05:00:00",
+        "flow_count": 6990,
+        "rolling_mean": 60.333333333333336,
+        "spike_ratio": 115.85635359116021
+      },
+      {
+        "source": "192.168.2.107",
+        "hour": "2010-06-17 05:00:00",
+        "flow_count": 2889,
+        "rolling_mean": 27.666666666666668,
+        "spike_ratio": 104.42168674698794
+      },
+      {
+        "source": "192.168.2.106",
+        "hour": "2010-06-13 09:00:00",
+        "flow_count": 5664,
+        "rolling_mean": 64.66666666666667,
+        "spike_ratio": 87.58762886597937
+      },
+      {
+        "source": "192.168.3.115",
+        "hour": "2010-06-15 00:00:00",
+        "flow_count": 1021,
+        "rolling_mean": 12.333333333333334,
+        "spike_ratio": 82.78378378378378
+      },
+      {
+        "source": "192.168.2.110",
+        "hour": "2010-06-12 00:00:00",
+        "flow_count": 1685,
+        "rolling_mean": 21.0,
+        "spike_ratio": 80.23809523809524
+      },
+      {
+        "source": "192.168.4.120",
+        "hour": "2010-06-12 00:00:00",
+        "flow_count": 616,
+        "rolling_mean": 8.0,
+        "spike_ratio": 77.0
+      }
+    ],
+    "ddos_candidates_count": 474,
+    "ddos_candidates_top10": [
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 07:55:00",
+        "distinct_sources": 144
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 01:55:00",
+        "distinct_sources": 139
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 02:55:00",
+        "distinct_sources": 135
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 05:55:00",
+        "distinct_sources": 133
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 03:20:00",
+        "distinct_sources": 132
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 06:20:00",
+        "distinct_sources": 120
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 02:10:00",
+        "distinct_sources": 118
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 04:25:00",
+        "distinct_sources": 118
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 07:25:00",
+        "distinct_sources": 116
+      },
+      {
+        "destination": "192.168.2.107",
+        "bin_5min": "2010-06-15 04:55:00",
+        "distinct_sources": 113
+      }
+    ],
+    "dur_mean": 48.98693171697825,
+    "dur_std": 619.7693095693534,
+    "dur_thresh": 1908.2948604250382,
+    "long_flows_count": 7628,
+    "long_flows_top10": [
+      {
+        "source": "192.168.1.101",
+        "destination": "192.168.1.255",
+        "duration_s": 49140.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.1.101",
+        "destination": "255.255.255.255",
+        "duration_s": 49140.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.2.109",
+        "destination": "255.255.255.255",
+        "duration_s": 48960.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.2.109",
+        "destination": "192.168.2.255",
+        "duration_s": 48960.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.2.112",
+        "destination": "192.168.2.109",
+        "duration_s": 48900.0,
+        "protocolName": "tcp_ip",
+        "appName": "SecureWeb"
+      },
+      {
+        "source": "192.168.2.112",
+        "destination": "192.168.2.255",
+        "duration_s": 48900.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.2.112",
+        "destination": "255.255.255.255",
+        "duration_s": 48900.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.3.117",
+        "destination": "255.255.255.255",
+        "duration_s": 48780.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.3.117",
+        "destination": "192.168.3.255",
+        "duration_s": 48780.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      },
+      {
+        "source": "192.168.3.114",
+        "destination": "192.168.3.255",
+        "duration_s": 48780.0,
+        "protocolName": "udp_ip",
+        "appName": "Unknown_UDP"
+      }
+    ],
+    "multi_proto_count": 108,
+    "multi_proto_top10": [
+      {
+        "source": "192.168.1.101",
+        "bin_60s": "2010-06-13 10:06:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.1.105",
+        "bin_60s": "2010-06-13 09:40:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.1.105",
+        "bin_60s": "2010-06-13 16:38:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.1.105",
+        "bin_60s": "2010-06-13 16:42:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.2.107",
+        "bin_60s": "2010-06-14 21:50:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.2.107",
+        "bin_60s": "2010-06-14 21:54:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.2.107",
+        "bin_60s": "2010-06-15 09:11:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.2.112",
+        "bin_60s": "2010-06-13 16:58:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.2.112",
+        "bin_60s": "2010-06-14 17:19:00",
+        "distinct_protocols": 3
+      },
+      {
+        "source": "192.168.3.117",
+        "bin_60s": "2010-06-16 09:55:00",
+        "distinct_protocols": 3
+      }
+    ]
+  },
+  "s4": {
+    "stealthy_scans_count": 25,
+    "stealthy_scans": [
+      {
+        "source": "192.168.4.121",
+        "destination": "192.168.5.122",
+        "distinct_ports": 3658,
+        "flow_count": 19783,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:58:00",
+        "span_min": 8639.0,
+        "rate_per_min": 2.289964116217155
+      },
+      {
+        "source": "192.168.1.105",
+        "destination": "192.168.2.112",
+        "distinct_ports": 824,
+        "flow_count": 1829,
+        "start": "2010-06-13 16:42:00",
+        "end": "2010-06-15 15:27:00",
+        "span_min": 2805.0,
+        "rate_per_min": 0.6520499108734403
+      },
+      {
+        "source": "192.168.2.112",
+        "destination": "192.168.5.122",
+        "distinct_ports": 664,
+        "flow_count": 11669,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:58:00",
+        "span_min": 8639.0,
+        "rate_per_min": 1.3507350387776362
+      },
+      {
+        "source": "192.168.4.118",
+        "destination": "192.168.5.122",
+        "distinct_ports": 639,
+        "flow_count": 12236,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:57:00",
+        "span_min": 8638.0,
+        "rate_per_min": 1.4165316045380876
+      },
+      {
+        "source": "192.168.1.105",
+        "destination": "192.168.5.122",
+        "distinct_ports": 606,
+        "flow_count": 10525,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:55:00",
+        "span_min": 8636.0,
+        "rate_per_min": 1.2187355257063455
+      },
+      {
+        "source": "192.168.3.114",
+        "destination": "192.168.5.122",
+        "distinct_ports": 589,
+        "flow_count": 3969,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:51:00",
+        "span_min": 8632.0,
+        "rate_per_min": 0.4598007414272475
+      },
+      {
+        "source": "192.168.2.113",
+        "destination": "192.168.5.122",
+        "distinct_ports": 564,
+        "flow_count": 18236,
+        "start": "2010-06-12 00:01:00",
+        "end": "2010-06-17 23:57:00",
+        "span_min": 8636.0,
+        "rate_per_min": 2.11162575266327
+      },
+      {
+        "source": "192.168.1.105",
+        "destination": "192.168.1.101",
+        "distinct_ports": 562,
+        "flow_count": 1502,
+        "start": "2010-06-12 00:09:00",
+        "end": "2010-06-17 21:30:00",
+        "span_min": 8481.0,
+        "rate_per_min": 0.17710175686829382
+      },
+      {
+        "source": "192.168.1.105",
+        "destination": "192.168.1.103",
+        "distinct_ports": 560,
+        "flow_count": 1379,
+        "start": "2010-06-13 10:17:00",
+        "end": "2010-06-17 23:43:00",
+        "span_min": 6566.0,
+        "rate_per_min": 0.21002132196162046
+      },
+      {
+        "source": "192.168.2.111",
+        "destination": "192.168.5.122",
+        "distinct_ports": 529,
+        "flow_count": 7390,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:58:00",
+        "span_min": 8639.0,
+        "rate_per_min": 0.8554230813751592
+      },
+      {
+        "source": "192.168.1.104",
+        "destination": "192.168.5.122",
+        "distinct_ports": 387,
+        "flow_count": 5260,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:54:00",
+        "span_min": 8635.0,
+        "rate_per_min": 0.609148812970469
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "192.168.5.122",
+        "distinct_ports": 328,
+        "flow_count": 8420,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:49:00",
+        "span_min": 8630.0,
+        "rate_per_min": 0.9756662804171495
+      },
+      {
+        "source": "192.168.3.115",
+        "destination": "192.168.5.122",
+        "distinct_ports": 293,
+        "flow_count": 4644,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:55:00",
+        "span_min": 8636.0,
+        "rate_per_min": 0.5377489578508569
+      },
+      {
+        "source": "192.168.4.120",
+        "destination": "192.168.5.122",
+        "distinct_ports": 273,
+        "flow_count": 8901,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:53:00",
+        "span_min": 8634.0,
+        "rate_per_min": 1.03092425295344
+      },
+      {
+        "source": "192.168.4.119",
+        "destination": "192.168.5.122",
+        "distinct_ports": 268,
+        "flow_count": 5937,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:47:00",
+        "span_min": 8628.0,
+        "rate_per_min": 0.6881084840055632
+      },
+      {
+        "source": "192.168.2.110",
+        "destination": "192.168.5.122",
+        "distinct_ports": 268,
+        "flow_count": 13673,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:32:00",
+        "span_min": 8613.0,
+        "rate_per_min": 1.5874840357598978
+      },
+      {
+        "source": "192.168.3.117",
+        "destination": "192.168.5.122",
+        "distinct_ports": 245,
+        "flow_count": 4049,
+        "start": "2010-06-12 00:00:00",
+        "end": "2010-06-17 23:56:00",
+        "span_min": 8636.0,
+        "rate_per_min": 0.4688513200555813
+      },
+      {
+        "source": "192.168.1.101",
+        "destination": "192.168.5.122",
+        "distinct_ports": 222,
+        "flow_count": 6557,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:54:00",
+        "span_min": 8635.0,
+        "rate_per_min": 0.7593514765489288
+      },
+      {
+        "source": "192.168.2.108",
+        "destination": "192.168.5.122",
+        "distinct_ports": 200,
+        "flow_count": 6820,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:57:00",
+        "span_min": 8638.0,
+        "rate_per_min": 0.7895346144940959
+      },
+      {
+        "source": "192.168.1.103",
+        "destination": "192.168.5.122",
+        "distinct_ports": 195,
+        "flow_count": 9445,
+        "start": "2010-06-11 23:58:00",
+        "end": "2010-06-17 23:51:00",
+        "span_min": 8633.0,
+        "rate_per_min": 1.0940576856249276
+      },
+      {
+        "source": "192.168.3.116",
+        "destination": "192.168.5.122",
+        "distinct_ports": 127,
+        "flow_count": 6773,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:57:00",
+        "span_min": 8638.0,
+        "rate_per_min": 0.7840935401713359
+      },
+      {
+        "source": "192.168.1.102",
+        "destination": "192.168.5.122",
+        "distinct_ports": 124,
+        "flow_count": 3374,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:51:00",
+        "span_min": 8632.0,
+        "rate_per_min": 0.39087117701575536
+      },
+      {
+        "source": "192.168.2.106",
+        "destination": "192.168.5.122",
+        "distinct_ports": 102,
+        "flow_count": 5238,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:58:00",
+        "span_min": 8639.0,
+        "rate_per_min": 0.6063201759462901
+      },
+      {
+        "source": "192.168.2.109",
+        "destination": "192.168.5.122",
+        "distinct_ports": 92,
+        "flow_count": 10600,
+        "start": "2010-06-11 23:59:00",
+        "end": "2010-06-17 23:54:00",
+        "span_min": 8635.0,
+        "rate_per_min": 1.227562246670527
+      },
+      {
+        "source": "192.168.1.105",
+        "destination": "192.168.1.2",
+        "distinct_ports": 82,
+        "flow_count": 180,
+        "start": "2010-06-12 06:58:00",
+        "end": "2010-06-17 18:58:00",
+        "span_min": 7920.0,
+        "rate_per_min": 0.022727272727272728
+      }
+    ],
+    "slow_ddos_count": 175,
+    "slow_ddos_top10": [
+      {
+        "destination": "192.168.2.107",
+        "run_start_srcs": 1,
+        "run_peak_srcs": 183,
+        "run_hours": 3,
+        "growth_ratio": 183.0
+      },
+      {
+        "destination": "142.166.14.80",
+        "run_start_srcs": 6,
+        "run_peak_srcs": 15,
+        "run_hours": 6,
+        "growth_ratio": 2.5
+      },
+      {
+        "destination": "142.166.14.71",
+        "run_start_srcs": 1,
+        "run_peak_srcs": 15,
+        "run_hours": 5,
+        "growth_ratio": 15.0
+      },
+      {
+        "destination": "142.166.14.69",
+        "run_start_srcs": 3,
+        "run_peak_srcs": 14,
+        "run_hours": 5,
+        "growth_ratio": 4.67
+      },
+      {
+        "destination": "142.166.14.78",
+        "run_start_srcs": 2,
+        "run_peak_srcs": 13,
+        "run_hours": 5,
+        "growth_ratio": 6.5
+      },
+      {
+        "destination": "142.166.14.86",
+        "run_start_srcs": 2,
+        "run_peak_srcs": 13,
+        "run_hours": 5,
+        "growth_ratio": 6.5
+      },
+      {
+        "destination": "206.123.111.173",
+        "run_start_srcs": 1,
+        "run_peak_srcs": 13,
+        "run_hours": 5,
+        "growth_ratio": 13.0
+      },
+      {
+        "destination": "142.166.14.77",
+        "run_start_srcs": 1,
+        "run_peak_srcs": 12,
+        "run_hours": 6,
+        "growth_ratio": 12.0
+      },
+      {
+        "destination": "142.166.14.70",
+        "run_start_srcs": 7,
+        "run_peak_srcs": 12,
+        "run_hours": 5,
+        "growth_ratio": 1.71
+      },
+      {
+        "destination": "142.166.14.79",
+        "run_start_srcs": 3,
+        "run_peak_srcs": 11,
+        "run_hours": 4,
+        "growth_ratio": 3.67
+      }
+    ],
+    "ip_hop_cluster_count": 1,
+    "ip_hop_clusters_top10": [
+      {
+        "members": [
+          "142.166.115.13",
+          "142.166.185.154",
+          "192.168.5.124",
+          "64.237.127.131"
+        ],
+        "size": 4
+      }
+    ],
+    "payload_findings": [
+      {
+        "pattern": "xss",
+        "column": "destinationPayloadAsUTF",
+        "matches": 58490
+      },
+      {
+        "pattern": "large_base64_blob",
+        "column": "sourcePayloadAsUTF",
+        "matches": 37398
+      },
+      {
+        "pattern": "large_base64_blob",
+        "column": "destinationPayloadAsUTF",
+        "matches": 36610
+      },
+      {
+        "pattern": "scanner_ua",
+        "column": "destinationPayloadAsUTF",
+        "matches": 15973
+      },
+      {
+        "pattern": "download_or_backdoor",
+        "column": "destinationPayloadAsUTF",
+        "matches": 1885
+      },
+      {
+        "pattern": "download_or_backdoor",
+        "column": "sourcePayloadAsUTF",
+        "matches": 107
+      },
+      {
+        "pattern": "scanner_ua",
+        "column": "sourcePayloadAsUTF",
+        "matches": 93
+      },
+      {
+        "pattern": "credential_leak",
+        "column": "destinationPayloadAsUTF",
+        "matches": 39
+      },
+      {
+        "pattern": "sql_injection",
+        "column": "destinationPayloadAsUTF",
+        "matches": 14
+      },
+      {
+        "pattern": "xss",
+        "column": "sourcePayloadAsUTF",
+        "matches": 3
+      },
+      {
+        "pattern": "shell_command",
+        "column": "sourcePayloadAsUTF",
+        "matches": 2
+      },
+      {
+        "pattern": "credential_leak",
+        "column": "sourcePayloadAsUTF",
+        "matches": 1
+      }
+    ],
+    "encrypted_total": 67542,
+    "enc_small_count": 1646,
+    "enc_short_count": 49950,
+    "c2_beacons_count": 53,
+    "c2_beacons_top15": [
+      {
+        "source": "192.168.2.107",
+        "destination": "239.192.152.143",
+        "flow_count": 136,
+        "iat_mean": 300.0,
+        "iat_std": 0.0,
+        "avg_payload": 165.0,
+        "iat_cv": 0.0
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "192.168.2.1",
+        "flow_count": 17,
+        "iat_mean": 2520.0,
+        "iat_std": 0.0,
+        "avg_payload": 199.52941176470588,
+        "iat_cv": 0.0
+      },
+      {
+        "source": "192.168.4.119",
+        "destination": "192.168.4.120",
+        "flow_count": 64,
+        "iat_mean": 1920.952380952381,
+        "iat_std": 7.559289460184569,
+        "avg_payload": 110.0625,
+        "iat_cv": 0.003935177953988001
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "58.142.222.4",
+        "flow_count": 6,
+        "iat_mean": 1380.0,
+        "iat_std": 84.8528137423857,
+        "avg_payload": 225.83333333333334,
+        "iat_cv": 0.06148754619013457
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "89.137.101.66",
+        "flow_count": 12,
+        "iat_mean": 905.4545454545455,
+        "iat_std": 56.63278844691233,
+        "avg_payload": 200.75,
+        "iat_cv": 0.06254625230080679
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "117.197.173.47",
+        "flow_count": 5,
+        "iat_mean": 915.0,
+        "iat_std": 57.445626465380286,
+        "avg_payload": 273.2,
+        "iat_cv": 0.06278210542664513
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "60.222.230.180",
+        "flow_count": 9,
+        "iat_mean": 907.5,
+        "iat_std": 59.46187253790689,
+        "avg_payload": 198.66666666666666,
+        "iat_cv": 0.06552272455967702
+      },
+      {
+        "source": "60.222.230.180",
+        "destination": "192.168.2.107",
+        "flow_count": 9,
+        "iat_mean": 907.5,
+        "iat_std": 59.46187253790689,
+        "avg_payload": 236.0,
+        "iat_cv": 0.06552272455967702
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "92.113.212.165",
+        "flow_count": 8,
+        "iat_mean": 900.0,
+        "iat_std": 60.0,
+        "avg_payload": 270.125,
+        "iat_cv": 0.06666666666666667
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "94.64.131.81",
+        "flow_count": 21,
+        "iat_mean": 909.0,
+        "iat_std": 65.36536987539631,
+        "avg_payload": 417.5238095238095,
+        "iat_cv": 0.07190909777271322
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "193.152.247.96",
+        "flow_count": 25,
+        "iat_mean": 907.5,
+        "iat_std": 66.93604994775757,
+        "avg_payload": 382.48,
+        "iat_cv": 0.07375873272480173
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "94.64.129.117",
+        "flow_count": 7,
+        "iat_mean": 920.0,
+        "iat_std": 72.6636084983398,
+        "avg_payload": 234.14285714285714,
+        "iat_cv": 0.07898218315036934
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "109.212.177.4",
+        "flow_count": 6,
+        "iat_mean": 864.0,
+        "iat_std": 68.41052550594829,
+        "avg_payload": 331.1666666666667,
+        "iat_cv": 0.07917884896521793
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "92.129.5.134",
+        "flow_count": 11,
+        "iat_mean": 906.0,
+        "iat_std": 71.83313998427188,
+        "avg_payload": 496.8181818181818,
+        "iat_cv": 0.07928602647270627
+      },
+      {
+        "source": "192.168.2.107",
+        "destination": "117.197.177.94",
+        "flow_count": 5,
+        "iat_mean": 945.0,
+        "iat_std": 75.49834435270749,
+        "avg_payload": 462.0,
+        "iat_cv": 0.07989242788646295
+      }
+    ],
+    "risk_register": [
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.4.121",
+        "destination": "192.168.5.122",
+        "detail": "3658 ports over 8639 min @ 2.29 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.105",
+        "destination": "192.168.2.112",
+        "detail": "824 ports over 2805 min @ 0.65 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.112",
+        "destination": "192.168.5.122",
+        "detail": "664 ports over 8639 min @ 1.35 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.4.118",
+        "destination": "192.168.5.122",
+        "detail": "639 ports over 8638 min @ 1.42 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.105",
+        "destination": "192.168.5.122",
+        "detail": "606 ports over 8636 min @ 1.22 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.3.114",
+        "destination": "192.168.5.122",
+        "detail": "589 ports over 8632 min @ 0.46 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.113",
+        "destination": "192.168.5.122",
+        "detail": "564 ports over 8636 min @ 2.11 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.105",
+        "destination": "192.168.1.101",
+        "detail": "562 ports over 8481 min @ 0.18 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.105",
+        "destination": "192.168.1.103",
+        "detail": "560 ports over 6566 min @ 0.21 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.111",
+        "destination": "192.168.5.122",
+        "detail": "529 ports over 8639 min @ 0.86 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.104",
+        "destination": "192.168.5.122",
+        "detail": "387 ports over 8635 min @ 0.61 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.107",
+        "destination": "192.168.5.122",
+        "detail": "328 ports over 8630 min @ 0.98 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.3.115",
+        "destination": "192.168.5.122",
+        "detail": "293 ports over 8636 min @ 0.54 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.4.120",
+        "destination": "192.168.5.122",
+        "detail": "273 ports over 8634 min @ 1.03 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.4.119",
+        "destination": "192.168.5.122",
+        "detail": "268 ports over 8628 min @ 0.69 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.110",
+        "destination": "192.168.5.122",
+        "detail": "268 ports over 8613 min @ 1.59 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.3.117",
+        "destination": "192.168.5.122",
+        "detail": "245 ports over 8636 min @ 0.47 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.101",
+        "destination": "192.168.5.122",
+        "detail": "222 ports over 8635 min @ 0.76 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.108",
+        "destination": "192.168.5.122",
+        "detail": "200 ports over 8638 min @ 0.79 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.103",
+        "destination": "192.168.5.122",
+        "detail": "195 ports over 8633 min @ 1.09 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.3.116",
+        "destination": "192.168.5.122",
+        "detail": "127 ports over 8638 min @ 0.78 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.102",
+        "destination": "192.168.5.122",
+        "detail": "124 ports over 8632 min @ 0.39 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.106",
+        "destination": "192.168.5.122",
+        "detail": "102 ports over 8639 min @ 0.61 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.2.109",
+        "destination": "192.168.5.122",
+        "detail": "92 ports over 8635 min @ 1.23 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Stealthy Port Scan",
+        "source": "192.168.1.105",
+        "destination": "192.168.1.2",
+        "detail": "82 ports over 7920 min @ 0.02 flows/min",
+        "justification": "Low-rate multi-port probe over extended time, stays below IDS rate triggers"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "239.192.152.143",
+        "detail": "IAT CV=0.000, 136 flows, avg 165 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "192.168.2.1",
+        "detail": "IAT CV=0.000, 17 flows, avg 200 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.4.119",
+        "destination": "192.168.4.120",
+        "detail": "IAT CV=0.004, 64 flows, avg 110 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "58.142.222.4",
+        "detail": "IAT CV=0.061, 6 flows, avg 226 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "89.137.101.66",
+        "detail": "IAT CV=0.063, 12 flows, avg 201 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "117.197.173.47",
+        "detail": "IAT CV=0.063, 5 flows, avg 273 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "60.222.230.180",
+        "detail": "IAT CV=0.066, 9 flows, avg 199 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "60.222.230.180",
+        "destination": "192.168.2.107",
+        "detail": "IAT CV=0.066, 9 flows, avg 236 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "92.113.212.165",
+        "detail": "IAT CV=0.067, 8 flows, avg 270 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "94.64.131.81",
+        "detail": "IAT CV=0.072, 21 flows, avg 418 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "193.152.247.96",
+        "detail": "IAT CV=0.074, 25 flows, avg 382 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "94.64.129.117",
+        "detail": "IAT CV=0.079, 7 flows, avg 234 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "109.212.177.4",
+        "detail": "IAT CV=0.079, 6 flows, avg 331 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "92.129.5.134",
+        "detail": "IAT CV=0.079, 11 flows, avg 497 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "117.197.177.94",
+        "detail": "IAT CV=0.080, 5 flows, avg 462 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "90.199.255.61",
+        "detail": "IAT CV=0.081, 25 flows, avg 495 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "216.8.132.168",
+        "detail": "IAT CV=0.084, 9 flows, avg 414 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "189.227.3.13",
+        "detail": "IAT CV=0.088, 7 flows, avg 149 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "91.78.182.24",
+        "detail": "IAT CV=0.089, 5 flows, avg 343 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "C2 Beaconing",
+        "source": "192.168.2.107",
+        "destination": "94.233.240.128",
+        "detail": "IAT CV=0.090, 8 flows, avg 149 B",
+        "justification": "Periodic small-payload connections match timer-driven malware beacon pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "IP Hopping",
+        "source": "142.166.115.13, 142.166.185.154, 192.168.5.124, 64.237.127.131",
+        "destination": "10 shared targets",
+        "detail": "4 IPs, Jaccard >= 0.50",
+        "justification": ">=50% destination overlap across multiple source IPs suggests one actor rotating addresses"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "192.168.2.107",
+        "detail": "3h monotonic growth, 1->183 sources (x183.0)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.80",
+        "detail": "6h monotonic growth, 6->15 sources (x2.5)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.71",
+        "detail": "5h monotonic growth, 1->15 sources (x15.0)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.69",
+        "detail": "5h monotonic growth, 3->14 sources (x4.67)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.78",
+        "detail": "5h monotonic growth, 2->13 sources (x6.5)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.86",
+        "detail": "5h monotonic growth, 2->13 sources (x6.5)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "206.123.111.173",
+        "detail": "5h monotonic growth, 1->13 sources (x13.0)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.77",
+        "detail": "6h monotonic growth, 1->12 sources (x12.0)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.70",
+        "detail": "5h monotonic growth, 7->12 sources (x1.71)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Slow DDoS",
+        "source": "Multiple",
+        "destination": "142.166.14.79",
+        "detail": "4h monotonic growth, 3->11 sources (x3.67)",
+        "justification": "Sustained source-count ramp-up without traffic spike, consistent with resource exhaustion"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.1.101",
+        "destination": "Multiple",
+        "detail": "6.35 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.1.102",
+        "destination": "Multiple",
+        "detail": "3.72 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.1.103",
+        "destination": "Multiple",
+        "detail": "5.39 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.1.104",
+        "destination": "Multiple",
+        "detail": "1.94 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.1.105",
+        "destination": "Multiple",
+        "detail": "3.46 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.2.106",
+        "destination": "Multiple",
+        "detail": "2.05 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.2.107",
+        "destination": "Multiple",
+        "detail": "4.86 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.2.108",
+        "destination": "Multiple",
+        "detail": "1.48 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.2.109",
+        "destination": "Multiple",
+        "detail": "7.37 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Traffic Volume Outlier",
+        "source": "192.168.2.110",
+        "destination": "Multiple",
+        "detail": "3.64 GB total bytes (> mean+3sigma)",
+        "justification": "Abnormally high bandwidth - could be exfiltration or compromised relay"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.1.101",
+        "destination": "192.168.1.255",
+        "detail": "49140s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.1.101",
+        "destination": "255.255.255.255",
+        "detail": "49140s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.2.109",
+        "destination": "255.255.255.255",
+        "detail": "48960s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.2.109",
+        "destination": "192.168.2.255",
+        "detail": "48960s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.2.112",
+        "destination": "192.168.2.109",
+        "detail": "48900s (threshold: 1908s), tcp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.2.112",
+        "destination": "192.168.2.255",
+        "detail": "48900s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.2.112",
+        "destination": "255.255.255.255",
+        "detail": "48900s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.3.117",
+        "destination": "255.255.255.255",
+        "detail": "48780s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.3.117",
+        "destination": "192.168.3.255",
+        "detail": "48780s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Long-Duration Connection",
+        "source": "192.168.3.114",
+        "destination": "192.168.3.255",
+        "detail": "48780s (threshold: 1908s), udp_ip",
+        "justification": "Far exceeds typical flow duration - possible tunnel or persistent backdoor"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.1.101",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.1.105",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.2.107",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.2.112",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.3.117",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.4.120",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.4.121",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Multi-Protocol Burst",
+        "source": "192.168.5.122",
+        "destination": "Multiple",
+        "detail": ">2 distinct protocols within 60 seconds",
+        "justification": "Rapid protocol switching is typical of scanners and lateral movement tools"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.2.108",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.4.121",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.3.117",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.2.112",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.4.119",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.1.103",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.3.116",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Anomalous Encrypted Traffic",
+        "source": "192.168.1.102",
+        "destination": "Multiple",
+        "detail": "Encrypted flow with tiny payload or sub-second duration",
+        "justification": "Deviates from normal TLS/SSH session profile - C2 tunnel or scanner probe"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Consistent Communicator",
+        "source": "192.168.1.101",
+        "destination": "Multiple",
+        "detail": "Active in >=80% of all 146 hourly windows",
+        "justification": "Could be infrastructure or monitoring agent - verify against asset inventory"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Consistent Communicator",
+        "source": "192.168.2.106",
+        "destination": "Multiple",
+        "detail": "Active in >=80% of all 146 hourly windows",
+        "justification": "Could be infrastructure or monitoring agent - verify against asset inventory"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Consistent Communicator",
+        "source": "192.168.1.102",
+        "destination": "Multiple",
+        "detail": "Active in >=80% of all 146 hourly windows",
+        "justification": "Could be infrastructure or monitoring agent - verify against asset inventory"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Consistent Communicator",
+        "source": "192.168.1.103",
+        "destination": "Multiple",
+        "detail": "Active in >=80% of all 146 hourly windows",
+        "justification": "Could be infrastructure or monitoring agent - verify against asset inventory"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Consistent Communicator",
+        "source": "192.168.1.104",
+        "destination": "Multiple",
+        "detail": "Active in >=80% of all 146 hourly windows",
+        "justification": "Could be infrastructure or monitoring agent - verify against asset inventory"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Traffic Spike",
+        "source": "Network-wide",
+        "destination": "Network-wide",
+        "detail": "2010-06-13 09:40:00 -- 7598 flows (threshold 3729)",
+        "justification": "Could be backup, update push, scan, or DDoS - correlate with other indicators"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Traffic Spike",
+        "source": "Network-wide",
+        "destination": "Network-wide",
+        "detail": "2010-06-13 10:00:00 -- 6718 flows (threshold 3729)",
+        "justification": "Could be backup, update push, scan, or DDoS - correlate with other indicators"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Traffic Spike",
+        "source": "Network-wide",
+        "destination": "Network-wide",
+        "detail": "2010-06-13 10:05:00 -- 7570 flows (threshold 3729)",
+        "justification": "Could be backup, update push, scan, or DDoS - correlate with other indicators"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Traffic Spike",
+        "source": "Network-wide",
+        "destination": "Network-wide",
+        "detail": "2010-06-13 10:10:00 -- 5570 flows (threshold 3729)",
+        "justification": "Could be backup, update push, scan, or DDoS - correlate with other indicators"
+      },
+      {
+        "risk_level": "LOW",
+        "threat_type": "Traffic Spike",
+        "source": "Network-wide",
+        "destination": "Network-wide",
+        "detail": "2010-06-13 10:15:00 -- 4702 flows (threshold 3729)",
+        "justification": "Could be backup, update push, scan, or DDoS - correlate with other indicators"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: xss",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "58,490 flows in destinationPayloadAsUTF",
+        "justification": "Payload contains xss pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: large_base64_blob",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "37,398 flows in sourcePayloadAsUTF",
+        "justification": "Payload contains large_base64_blob pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: large_base64_blob",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "36,610 flows in destinationPayloadAsUTF",
+        "justification": "Payload contains large_base64_blob pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: scanner_ua",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "15,973 flows in destinationPayloadAsUTF",
+        "justification": "Payload contains scanner_ua pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Payload: download_or_backdoor",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "1,885 flows in destinationPayloadAsUTF",
+        "justification": "Payload contains download_or_backdoor pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Payload: download_or_backdoor",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "107 flows in sourcePayloadAsUTF",
+        "justification": "Payload contains download_or_backdoor pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: scanner_ua",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "93 flows in sourcePayloadAsUTF",
+        "justification": "Payload contains scanner_ua pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: credential_leak",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "39 flows in destinationPayloadAsUTF",
+        "justification": "Payload contains credential_leak pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Payload: sql_injection",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "14 flows in destinationPayloadAsUTF",
+        "justification": "Payload contains sql_injection pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: xss",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "3 flows in sourcePayloadAsUTF",
+        "justification": "Payload contains xss pattern"
+      },
+      {
+        "risk_level": "HIGH",
+        "threat_type": "Payload: shell_command",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "2 flows in sourcePayloadAsUTF",
+        "justification": "Payload contains shell_command pattern"
+      },
+      {
+        "risk_level": "MEDIUM",
+        "threat_type": "Payload: credential_leak",
+        "source": "Multiple",
+        "destination": "Multiple",
+        "detail": "1 flows in sourcePayloadAsUTF",
+        "justification": "Payload contains credential_leak pattern"
+      }
+    ],
+    "risk_summary": {
+      "HIGH": 60,
+      "MEDIUM": 44,
+      "LOW": 10
+    }
+  }
+}

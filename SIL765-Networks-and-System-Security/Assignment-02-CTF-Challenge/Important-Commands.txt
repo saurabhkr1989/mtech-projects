@@ -1,0 +1,9 @@
+﻿ssh -i id_rsa p1@192.168.1.11
+
+ctf-extract P1
+
+tar -czvf 2025JCS3011-P1.tar.gz flag.txt key.txt
+
+scp -i id_rsa p1@192.168.1.11:~/2025JCS3011-P1.tar.gz .
+
+

@@ -1,0 +1,155 @@
+ CIPHER TEXT 
+1981y, $pp1n1yuux oq@ 2@3s5u1n $p 1981y, 1v y n$s9o2x 19 v$soq yv1y. 1o 1v oq@ v@6@9oq uy27@vo n$s9o2x 5x y2@y, oq@ v@n$98 0$vo 3$3su$sv n$s9o2x, y98 oq@ 0$vo 3$3su$sv 8@0$n2ynx 19 oq@ #$2u8. 5$s98@8 5x oq@ 1981y9 $n@y9 $9 oq@ v$soq, oq@ y2y51y9 v@y $9 oq@ v$soq#@vo, y98 oq@ 5yx $p 5@97yu $9 oq@ v$soq@yvo, 1o vqy2@v uy98 5$28@2v #1oq 3yw1voy9 o$ oq@ #@vo; nq19y, 9@3yu, y98 5qsoy9 o$ oq@ 9$2oq; y98 5y97uy8@vq y98 0xy90y2 o$ oq@ @yvo. 19 oq@ 1981y9 $n@y9, 1981y 1v 19 oq@ 61n191ox $p v21 uy9wy y98 oq@ 0yu816@v; 1ov y98y0y9 y98 91n$5y2 1vuy98v vqy2@ y 0y21o10@ 5$28@2 #1oq oqy1uy98, 0xy90y2 y98 198$9@v1y. 7$$8, 9$# os29 p$2 oq@ v@n$98 3y2o $p oq@ 4s@vo1$9, 7$$8 usnw!
+
+ DECIPHERED PLAIN TEXT 
+india, officially the republic of india, is a country in south asia. it is the seventh largest country by area, the second most populous country, and the most populous democracy in the world. bounded by the indian ocean on the south, the arabian sea on the southwest, and the bay of bengal on the southeast, it shares land borders with pakistan to the west; china, nepal, and bhutan to the north; and bangladesh and myanmar to the east. in the indian ocean, india is in the vicinity of sri lanka and the maldives; its andaman and nicobar islands share a maritime border with thailand, myanmar and indonesia. good, now turn for the second part of the question, good luck!
+
+ DECIPHERED KEY 
+y5n8@p7q1zwu09$342vos6#rxt
+
+
+***************************************
+
+ CIPHER TEXT 
+64s48u46 8y6 q480ryp nrv 6ryy43 2yu$2tn46, n4 54yu u$ o46. un8u yrpnu n4 6r6 y$u vq441 54qq, n80ryp s4043rvn 6348wv, n80ryp y$ 34vu. n4 58v 2yv234 5n4un43 n4 58v 8vq441 $3 6348wryp. t$yvtr$2v, 2yt$yvtr$2v, 8qq 58v 8 oq23. n4 34w4wo4346 t3#ryp, 5rvnryp, n$1ryp, o4ppryp, 404y q82pnryp. n4 sq$8u46 un3$2pn un4 2yr043v4, v44ryp vu83v, 1q8y4uv, v44ryp 483un, 8qq o2u nrwv4qs. 5n4y n4 q$$z46 6$5y, u3#ryp u$ v44 nrv o$6#, un434 58v y$unryp. ru 58v x2vu un8u n4 58v un434, o2u n4 t$2q6 y$u s44q 8y#unryp s$3 x2vu nrv 134v4yt4.
+
+ DECIPHERED PLAIN TEXT 
+defeated and leaving his dinner untouched, he went to bed. that night he did not sleep well, having feverish dreams, having no rest. he was unsure whether he was asleep or dreaming. conscious, unconscious, all was a blur. he remembered crying, wishing, hoping, begging, even laughing. he floated through the universe, seeing stars, planets, seeing earth, all but himself. when he looked down, trying to see his body, there was nothing. it was zust that he was there, but he could not feel anything for zust his presence.
+
+ DECIPHERED KEY 
+8ot64spnr@zqwy$173vu2059#x
+
+******************************
+
+ CIPHER TEXT 
+476p61 n3zp7 26n 6 876$3nx6138 3zo36z $tuqrv13qz6$5 27q w6$1383w61to 3z 17t xv$ot$ qs 6 #vz3q$ 4$313n7 wqr38t qss38t$ 6zo 6z 3zo36z 7t6o 8qzn164rt 3z x3n169tz $t16r3613qz sq$ 17t ot617 qs 6z 3zo36z z613qz6r3n1. 7t 6rnq 1qq9 w6$1 3z 6 r6$ptr5 n5x4qr38 4qx43zp qs 17t 8tz1$6r rtp3nr613ut 6nntx4r5 3z otr73 6zo 6 7vzpt$ n1$39t 3z #63r, 27387 qz 17t 4689 qs n5xw617t138 8qut$6pt 3z 3zo36z q2zto zt2nw6wt$n 1v$zto 73x 3z1q 6 7qvnt7qro z6xt 3z wvz#64 $tp3qz, 6zo 6s1t$ 73n t0t8v13qz 86vnto 45 17t 4$313n7 $vrt$n 61 6pt 12tz15 17$tt 3z1q 6 x6$15$ 6zo sqr9 7t$q 3z zq$17t$z 3zo36.
+
+ DECIPHERED PLAIN TEXT 
+bhagat singh was a charismatic indian revolutionary who participated in the murder of a junior british police officer and an indian head constable in mistaken retaliation for the death of an indian nationalist. he also took part in a largely symbolic bombing of the central legislative assembly in delhi and a hunger strike in jail, which on the back of sympathetic coverage in indian owned newspapers turned him into a household name in punjab region, and after his execution caused by the british rulers at age twenty three into a martyr and folk hero in northern india.
+
+ DECIPHERED KEY 
+648otsp73#9rxzqw@$n1vu205y
+
+
+
+********************************
+
+--- ORIGINAL PLAINTEXT ---
+Improvement in one sector creates multiple benefits across the economy, including higher productivity, lower costs and better decisions. Countries that develop and use AI effectively stand to gain an advantage in competitiveness and resilience. In this sense, AI is becoming a capability that strengthens the nation and improves the lives of its people.
+
+--- TRUE KEY (a-z) ---
+$qunztw2v4p5sx#oy3697r@018
+
+--- CIPHERTEXT ---
+vso3#rzszx9 vx #xz 6zu9#3 u3z$9z6 s759vo5z qzxztv96 $u3#66 92z zu#x#s1, vxu57nvxw 2vw2z3 o3#n7u9vrv91, 5#@z3 u#696 $xn qz99z3 nzuv6v#x6. u#7x93vz6 92$9 nzrz5#o $xn 76z $v zttzu9vrz51 69$xn 9# w$vx $x $nr$x9$wz vx u#soz9v9vrzxz66 $xn 3z6v5vzxuz. vx 92v6 6zx6z, $v v6 qzu#svxw $ u$o$qv5v91 92$9 693zxw92zx6 92z x$9v#x $xn vso3#rz6 92z 5vrz6 #t v96 oz#o5z.
+
+
+*********************************
+
+--- ORIGINAL PLAINTEXT ---
+Human progress has always been shaped by technology. Electricity transformed how we lived and worked. Computers changed how we processed information, and the internet connected the world. Later, mobile phones brought technology into the hands of everyone.
+
+Each phase reshaped society. We are now entering the Fifth Industrial Revolution, where AI works alongside humans to transform every sector of the economy. It builds on the digital advances of the past decade. It focuses on humans and machines working together, using AI to improve lives and address challenges in agriculture, health, climate change and a host of other sectors.
+
+--- TRUE KEY (a-z) ---
+svzw0834#5yno92q6tur$17p@x
+
+--- CIPHERTEXT ---
+4$os9 qt23t0uu 4su sn7s@u v009 u4sq0w v@ r0z492n23@. 0n0zrt#z#r@ rts9u82to0w 427 70 n#10w s9w 72ty0w. z2oq$r0tu z4s930w 427 70 qt2z0uu0w #982tosr#29, s9w r40 #9r0t90r z2990zr0w r40 72tnw. nsr0t, o2v#n0 q4290u vt2$34r r0z492n23@ #9r2 r40 4s9wu 28 010t@290.
+
+0sz4 q4su0 t0u4sq0w u2z#0r@. 70 st0 927 09r0t#93 r40 8#8r4 #9w$urt#sn t012n$r#29, 740t0 s# 72tyu sn293u#w0 4$os9u r2 rts9u82to 010t@ u0zr2t 28 r40 0z292o@. #r v$#nwu 29 r40 w#3#rsn sw1s9z0u 28 r40 qsur w0zsw0. #r 82z$u0u 29 4$os9u s9w osz4#90u 72ty#93 r230r40t, $u#93 s# r2 #oqt210 n#10u s9w swwt0uu z4snn0930u #9 s3t#z$nr$t0, 40snr4, zn#osr0 z4s930 s9w s 42ur 28 2r40t u0zr2tu.
+
+
+************************
+
+ CIPHER TEXT 
+7o 0u$6y0q$@u, $7 r46ny74or $@u 3@7o27o2 y4z-o4yq0 04rz7y$6 q$z$3767y7ur y4 87ry@7qy 04rz7y$6r. 7o87$o ry$@ynzr $@u 8u9u64z7o2 $7 rq@uuo7o2 y446r y0$y rnzz4@y 84qy4@r 3# $o$6#r7o2 tu87q$6 7t$2ur $o8 4y0u@ q67o7q$6 8$y$. $7 7r $6r4 0u6z7o2 8uyuqy oun@46427q$6 87ru$rur u$@67u@ $o8 t4@u $qqn@$yu6# 3# 8uq7z0u@7o2 q4tz6ux 3@$7o r72o$6r. 7y 7r q6u$@ y0$y $o# o$y74o y0$y v$oyr y4 2@4v @$z786# tnry 6u$@o y4 nru $7 $y rq$6u $q@4rr ruqy4@r. vu $@u w4664v7o2 y07r ry@$yu2# 4w ‘$7 87wwnr74o’ 4@ $7 $84zy74o $y rq$6u
+
+ DECIPHERED PLAIN TEXT 
+in healthcare, ai solutions are bringing top-notch hospital capabilities to district hospitals. indian startups are developing ai screening tools that support doctors by analysing medical images and other clinical data. ai is also helping detect neurological diseases earlier and more accurately by deciphering complex brain signals. it is clear that any nation that wants to grow rapidly must learn to use ai at scale across sectors. we are following this strategy of ‘ai diffusion’ or ai adoption at scale
+
+ DECIPHERED KEY 
+$3q8uw207sp6to4z5@ryn9vx#1
+
+
+*******************
+
+ CIPHER TEXT 
+$#z 0zy9tp @3qzu 9o $#z 0$3yv 60 36 29pz@0. n#6@z 3rr@6y3$69t0 yuz3$z 8606s@z 09y6z$3@ 62r3y$, $#z 36 29pz@ 0zu8z0 30 $#z su36t $#3$ r9nzu0 $#z2. @3u1z 1@9s3@ r@3qzu0, 6ty@5p6t1 9rzt36, 1991@z 3tp 2z$3, @zp $#z z3u@q ru91uz00 6t pz8z@9r6t1 $#z0z ou9t$6zu 29pz@0. $#90z 29pz@0 pz29t0$u3$zp n#3$ 36 y95@p 3y#6z8z 3$ 0y3@z 3tp zwr3tpzp $#z s95tp3u6z0 9o n#3$ n30 $zy#t9@916y3@@q r9006s@z.
+
+#9nz8zu, $u36t6t1 3tp u5tt6t1 $#z0z 29pz@0 uz756uzp zt9u2950 y92r5$6t1 uz095uyz0, 23v6t1 $#z2 zwrzt068z $9 pz8z@9r 3tp pzr@9q. 30 3 uz05@$, 3yyz00 $9 3p83tyzp 36 pz8z@9r2zt$ y3r3s6@6$6z0 uz236tzp @626$zp $9 3 ozn r@3qzu0. $#zt y32z zt16tzzu6t1 6tt983$69t0 $#3$ su951#$ 3 0@zn 9o 29pz@0 ou92 y#6t3. pzy3pz0 9o 6t8z0$2zt$ 6t zt16tzzu6t1 3tp $zy#t9@916y3@ uz0z3uy# ru9rz@@zp $#z0z 6tt983$69t0.
+
+ DECIPHERED PLAIN TEXT 
+the second layer of the stack is ai models. while applications create visible societal impact, the ai model serves as the brain that powers them. large global players, including openai, google and meta, led the early progress in developing these frontier models. those models demonstrated what ai could achieve at scale and expanded the boundaries of what was technologically possible.
+
+however, training and running these models required enormous computing resources, making them expensive to develop and deploy. as a result, access to advanced ai development capabilities remained limited to a few players. then came engineering innovations that brought a slew of models from china. decades of investment in engineering and technological research propelled these innovations.
+
+ DECIPHERED KEY 
+3sypzo1#6xv@2t9r7u0$58nwq4
+
+
+--- ORIGINAL PLAINTEXT ---
+The quick brown fox jumps over the lazy dog. Information regarding the national security station was shared after the formal association meeting. Everything about the present situation and the transition period requires constant attention to the international relations during this time.
+
+--- TRUE KEY (a-z) ---
+0p@3y7znv42q5#x9ou$1rw8t6s
+
+--- CIPHERTEXT ---
+1ny orv@2 pux8# 7xt 4r59$ xwyu 1ny q0s6 3xz. v#7xu501vx# uyz0u3v#z 1ny #01vx#0q $y@ruv16 $101vx# 80$ $n0uy3 071yu 1ny 7xu50q 0$$x@v01vx# 5yy1v#z. ywyu61nv#z 0pxr1 1ny 9uy$y#1 $v1r01vx# 0#3 1ny 1u0#$v1vx# 9yuvx3 uyorvuy$ @x#$10#1 011y#1vx# 1x 1ny v#1yu#01vx#0q uyq01vx#$ 3ruv#z 1nv$ 1v5y.
+
+
+
+
+
+
+
+
+--- ORIGINAL PLAINTEXT ---
+The development of modern technology has transformed the way we communicate and process information every day. This transition requires a deep understanding of the relations between different systems and the security measures needed to protect them. Most successful organizations prioritize the integration of reliable analysis tools to maintain a competitive advantage in the international market while ensuring the stability of their internal operations.
+
+--- TRUE KEY (a-z) ---
+91tun3r5p0q#v2z76o$4@8ywxs
+
+--- CIPHERTEXT ---
+45n un8n#z7vn24 z3 vzuno2 4nt52z#zrx 59$ 4o92$3zovnu 45n y9x yn tzvv@2pt94n 92u 7oztn$$ p23zov94pz2 n8nox u9x. 45p$ 4o92$p4pz2 on6@pon$ 9 unn7 @2uno$492up2r z3 45n on#94pz2$ 1n4ynn2 up33non24 $x$4nv$ 92u 45n $nt@op4x vn9$@on$ 2nnunu 4z 7oz4nt4 45nv. vz$4 $@ttn$$3@# zor92ps94pz2$ 7opzop4psn 45n p24nro94pz2 z3 on#p91#n 929#x$p$ 4zz#$ 4z v9p249p2 9 tzv7n4p4p8n 9u89249rn p2 45n p24no294pz29# v9oqn4 y5p#n n2$@op2r 45n $491p#p4x z3 45npo p24no29# z7no94pz2$.
+
+
+
+
+
+
+
+
+
+
+--- ORIGINAL PLAINTEXT ---
+Public speakers must show courage during every difficult moment. Quiet nights offer peace after long work shifts. Brave pilots fly across vast oceans towards distant lands. Some people prefer coffee while others drink black tea. Small groups gather near historical buildings. Cold weather brings many challenges for rural workers. Clear water flows down rocky hills. Bright ideas change world history. Such simple things matter most.
+
+--- TRUE KEY (a-z) ---
+ntx@qspryu#75o6z0v932184w$
+
+--- CIPHERTEXT ---
+z2t7yx 9zqn#qv9 5293 9r68 x62vnpq @2vyop q1qvw @yssyx273 565qo3. 02yq3 oypr39 6ssqv zqnxq ns3qv 76op 86v# 9rys39. tvn1q zy7639 s7w nxv699 1n93 6xqno9 368nv@9 @y93no3 7no@9. 965q zq6z7q zvqsqv x6ssqq 8ry7q 63rqv9 @vyo# t7nx# 3qn. 95n77 pv62z9 pn3rqv oqnv ry936vyxn7 t2y7@yop9. x67@ 8qn3rqv tvyop9 5now xrn77qopq9 s6v v2vn7 86v#qv9. x7qnv 8n3qv s7689 @68o v6x#w ry779. tvypr3 y@qn9 xrnopq 86v7@ ry936vw. 92xr 9y5z7q 3ryop9 5n33qv 5693.
+
+
+
+
+
+
+
+
+
+--- ORIGINAL PLAINTEXT ---
+Uncharacteristically, brave pilots fly across vast oceans towards distant lands. Compartmentalization obscures clear logic paths during every difficult moment. Incomprehensibility makes simple tasks quite hard. Interdisciplinary research helps solve complex problems. Counterproductive habits delay personal growth. Hyperpolarization splits several local communities. Large ships sail past rocky shores. Bright ideas change world history. Such simple things matter most.
+
+--- TRUE KEY (a-z) ---
+t0wy1o4s@85ur3pqx$v7692z#n
+
+--- CIPHERTEXT ---
+63wst$tw71$@v7@wtuu#, 0$t91 q@up7v ou# tw$pvv 9tv7 pw1t3v 7p2t$yv y@v7t37 ut3yv. wprqt$7r137tu@nt7@p3 p0vw6$1v wu1t$ up4@w qt7sv y6$@34 191$# y@oo@w6u7 rpr137. @3wprq$1s13v@0@u@7# rt51v v@rqu1 7tv5v x6@71 st$y. @371$y@vw@qu@3t$# $1v1t$ws s1uqv vpu91 wprqu1z q$p0u1rv. wp6371$q$py6w7@91 st0@7v y1ut# q1$vp3tu 4$p27s. s#q1$qput$@nt7@p3 vqu@7v v191$tu upwtu wprr63@7@1v. ut$41 vs@qv vt@u qtv7 $pw5# vsp$1v. 0$@4s7 @y1tv wst341 2p$uy s@v7p$#. v6ws v@rqu1 7s@34v rt771$ rpv7.
+
+
+
+
+
+

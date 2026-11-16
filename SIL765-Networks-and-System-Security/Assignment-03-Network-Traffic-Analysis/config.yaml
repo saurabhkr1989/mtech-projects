@@ -1,0 +1,74 @@
+data:
+  base_dir: "logs"
+  files: []          # leave empty to auto-detect all network_analysis_data*.csv
+  chunk_size: 100000
+
+output:
+  figures_dir: "outputs/figures"
+  show_plots: false
+  save_plots: true
+
+section1:
+  top_k_protocols: 5
+  top_n_ips: 10
+  top_n_pairs: 3
+  time_window: "1h"
+  consistent_ip_min_pct: 0.80
+  spike_bin: "5min"
+  spike_z_threshold: 2.0
+
+section2:
+  hyperloglog:
+    precision_bits: 12
+  count_min_sketch:
+    hash_rows: 5
+    hash_width: 10000
+    heavy_hitter_pct: 0.01
+  bloom_filter:
+    target_fpr: 0.01
+    probe_count: 100000
+
+section3:
+  statistical:
+    iqr_multiplier: 1.5
+    outlier_z_sigma: 3.0
+    protocol_dev_sigma: 2.0
+  behavioural:
+    spike_ratio: 5.0
+    rolling_hours: 3
+    fan_in_min_src: 20
+    fan_in_window: "5min"
+  suspicious:
+    long_dur_z_sigma: 3.0
+    multi_proto_window: "60s"
+    multi_proto_min: 3
+
+section4:
+  port_scan:
+    min_distinct_ports: 30
+    min_span_minutes: 10
+    max_rate_per_min: 5.0
+  slow_ddos:
+    min_run_hours: 3
+    min_peak_sources: 5
+    min_growth_ratio: 1.5
+  ip_hopping:
+    jaccard_threshold: 0.50
+    min_cluster_size: 3
+  c2_beaconing:
+    min_flows: 5
+    max_iat_cv: 0.30
+    max_avg_payload_b: 500
+  payload_patterns:
+    shell_command: '(/bin/sh|/bin/bash|cmd\.exe|powershell)'
+    download_or_backdoor: '\b(wget|curl|ncat|netcat|nc -e)\b'
+    sql_injection: '(?i)(SELECT\s+.+\s+FROM|UNION\s+(ALL\s+)?SELECT)'
+    xss: '(<script|javascript:|onerror\s*=|onload\s*=)'
+    scanner_ua: '(?i)(nmap|masscan|zgrab|sqlmap|nikto|dirbuster|bot)'
+    credential_leak: '(?i)(password\s*=|passwd\s*=|secret\s*=)'
+    large_base64_blob: '[A-Za-z0-9+/]{60,}={0,2}'
+  encrypted_apps:
+    - SecureWeb
+    - SSH
+    - IPSec
+    - Authentication
