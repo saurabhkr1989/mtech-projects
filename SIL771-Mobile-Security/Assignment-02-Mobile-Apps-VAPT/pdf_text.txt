@@ -1,0 +1,59 @@
+SIL771: MOBILE SECURITY 
+Assignment No. 2: SECURITY TESTING OF MOBILE APPS 
+TOTAL MARK: 200           SUBMISSION DUE DATE: 21 APR 26 
+(A)ANDROGOAT APP: 50% MARKS 
+(B)ANY ONE APP FROM GOOGLE PLAY: 50% MARKS 
+Introduction: We have learned Android app security, the Android Security Model and 
+performed security testing of DIVA app.  To reinforce the learning, you have to perform 
+security testing of AndroGoat mobile app and another mobile app from Google Play as 
+assignment 2. This assignment carries 200 marks (100 marks each for the two apps) and 
+is due on 21 Apr 26. 
+TASK 1: Download AndroGoat.apk from IITD Moodle. Create an Android Device in 
+Genymotion with Google Pixel 6 device with Android 11.0 (you may use other 
+configurations as well). Install AndroGoat.apk and verify that it runs. You may use tools 
+such as adb, jadx-gui, mobSF, apktool, DB Browser for SQLite, Burp-suite, Frida, 
+Objections, etc. to perform vulnerability analysis and penetration testing of the app.  
+Your task is to perform the security testing of the given app and exploit the vulnerabilities 
+(built intentionally in the app). The list of vulnerabilities covered in the app are listed below.  
+1.Network intercepting – HTTP 
+2.Network intercepting – HTTPS 
+3.Network intercepting – Certificate Pinning 
+4.Unprotected Android Components – Activity 
+5.Unprotected Android Components –Service 
+6.Unprotected Android Components – Broadcast Receivers 
+7.Unprotected Android Components – Custom URL Scheme 
+8.Insecure Data Storage – Shared Prefs - 1 
+9.Insecure Data Storage - Shared Prefs - 2 
+10.Insecure Data Storage - SQLite 
+11.Insecure Data Storage – Temp Files 
+12.Insecure Data Storage – SD Card 
+13.Input Validations – XSS 
+14.Input Validations – SQLi 
+15.Input Validations – WebView 
+16.Keyboard Cache 
+17.Insecure Logging 
+18.Clipboard - Copy & paste 
+19.Hard coding issues 
+20.Root Detection 
+21.Emulator Detection 
+22.Binary Patching 
+
+---PAGE---
+
+Identify and exploit 20 vulnerabilities out of 22 listed above. You will earn 5 points for 
+successfully solving the challenge by identifying/ exploiting each vulnerability of the app. 
+TASK 2: Go to Google Play Store (https://play.google.com) and select any app. Download/ 
+install it on an Android device / emulator and perform Vulnerability Analysis. Your task is 
+to identify at least 5 vulnerabilities. Each identified vulnerability will be credited with 
+upto 20 marks depending on the criticality of the vulnerability identified. 
+Submission: Prepare two reports clearly defining the following for each vulnerability you 
+identify/ exploit for Task 1 and Task 2: 
+•Vulnerability (What is the vulnerability?) 
+•Root Cause of the Vulnerability 
+•Snapshot of the commands you executed 
+•Snapshot of the Screens of relevant parts of the app to show success 
+Submit the reports in pdf format having your roll no and name as filename (e.g. A2-
+TASK1_2021JCS2280_RamSingh.pdf ). The submission is due on 21 Apr 26. 
+________________________________________________________________________ 
+Note: The assignment has to be solved individually and relevant snapshots must be 
+attached to demonstrate the results you obtained. Plagiarism may result in 0 marks. 

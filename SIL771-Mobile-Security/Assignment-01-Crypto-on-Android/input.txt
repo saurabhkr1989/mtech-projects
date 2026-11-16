@@ -1,0 +1,7 @@
+This is the secret file for use in Assignment 1 of SIL771: Mobile Security
+
+Keep this file encrypted while at rest.
+
+----SECRET_BEGINS----
+A strong way to keep data encrypted on an Android device is to use AES-256 for encrypting files and app data, with the encryption key protected inside the Android Keystore. The key should never be stored in plain form in the app or filesystem. For even stronger protection, the app can use hardware-backed keystore and require user authentication such as PIN, password, or biometrics before key use. Data should be encrypted both at rest and during sensitive processing, with proper key rotation and secure deletion practices. Combined with full-disk or file-based encryption already provided by Android, this creates a layered cryptographic defense against unauthorized access.
+----SECRET_ENDS----
